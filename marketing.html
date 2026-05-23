@@ -497,6 +497,12 @@ input[type=text]{width:100%;padding:8px 12px;border:0.5px solid var(--color-bord
       <span class="badge badge-ok"><i class="ti ti-circle-dot" style="font-size:11px" aria-hidden="true"></i> IA activa</span>
     </div>
 
+    <div id="key-banner" style="display:none;background:#FFFBEB;border:1px solid #F59E0B;border-radius:8px;padding:10px 14px;margin-bottom:12px;align-items:center;gap:8px;flex-wrap:wrap">
+      <span style="font-size:12px;color:#92400E;flex:1;min-width:160px">🔑 Ingresa tu OpenAI API key para activar la IA (se guarda solo en tu navegador)</span>
+      <input id="keyInput" type="password" placeholder="sk-proj-..." style="border:1px solid #D1D5DB;border-radius:6px;padding:5px 9px;font-size:12px;width:220px;font-family:inherit">
+      <button onclick="guardarKey()" style="background:#0D1B40;color:#C9A84C;border:none;border-radius:6px;padding:5px 14px;font-size:12px;cursor:pointer;font-weight:700;font-family:inherit">Guardar</button>
+    </div>
+
     <div id="iaChat" style="display:flex;flex-direction:column;gap:8px;min-height:60px;max-height:280px;overflow-y:auto;margin-bottom:12px">
       <div class="chat-msg-m chat-ai-m">Hola Alejandro. Soy tu asistente de marketing. Puedo generar captions, hooks, ideas de carrusel, guiones de TikTok y estrategias de contenido para YAAN. ¿Por dónde empezamos?</div>
     </div>
@@ -518,6 +524,16 @@ input[type=text]{width:100%;padding:8px 12px;border:0.5px solid var(--color-bord
 </div>
 
 <script>
+function getApiKey(){return localStorage.getItem('yaan_openai_key')||'';}
+function guardarKey(){
+  const k=document.getElementById('keyInput').value.trim();
+  if(k){localStorage.setItem('yaan_openai_key',k);document.getElementById('key-banner').style.display='none';
+    document.getElementById('iaChat').innerHTML='<div class="chat-msg-m chat-ai-m">✅ API key guardada. ¿Qué contenido generamos hoy?</div>';}
+}
+window.addEventListener('load',()=>{
+  if(!getApiKey())document.getElementById('key-banner').style.display='flex';
+});
+
 function showTab(id,btn){
   document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
@@ -582,12 +598,13 @@ const iaHist=[];
 async function callClaude(msg,sys){
   const hist=sys===MARKETING_SYS?iaHist:[];
   hist.push({role:'user',content:msg});
-  const r=await fetch('https://api.anthropic.com/v1/messages',{
-    method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:400,system:sys,messages:hist.slice(-8)})
+  const key=getApiKey();if(!key)return '⚠️ Configura tu API key en el panel del asistente IA.';
+  const r=await fetch('https://api.openai.com/v1/chat/completions',{
+    method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
+    body:JSON.stringify({model:'gpt-4o-mini',max_tokens:400,messages:[{role:'system',content:sys},...hist.slice(-8)]})
   });
   const d=await r.json();
-  const ans=d.content?.[0]?.text||'Error de conexión.';
+  const ans=d.choices?.[0]?.message?.content||d.error?.message||'Error de conexión.';
   hist.push({role:'assistant',content:ans});
   return ans;
 }

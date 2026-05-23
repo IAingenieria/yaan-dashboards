@@ -648,6 +648,12 @@ input[type=text]:focus{outline:none;border-color:#2563EB}
       <span class="badge b-ok">● IA activa</span>
     </div>
 
+    <div id="key-banner" style="display:none;background:#FFFBEB;border:1px solid #F59E0B;border-radius:8px;padding:10px 14px;margin-bottom:12px;align-items:center;gap:8px;flex-wrap:wrap">
+      <span style="font-size:12px;color:#92400E;flex:1;min-width:160px">🔑 Ingresa tu OpenAI API key para activar la IA (se guarda solo en tu navegador)</span>
+      <input id="keyInput" type="password" placeholder="sk-proj-..." style="border:1px solid #D1D5DB;border-radius:6px;padding:5px 9px;font-size:12px;width:220px;font-family:inherit">
+      <button onclick="guardarKey()" style="background:#0D1B40;color:#C9A84C;border:none;border-radius:6px;padding:5px 14px;font-size:12px;cursor:pointer;font-weight:700;font-family:inherit">Guardar</button>
+    </div>
+
     <div id="iaChat" style="display:flex;flex-direction:column;gap:8px;min-height:80px;max-height:300px;overflow-y:auto;margin-bottom:12px;padding:4px">
       <div class="chat-msg chat-ai">Hola. Soy tu asistente de ventas para Universidad YAAN. Puedo ayudarte con:
 
@@ -679,6 +685,17 @@ input[type=text]:focus{outline:none;border-color:#2563EB}
 </div><!-- /yaan-dash -->
 
 <script>
+/* ── API KEY ── */
+function getApiKey(){return localStorage.getItem('yaan_openai_key')||'';}
+function guardarKey(){
+  const k=document.getElementById('keyInput').value.trim();
+  if(k){localStorage.setItem('yaan_openai_key',k);document.getElementById('key-banner').style.display='none';
+    document.getElementById('iaChat').innerHTML='<div class="chat-msg chat-ai">✅ API key guardada. ¿Con cuál prospecto empezamos?</div>';}
+}
+window.addEventListener('load',()=>{
+  if(!getApiKey())document.getElementById('key-banner').style.display='flex';
+});
+
 /* ── TABS ── */
 function showTab(id,btn){
   document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('on'));
@@ -777,12 +794,13 @@ async function sendIA(){
   const typing=add('Generando estrategia...','chat-ai');
   hist.push({role:'user',content:q});
   try{
-    const r=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:500,system:SYS,messages:hist.slice(-10)})
+    const key=getApiKey();if(!key){typing.textContent='⚠️ Configura tu API key en el panel superior para activar la IA.';return;}
+    const r=await fetch('https://api.openai.com/v1/chat/completions',{
+      method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
+      body:JSON.stringify({model:'gpt-4o-mini',max_tokens:500,messages:[{role:'system',content:SYS},...hist.slice(-10)]})
     });
     const d=await r.json();
-    const a=d.content?.[0]?.text||'Error de conexión.';
+    const a=d.choices?.[0]?.message?.content||d.error?.message||'Error de conexión.';
     typing.textContent=a;
     hist.push({role:'assistant',content:a});
   }catch(e){typing.textContent='Error al conectar con la IA.';}
