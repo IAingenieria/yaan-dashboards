@@ -1,0 +1,619 @@
+
+<h2 class="sr-only">Panel de generación de contenido para Alejandro — Universidad YAAN. Incluye aprobación de keywords, landing pages y blogs sugeridos por inteligencia artificial antes de su generación.</h2>
+
+<style>
+:root{--color-background-primary:#FFFFFF;--color-background-secondary:#F4F6FA;--color-text-primary:#111827;--color-text-secondary:#6B7280;--color-border-secondary:#CBD5E1;--color-border-tertiary:#E5E7EB;--border-radius-md:8px;--border-radius-lg:12px;--font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+*{box-sizing:border-box}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px 16px;margin-bottom:10px}
+.badge{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:var(--border-radius-md);font-size:11px;font-weight:500}
+.bpend{background:#EEF2FA;color:#1E3D7A}
+.bok{background:#E9F7EF;color:#1A7A4A}
+.bwarn{background:#FEF9E7;color:#A0680A}
+.bdanger{background:#FDEDEC;color:#C0392B}
+.bgold{background:#0D1B40;color:#C9A84C}
+.btn{padding:5px 13px;border:none;border-radius:var(--border-radius-md);cursor:pointer;font-size:12px;font-family:var(--font-sans);font-weight:500}
+.btn-approve{background:#1A7A4A;color:#fff}
+.btn-reject{background:#C0392B;color:#fff}
+.btn-edit{background:var(--color-background-secondary);color:var(--color-text-secondary);border:0.5px solid var(--color-border-secondary)}
+.btn-gen{background:#0D1B40;color:#C9A84C}
+.tab-btn{padding:7px 14px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);cursor:pointer;font-size:12px;color:var(--color-text-secondary);font-family:var(--font-sans)}
+.tab-btn.on{background:#0D1B40;color:#C9A84C;border-color:#0D1B40;font-weight:500}
+.tab-pane{display:none}.tab-pane.on{display:block}
+.kw-row{display:grid;grid-template-columns:2.2fr .8fr .8fr 1fr 1fr auto;gap:8px;align-items:center;padding:9px 12px;border-radius:var(--border-radius-md);margin-bottom:6px;border:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary)}
+.kw-row:hover{border-color:#C9A84C}
+.score-mini{height:5px;border-radius:3px;background:var(--color-background-secondary)}
+.score-fill{height:100%;border-radius:3px}
+.lp-card{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);margin-bottom:10px;overflow:hidden}
+.lp-head{background:#0D1B40;padding:10px 14px;display:flex;justify-content:space-between;align-items:center}
+.lp-body{padding:12px 14px}
+.blog-card{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);margin-bottom:10px;overflow:hidden}
+.blog-head{background:#162447;padding:10px 14px;display:flex;justify-content:space-between;align-items:center}
+.stat-mini{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:6px 10px;text-align:center}
+.chat-msg-g{padding:10px 14px;border-radius:var(--border-radius-lg);font-size:13px;line-height:1.6;max-width:90%;white-space:pre-wrap}
+.chat-user-g{background:#0D1B40;color:#fff;align-self:flex-end}
+.chat-ai-g{background:var(--color-background-secondary);color:var(--color-text-primary);align-self:flex-start}
+input[type=text]{width:100%;padding:8px 12px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:13px;font-family:var(--font-sans);background:var(--color-background-primary);color:var(--color-text-primary)}
+.queue-item{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);margin-bottom:6px;background:var(--color-background-primary)}
+.pulse{animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+</style>
+
+<div style="background:#F2F4F8;padding:16px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#111827">
+
+<div style="display:flex;align-items:center;gap:14px;background:#fff;border-radius:12px;padding:12px 18px;margin-bottom:18px;box-shadow:0 1px 4px rgba(0,0,0,.08);border:1px solid #E5E7EB">
+  <svg width="52" height="52" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g stroke="white" stroke-width="3.5" stroke-linejoin="round"><polygon points="50,50 90,10 90,50" fill="#E02844"/><polygon points="50,50 50,10 90,10" fill="#C06070"/><polygon points="50,50 90,50 90,90" fill="#E02844"/><polygon points="50,50 90,90 50,90" fill="#C06070"/><polygon points="50,50 10,90 10,50" fill="#E02844"/><polygon points="50,50 50,90 10,90" fill="#C06070"/><polygon points="50,50 10,10 50,10" fill="#E02844"/><polygon points="50,50 10,50 10,10" fill="#C06070"/></g></svg>
+  <div><p style="margin:0;font-size:10px;font-weight:800;color:#0D1B40;letter-spacing:.18em;line-height:1.4">UNIVERSIDAD</p><p style="margin:0;font-size:8px;color:#0D1B40">▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪</p><p style="margin:0;font-size:27px;font-weight:900;color:#E02844;letter-spacing:.06em;line-height:1.1">Y.A.A.N</p></div>
+  <div style="margin-left:10px;padding-left:14px;border-left:1px solid #E5E7EB;flex:1">
+    <p style="margin:0;font-size:14px;font-weight:700;color:#0D1B40">Generación de Contenido — SEO</p>
+    <p style="margin:2px 0 0;font-size:11px;color:#6B7280">Alejandro · Semana 21 · Mayo 2026</p>
+  </div>
+  <span style="background:#0D1B40;color:#C9A84C;padding:4px 12px;border-radius:99px;font-size:11px;font-weight:600;white-space:nowrap">RVOE SEP ✓</span>
+</div>
+
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:8px">
+  <div>
+    <h2 style="margin:0;font-size:18px;font-weight:500">Generación de Contenido — Alejandro</h2>
+    <p style="margin:3px 0 0;font-size:13px;color:var(--color-text-secondary)">La IA propone · Alejandro aprueba · El sistema genera</p>
+  </div>
+  <div style="display:flex;gap:6px;flex-wrap:wrap">
+    <span class="badge bdanger">12 keywords por aprobar</span>
+    <span class="badge bwarn">4 landings en cola</span>
+    <span class="badge bpend">6 blogs propuestos</span>
+  </div>
+</div>
+
+<div style="background:#0D1B40;border-radius:var(--border-radius-lg);padding:12px 16px;margin-bottom:1rem;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+  <i class="ti ti-brain" style="font-size:20px;color:#C9A84C" aria-hidden="true"></i>
+  <div>
+    <p style="margin:0;font-size:13px;font-weight:500;color:#fff">La IA analizó 847 búsquedas activas + tendencias SEO esta semana</p>
+    <p style="margin:2px 0 0;font-size:12px;color:#7090B0">Propone keywords, estructura de landing pages y títulos de blog antes de generar nada. Tu aprobación activa la generación.</p>
+  </div>
+  <div style="margin-left:auto;display:flex;gap:8px">
+    <button class="btn btn-approve" onclick="approveAll()">Aprobar todo ↓</button>
+    <button class="btn btn-edit" onclick="alert('Sincronizando tendencias...')"><i class="ti ti-refresh" aria-hidden="true"></i> Actualizar</button>
+  </div>
+</div>
+
+<div style="display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap">
+  <button class="tab-btn on" onclick="st('kw',this)"><i class="ti ti-search" aria-hidden="true"></i> Keywords</button>
+  <button class="tab-btn" onclick="st('lp',this)"><i class="ti ti-layout-2" aria-hidden="true"></i> Landing pages</button>
+  <button class="tab-btn" onclick="st('blog',this)"><i class="ti ti-file-text" aria-hidden="true"></i> Blogs</button>
+  <button class="tab-btn" onclick="st('queue',this)"><i class="ti ti-list-check" aria-hidden="true"></i> Cola de generación</button>
+  <button class="tab-btn" onclick="st('ia',this)"><i class="ti ti-sparkles" aria-hidden="true"></i> IA Sugerencias</button>
+</div>
+
+<!-- ── KEYWORDS ─────────────────────────────────────────────────────────── -->
+<div id="tab-kw" class="tab-pane on">
+  <div style="display:grid;grid-template-columns:2.2fr .8fr .8fr 1fr 1fr auto;gap:8px;padding:6px 12px;margin-bottom:4px">
+    <span style="font-size:11px;color:var(--color-text-secondary);font-weight:500;text-transform:uppercase;letter-spacing:.04em">Keyword sugerida por IA</span>
+    <span style="font-size:11px;color:var(--color-text-secondary);font-weight:500;text-transform:uppercase;letter-spacing:.04em">Búsq./mes</span>
+    <span style="font-size:11px;color:var(--color-text-secondary);font-weight:500;text-transform:uppercase;letter-spacing:.04em">Comp.</span>
+    <span style="font-size:11px;color:var(--color-text-secondary);font-weight:500;text-transform:uppercase;letter-spacing:.04em">Oportunidad</span>
+    <span style="font-size:11px;color:var(--color-text-secondary);font-weight:500;text-transform:uppercase;letter-spacing:.04em">Carrera</span>
+    <span style="font-size:11px;color:var(--color-text-secondary);font-weight:500;text-transform:uppercase;letter-spacing:.04em">Acción</span>
+  </div>
+
+  <div id="kwList">
+  <div class="kw-row" id="kw1">
+    <div>
+      <p style="margin:0;font-size:13px;font-weight:500;color:var(--color-text-primary)">licenciatura en derecho san luis potosí</p>
+      <p style="margin:2px 0 0;font-size:11px;color:var(--color-text-secondary)">Intent: inscripción · Tendencia ↑18% este mes</p>
+    </div>
+    <span style="font-size:13px;font-weight:500">1,900</span>
+    <div><span class="badge bok">Baja</span></div>
+    <div>
+      <p style="margin:0 0 2px;font-size:11px;color:#1A7A4A;font-weight:500">97 / 100</p>
+      <div class="score-mini"><div class="score-fill" style="width:97%;background:#1A7A4A"></div></div>
+    </div>
+    <span class="badge bgold" style="font-size:10px">Derecho</span>
+    <div style="display:flex;gap:4px">
+      <button class="btn btn-reject" style="padding:4px 8px" onclick="kwAction('kw1','rechazada')">✗</button>
+      <button class="btn btn-approve" style="padding:4px 8px" onclick="kwAction('kw1','aprobada')">✓</button>
+    </div>
+  </div>
+
+  <div class="kw-row" id="kw2">
+    <div>
+      <p style="margin:0;font-size:13px;font-weight:500;color:var(--color-text-primary)">maestría en educación ejecutiva slp</p>
+      <p style="margin:2px 0 0;font-size:11px;color:var(--color-text-secondary)">Intent: posgrado · Perfil adulto trabajador</p>
+    </div>
+    <span style="font-size:13px;font-weight:500">880</span>
+    <div><span class="badge bok">Baja</span></div>
+    <div>
+      <p style="margin:0 0 2px;font-size:11px;color:#1A7A4A;font-weight:500">91 / 100</p>
+      <div class="score-mini"><div class="score-fill" style="width:91%;background:#1A7A4A"></div></div>
+    </div>
+    <span class="badge bgold" style="font-size:10px">Maestría</span>
+    <div style="display:flex;gap:4px">
+      <button class="btn btn-reject" style="padding:4px 8px" onclick="kwAction('kw2','rechazada')">✗</button>
+      <button class="btn btn-approve" style="padding:4px 8px" onclick="kwAction('kw2','aprobada')">✓</button>
+    </div>
+  </div>
+
+  <div class="kw-row" id="kw3">
+    <div>
+      <p style="margin:0;font-size:13px;font-weight:500;color:var(--color-text-primary)">universidad con rvoe san luis potosí becas</p>
+      <p style="margin:2px 0 0;font-size:11px;color:var(--color-text-secondary)">Intent: comparación · Precio sensible</p>
+    </div>
+    <span style="font-size:13px;font-weight:500">1,200</span>
+    <div><span class="badge bwarn">Media</span></div>
+    <div>
+      <p style="margin:0 0 2px;font-size:11px;color:#C9A84C;font-weight:500">84 / 100</p>
+      <div class="score-mini"><div class="score-fill" style="width:84%;background:#C9A84C"></div></div>
+    </div>
+    <span class="badge bgold" style="font-size:10px">General</span>
+    <div style="display:flex;gap:4px">
+      <button class="btn btn-reject" style="padding:4px 8px" onclick="kwAction('kw3','rechazada')">✗</button>
+      <button class="btn btn-approve" style="padding:4px 8px" onclick="kwAction('kw3','aprobada')">✓</button>
+    </div>
+  </div>
+
+  <div class="kw-row" id="kw4">
+    <div>
+      <p style="margin:0;font-size:13px;font-weight:500;color:var(--color-text-primary)">ingeniería mecatrónica ciudad valles</p>
+      <p style="margin:2px 0 0;font-size:11px;color:var(--color-text-secondary)">Intent: inscripción · Mercado sin competencia directa</p>
+    </div>
+    <span style="font-size:13px;font-weight:500">590</span>
+    <div><span class="badge bok">Muy baja</span></div>
+    <div>
+      <p style="margin:0 0 2px;font-size:11px;color:#1A7A4A;font-weight:500">88 / 100</p>
+      <div class="score-mini"><div class="score-fill" style="width:88%;background:#1A7A4A"></div></div>
+    </div>
+    <span class="badge bgold" style="font-size:10px">Mecatrónica</span>
+    <div style="display:flex;gap:4px">
+      <button class="btn btn-reject" style="padding:4px 8px" onclick="kwAction('kw4','rechazada')">✗</button>
+      <button class="btn btn-approve" style="padding:4px 8px" onclick="kwAction('kw4','aprobada')">✓</button>
+    </div>
+  </div>
+
+  <div class="kw-row" id="kw5">
+    <div>
+      <p style="margin:0;font-size:13px;font-weight:500;color:var(--color-text-primary)">licenciatura para maestros normalistas slp</p>
+      <p style="margin:2px 0 0;font-size:11px;color:var(--color-text-secondary)">Intent: inscripción urgente · Tema de semana actual ↑↑</p>
+    </div>
+    <span style="font-size:13px;font-weight:500">720</span>
+    <div><span class="badge bok">Nula</span></div>
+    <div>
+      <p style="margin:0 0 2px;font-size:11px;color:#1A7A4A;font-weight:500">99 / 100</p>
+      <div class="score-mini"><div class="score-fill" style="width:99%;background:#1A7A4A"></div></div>
+    </div>
+    <span class="badge bgold" style="font-size:10px">Ed. Física</span>
+    <div style="display:flex;gap:4px">
+      <button class="btn btn-reject" style="padding:4px 8px" onclick="kwAction('kw5','rechazada')">✗</button>
+      <button class="btn btn-approve" style="padding:4px 8px" onclick="kwAction('kw5','aprobada')">✓</button>
+    </div>
+  </div>
+  </div>
+
+  <div id="kwLog" style="margin-top:10px"></div>
+
+  <div style="margin-top:12px;padding:10px 14px;background:var(--color-background-secondary);border-radius:var(--border-radius-lg);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+    <p style="margin:0;font-size:12px;color:var(--color-text-secondary)">Hay 7 keywords más sin revisar esta semana</p>
+    <button class="btn btn-edit" onclick="loadMore()">Ver más keywords ↓</button>
+  </div>
+</div>
+
+<!-- ── LANDING PAGES ────────────────────────────────────────────────────── -->
+<div id="tab-lp" class="tab-pane">
+  <p style="margin:0 0 10px;font-size:12px;color:var(--color-text-secondary)">La IA propone la estructura completa. Alejandro aprueba antes de que se genere y publique.</p>
+
+  <div class="lp-card" id="lp1">
+    <div class="lp-head">
+      <div>
+        <p style="margin:0;font-size:13px;font-weight:500;color:#C9A84C">Licenciatura en Derecho — San Luis Potosí</p>
+        <p style="margin:2px 0 0;font-size:11px;color:#7090B0">universidadyaan.mx/licenciatura-derecho-san-luis-potosi</p>
+      </div>
+      <div style="display:flex;gap:6px;align-items:center">
+        <span class="badge" style="background:#C9A84C;color:#0D1B40;font-size:10px">SEO score: 94</span>
+        <span class="badge bpend">Pendiente</span>
+      </div>
+    </div>
+    <div class="lp-body">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+        <div>
+          <p style="margin:0 0 4px;font-size:11px;color:var(--color-text-secondary);font-weight:500;text-transform:uppercase;letter-spacing:.04em">H1 propuesto</p>
+          <p style="margin:0;font-size:13px;font-weight:500;color:var(--color-text-primary)">Licenciatura en Derecho en San Luis Potosí — RVOE oficial, trabaja y estudia</p>
+        </div>
+        <div>
+          <p style="margin:0 0 4px;font-size:11px;color:var(--color-text-secondary);font-weight:500;text-transform:uppercase;letter-spacing:.04em">Meta description</p>
+          <p style="margin:0;font-size:12px;color:var(--color-text-secondary)">Estudia Derecho en YAAN con RVOE SEP. Modelo ejecutivo para trabajadores. Becas disponibles. Inscríbete hoy en SLP. (156 chars)</p>
+        </div>
+      </div>
+      <div style="margin-bottom:10px">
+        <p style="margin:0 0 4px;font-size:11px;color:var(--color-text-secondary);font-weight:500;text-transform:uppercase;letter-spacing:.04em">Estructura de secciones propuesta</p>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <span class="badge bpend">Hero con CTA</span>
+          <span class="badge bpend">Perfil del egresado</span>
+          <span class="badge bpend">Plan de estudios</span>
+          <span class="badge bpend">Becas y costos</span>
+          <span class="badge bpend">Testimonios</span>
+          <span class="badge bpend">WhatsApp flotante</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap">
+        <button class="btn btn-edit" onclick="previewLP('Derecho SLP')">Vista previa</button>
+        <button class="btn btn-reject" onclick="rejectLP('lp1','Derecho SLP')">Rechazar</button>
+        <button class="btn btn-approve" onclick="approveLP('lp1','Derecho SLP')">Aprobar generación</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="lp-card" id="lp2">
+    <div class="lp-head">
+      <div>
+        <p style="margin:0;font-size:13px;font-weight:500;color:#C9A84C">Ingeniería en Mecatrónica — Ciudad Valles</p>
+        <p style="margin:2px 0 0;font-size:11px;color:#7090B0">universidadyaan.mx/ingenieria-mecatronica-ciudad-valles</p>
+      </div>
+      <div style="display:flex;gap:6px;align-items:center">
+        <span class="badge" style="background:#C9A84C;color:#0D1B40;font-size:10px">SEO score: 88</span>
+        <span class="badge bpend">Pendiente</span>
+      </div>
+    </div>
+    <div class="lp-body">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+        <div>
+          <p style="margin:0 0 4px;font-size:11px;color:var(--color-text-secondary);font-weight:500;text-transform:uppercase;letter-spacing:.04em">H1 propuesto</p>
+          <p style="margin:0;font-size:13px;font-weight:500;color:var(--color-text-primary)">Ingeniería en Mecatrónica en Ciudad Valles — única sede en la región</p>
+        </div>
+        <div>
+          <p style="margin:0 0 4px;font-size:11px;color:var(--color-text-secondary);font-weight:500;text-transform:uppercase;letter-spacing:.04em">Meta description</p>
+          <p style="margin:0;font-size:12px;color:var(--color-text-secondary)">Estudia Mecatrónica en YAAN Ciudad Valles. RVOE SEP. Laboratorios propios. Bolsa de trabajo con maquiladoras. (148 chars)</p>
+        </div>
+      </div>
+      <div style="background:#FEF9E7;border-radius:var(--border-radius-md);padding:8px 12px;margin-bottom:10px">
+        <p style="margin:0;font-size:12px;color:#A0680A"><i class="ti ti-bulb" style="font-size:12px" aria-hidden="true"></i> Sugerencia IA: agregar sección de convenios con parque industrial de Cd. Valles para aumentar conversión +23%</p>
+      </div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap">
+        <button class="btn btn-edit" onclick="previewLP('Mecatrónica Cd. Valles')">Vista previa</button>
+        <button class="btn btn-reject" onclick="rejectLP('lp2','Mecatrónica Cd. Valles')">Rechazar</button>
+        <button class="btn btn-approve" onclick="approveLP('lp2','Mecatrónica Cd. Valles')">Aprobar generación</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="lp-card" id="lp3">
+    <div class="lp-head">
+      <div>
+        <p style="margin:0;font-size:13px;font-weight:500;color:#C9A84C">Maestría en Educación Ejecutiva — San Luis Potosí</p>
+        <p style="margin:2px 0 0;font-size:11px;color:#7090B0">universidadyaan.mx/maestria-educacion-ejecutiva-slp</p>
+      </div>
+      <div style="display:flex;gap:6px;align-items:center">
+        <span class="badge" style="background:#C9A84C;color:#0D1B40;font-size:10px">SEO score: 91</span>
+        <span class="badge bpend">Pendiente</span>
+      </div>
+    </div>
+    <div class="lp-body">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px">
+        <div>
+          <p style="margin:0 0 4px;font-size:11px;color:var(--color-text-secondary);font-weight:500;text-transform:uppercase;letter-spacing:.04em">H1 propuesto</p>
+          <p style="margin:0;font-size:13px;font-weight:500;color:var(--color-text-primary)">Maestría en Educación en SLP — para docentes que trabajan y quieren crecer</p>
+        </div>
+        <div>
+          <p style="margin:0 0 4px;font-size:11px;color:var(--color-text-secondary);font-weight:500;text-transform:uppercase;letter-spacing:.04em">Segmento objetivo</p>
+          <p style="margin:0;font-size:12px;color:var(--color-text-secondary)">Maestros CONAFE, normalistas, docentes con 3+ años de práctica buscando ascenso salarial SEP</p>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap">
+        <button class="btn btn-edit" onclick="previewLP('Maestría Educación SLP')">Vista previa</button>
+        <button class="btn btn-reject" onclick="rejectLP('lp3','Maestría Educación')">Rechazar</button>
+        <button class="btn btn-approve" onclick="approveLP('lp3','Maestría Educación')">Aprobar generación</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="lpLog" style="margin-top:4px"></div>
+</div>
+
+<!-- ── BLOGS ───────────────────────────────────────────────────────────── -->
+<div id="tab-blog" class="tab-pane">
+  <p style="margin:0 0 10px;font-size:12px;color:var(--color-text-secondary)">Artículos propuestos a partir de la Revista YAAN + keywords aprobadas. Alejandro aprueba el título y estructura antes de la redacción automatizada.</p>
+
+  <div class="blog-card" id="blog1">
+    <div class="blog-head">
+      <div style="flex:1">
+        <p style="margin:0;font-size:13px;font-weight:500;color:#C9A84C">¿Cuánto gana un maestro normalista con licenciatura en México? La diferencia real</p>
+        <p style="margin:3px 0 0;font-size:11px;color:#7090B0">Keyword: licenciatura para maestros normalistas slp · 720 búsq/mes</p>
+      </div>
+      <span class="badge" style="background:#C9A84C;color:#0D1B40;margin-left:8px;white-space:nowrap">SEO 96/100</span>
+    </div>
+    <div style="padding:12px 14px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px">
+        <div>
+          <p style="margin:0 0 6px;font-size:11px;color:var(--color-text-secondary);font-weight:500;text-transform:uppercase;letter-spacing:.04em">Estructura propuesta</p>
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--color-text-secondary)"><span style="color:#C9A84C;font-weight:500">H2</span> Salario promedio maestro sin licenciatura</div>
+            <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--color-text-secondary)"><span style="color:#C9A84C;font-weight:500">H2</span> Qué cambia con el RVOE oficial SEP</div>
+            <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--color-text-secondary)"><span style="color:#C9A84C;font-weight:500">H2</span> Cómo titularse sin dejar de trabajar</div>
+            <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--color-text-secondary)"><span style="color:#C9A84C;font-weight:500">H2</span> Costos, becas y proceso en YAAN</div>
+          </div>
+        </div>
+        <div>
+          <p style="margin:0 0 6px;font-size:11px;color:var(--color-text-secondary);font-weight:500;text-transform:uppercase;letter-spacing:.04em">Datos del artículo</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+            <div class="stat-mini"><p style="margin:0;font-size:14px;font-weight:500">1,400</p><p style="margin:0;font-size:10px;color:var(--color-text-secondary)">palabras</p></div>
+            <div class="stat-mini"><p style="margin:0;font-size:14px;font-weight:500">6 min</p><p style="margin:0;font-size:10px;color:var(--color-text-secondary)">lectura</p></div>
+            <div class="stat-mini"><p style="margin:0;font-size:14px;font-weight:500">3</p><p style="margin:0;font-size:10px;color:var(--color-text-secondary)">backlinks int.</p></div>
+            <div class="stat-mini"><p style="margin:0;font-size:14px;font-weight:500">Revista</p><p style="margin:0;font-size:10px;color:var(--color-text-secondary)">fuente base</p></div>
+          </div>
+        </div>
+      </div>
+      <div style="background:#E9F7EF;border-radius:var(--border-radius-md);padding:8px 12px;margin-bottom:10px">
+        <p style="margin:0;font-size:12px;color:#1A7A4A"><i class="ti ti-link" style="font-size:12px" aria-hidden="true"></i> Backlinks internos sugeridos: → /licenciatura-educacion-slp · → /becas · → /modelo-ejecutivo</p>
+      </div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap">
+        <button class="btn btn-edit" onclick="editBlog('blog1','Salario maestros')">Editar estructura</button>
+        <button class="btn btn-reject" onclick="rejectBlog('blog1')">Rechazar</button>
+        <button class="btn btn-approve" onclick="approveBlog('blog1','Salario maestros normalistas')">Aprobar redacción</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="blog-card" id="blog2">
+    <div class="blog-head">
+      <div style="flex:1">
+        <p style="margin:0;font-size:13px;font-weight:500;color:#C9A84C">Derecho en San Luis Potosí: campo laboral, salarios y qué universidad elegir</p>
+        <p style="margin:3px 0 0;font-size:11px;color:#7090B0">Keyword: licenciatura en derecho san luis potosí · 1,900 búsq/mes</p>
+      </div>
+      <span class="badge" style="background:#C9A84C;color:#0D1B40;margin-left:8px;white-space:nowrap">SEO 94/100</span>
+    </div>
+    <div style="padding:12px 14px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px">
+        <div>
+          <p style="margin:0 0 6px;font-size:11px;color:var(--color-text-secondary);font-weight:500;text-transform:uppercase;letter-spacing:.04em">Estructura propuesta</p>
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--color-text-secondary)"><span style="color:#C9A84C;font-weight:500">H2</span> Mercado laboral del abogado en SLP 2026</div>
+            <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--color-text-secondary)"><span style="color:#C9A84C;font-weight:500">H2</span> Salario promedio por especialidad</div>
+            <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--color-text-secondary)"><span style="color:#C9A84C;font-weight:500">H2</span> Por qué elegir YAAN para estudiar Derecho</div>
+            <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--color-text-secondary)"><span style="color:#C9A84C;font-weight:500">H2</span> Modelo ejecutivo para trabajadores activos</div>
+          </div>
+        </div>
+        <div>
+          <p style="margin:0 0 6px;font-size:11px;color:var(--color-text-secondary);font-weight:500;text-transform:uppercase;letter-spacing:.04em">Datos del artículo</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+            <div class="stat-mini"><p style="margin:0;font-size:14px;font-weight:500">1,650</p><p style="margin:0;font-size:10px;color:var(--color-text-secondary)">palabras</p></div>
+            <div class="stat-mini"><p style="margin:0;font-size:14px;font-weight:500">7 min</p><p style="margin:0;font-size:10px;color:var(--color-text-secondary)">lectura</p></div>
+            <div class="stat-mini"><p style="margin:0;font-size:14px;font-weight:500">4</p><p style="margin:0;font-size:10px;color:var(--color-text-secondary)">backlinks int.</p></div>
+            <div class="stat-mini"><p style="margin:0;font-size:14px;font-weight:500">Alta</p><p style="margin:0;font-size:10px;color:var(--color-text-secondary)">prioridad</p></div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap">
+        <button class="btn btn-edit" onclick="editBlog('blog2','Derecho SLP')">Editar estructura</button>
+        <button class="btn btn-reject" onclick="rejectBlog('blog2')">Rechazar</button>
+        <button class="btn btn-approve" onclick="approveBlog('blog2','Derecho campo laboral SLP')">Aprobar redacción</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="blogLog" style="margin-top:4px"></div>
+</div>
+
+<!-- ── COLA DE GENERACIÓN ────────────────────────────────────────────────── -->
+<div id="tab-queue" class="tab-pane">
+  <p style="margin:0 0 12px;font-size:12px;color:var(--color-text-secondary)">Todo lo que Alejandro aprobó entra aquí. El sistema genera en orden de prioridad.</p>
+
+  <div id="queueContainer">
+  <div class="queue-item">
+    <div style="width:8px;height:8px;border-radius:50%;background:#1A7A4A;flex-shrink:0" class="pulse"></div>
+    <div style="flex:1">
+      <p style="margin:0;font-size:13px;font-weight:500">Landing page — Licenciatura en Derecho SLP</p>
+      <p style="margin:2px 0 0;font-size:11px;color:var(--color-text-secondary)">Generando HTML + SEO + estructura completa</p>
+    </div>
+    <span class="badge bok">Generando</span>
+    <div style="width:100px">
+      <div style="height:4px;background:var(--color-background-secondary);border-radius:2px"><div style="width:68%;height:4px;background:#1A7A4A;border-radius:2px"></div></div>
+      <p style="margin:2px 0 0;font-size:10px;color:var(--color-text-secondary);text-align:right">68%</p>
+    </div>
+  </div>
+
+  <div class="queue-item">
+    <div style="width:8px;height:8px;border-radius:50%;background:#C9A84C;flex-shrink:0"></div>
+    <div style="flex:1">
+      <p style="margin:0;font-size:13px;font-weight:500">Blog — Salario maestros normalistas con licenciatura</p>
+      <p style="margin:2px 0 0;font-size:11px;color:var(--color-text-secondary)">En cola · espera landing de Derecho</p>
+    </div>
+    <span class="badge bwarn">En cola</span>
+    <span style="font-size:11px;color:var(--color-text-secondary)">#2</span>
+  </div>
+
+  <div class="queue-item">
+    <div style="width:8px;height:8px;border-radius:50%;background:#C9A84C;flex-shrink:0"></div>
+    <div style="flex:1">
+      <p style="margin:0;font-size:13px;font-weight:500">Landing page — Ing. Mecatrónica Ciudad Valles</p>
+      <p style="margin:2px 0 0;font-size:11px;color:var(--color-text-secondary)">Aprobada hace 5 min · Esperando turno</p>
+    </div>
+    <span class="badge bwarn">En cola</span>
+    <span style="font-size:11px;color:var(--color-text-secondary)">#3</span>
+  </div>
+
+  <div class="queue-item" style="opacity:.5">
+    <div style="width:8px;height:8px;border-radius:50%;background:var(--color-border-secondary);flex-shrink:0"></div>
+    <div style="flex:1">
+      <p style="margin:0;font-size:13px">Blog — Derecho campo laboral SLP 2026</p>
+      <p style="margin:2px 0 0;font-size:11px;color:var(--color-text-secondary)">Pendiente de aprobación de keyword</p>
+    </div>
+    <span class="badge bpend">Bloqueado</span>
+    <span style="font-size:11px;color:var(--color-text-secondary)">#4</span>
+  </div>
+  </div>
+
+  <div style="margin-top:14px;padding:12px 14px;background:var(--color-background-secondary);border-radius:var(--border-radius-lg)">
+    <p style="margin:0 0 8px;font-size:12px;font-weight:500;color:var(--color-text-primary)">Publicados esta semana</p>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px"><span style="color:var(--color-text-secondary)">Blog — ¿Qué es el RVOE y por qué importa?</span><span class="badge bok">Publicado</span></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px"><span style="color:var(--color-text-secondary)">Landing — Contaduría Pública SLP</span><span class="badge bok">Publicado</span></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px"><span style="color:var(--color-text-secondary)">Blog — Maquiladoras y desarrollo profesional en SLP</span><span class="badge bok">Publicado</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── IA SUGERENCIAS ────────────────────────────────────────────────────── -->
+<div id="tab-ia" class="tab-pane">
+  <div style="border:2px solid #C9A84C;border-radius:var(--border-radius-lg);padding:14px 16px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+      <div>
+        <p style="margin:0;font-size:14px;font-weight:500">IA de contenido — sugerencias y propuestas</p>
+        <p style="margin:3px 0 0;font-size:12px;color:var(--color-text-secondary)">Pide nuevas keywords, propuestas de landing, ideas de blog o análisis de competencia</p>
+      </div>
+      <span class="badge bok"><i class="ti ti-circle-dot" style="font-size:11px" aria-hidden="true"></i> Activa</span>
+    </div>
+
+    <div id="iaBox" style="display:flex;flex-direction:column;gap:8px;min-height:60px;max-height:260px;overflow-y:auto;margin-bottom:12px">
+      <div class="chat-msg-g chat-ai-g">Hola Alejandro. Puedo sugerirte nuevas keywords por carrera, proponer títulos de blog basados en la Revista YAAN, analizar qué está haciendo la competencia o generar estructuras completas de landing page. ¿Qué necesitas?</div>
+    </div>
+
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">
+      <button onclick="askIA('Dame 5 keywords de alta oportunidad para Administración de Empresas en Guadalajara')" style="font-size:11px;padding:4px 10px">Keywords Administración GDL ↗</button>
+      <button onclick="askIA('Propón 3 títulos de blog sobre orientación vocacional que puedan posicionarse en Google México')" style="font-size:11px;padding:4px 10px">Blogs orientación vocacional ↗</button>
+      <button onclick="askIA('¿Qué palabras clave están usando otras universidades ejecutivas en SLP? Dame alternativas para YAAN')" style="font-size:11px;padding:4px 10px">Análisis competencia ↗</button>
+      <button onclick="askIA('Propón una estructura completa para la landing page de Pedagogía enfocada en maestros')" style="font-size:11px;padding:4px 10px">Landing Pedagogía ↗</button>
+    </div>
+
+    <div style="display:flex;gap:8px">
+      <input type="text" id="iaInput2" placeholder="Pide keywords, blogs, landings, análisis..." onkeydown="if(event.key==='Enter')askIA(document.getElementById('iaInput2').value);document.getElementById('iaInput2').value=''" />
+      <button onclick="askIA(document.getElementById('iaInput2').value);document.getElementById('iaInput2').value=''" style="padding:0 16px;background:#0D1B40;color:#C9A84C;border:none;border-radius:var(--border-radius-md);font-size:13px;cursor:pointer;font-family:var(--font-sans);font-weight:500">Generar</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+function st(id,btn){
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('on'));
+  document.getElementById('tab-'+id).classList.add('on');
+  btn.classList.add('on');
+}
+
+function logAction(containerId, msg, color){
+  const c=document.getElementById(containerId);
+  if(!c)return;
+  const d=document.createElement('div');
+  d.style.cssText=`padding:8px 12px;background:${color};border-radius:8px;font-size:12px;margin-bottom:6px`;
+  d.textContent=msg+' — '+new Date().toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'});
+  c.prepend(d);
+}
+
+function kwAction(id, action){
+  const el=document.getElementById(id);
+  if(!el)return;
+  if(action==='aprobada'){
+    el.style.borderColor='#1A7A4A';
+    el.style.background='#E9F7EF';
+    el.style.opacity='.5';
+    el.style.pointerEvents='none';
+    logAction('kwLog','✓ Keyword aprobada — se agrega al pipeline de generación','#E9F7EF');
+    addToQueue(id);
+  } else {
+    el.style.opacity='.3';
+    el.style.pointerEvents='none';
+    logAction('kwLog','✗ Keyword descartada esta semana','#FDEDEC');
+  }
+}
+
+function addToQueue(kwId){
+  const qc=document.getElementById('queueContainer');
+  if(!qc)return;
+  const d=document.createElement('div');
+  d.className='queue-item';
+  d.innerHTML=`<div style="width:8px;height:8px;border-radius:50%;background:#C9A84C;flex-shrink:0"></div>
+    <div style="flex:1"><p style="margin:0;font-size:13px">Nueva keyword aprobada — landing y blog por generar</p>
+    <p style="margin:2px 0 0;font-size:11px;color:var(--color-text-secondary)">Recién agregada a la cola</p></div>
+    <span class="badge bwarn">En cola</span>`;
+  qc.appendChild(d);
+}
+
+function approveLP(id, name){
+  const el=document.getElementById(id);
+  if(!el)return;
+  el.style.opacity='.5';el.style.pointerEvents='none';
+  logAction('lpLog','✓ Aprobada: Landing page — '+name+' · Generando ahora','#E9F7EF');
+}
+function rejectLP(id, name){
+  const el=document.getElementById(id);
+  if(!el)return;
+  el.style.opacity='.3';el.style.pointerEvents='none';
+  logAction('lpLog','✗ Rechazada: Landing page — '+name,'#FDEDEC');
+}
+function previewLP(name){ alert('Vista previa de '+name+'\n\nEn producción se abrirá la maqueta de la landing page generada con el H1, meta y estructura aprobados.'); }
+
+function approveBlog(id, name){
+  const el=document.getElementById(id);
+  if(!el)return;
+  el.style.opacity='.5';el.style.pointerEvents='none';
+  logAction('blogLog','✓ Aprobado: Blog — '+name+' · Redacción automatizada en proceso','#E9F7EF');
+}
+function rejectBlog(id){
+  const el=document.getElementById(id);
+  if(!el)return;
+  el.style.opacity='.3';el.style.pointerEvents='none';
+  logAction('blogLog','✗ Blog rechazado — la IA propondrá un título alternativo','#FDEDEC');
+}
+function editBlog(id, name){ alert('Editor de estructura para: '+name+'\n\nEn producción se abrirá el editor de outline donde Alejandro puede modificar H2s y backlinks antes de aprobar.'); }
+
+function approveAll(){
+  ['kw1','kw2','kw3','kw4','kw5'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el&&el.style.pointerEvents!=='none'){kwAction(id,'aprobada');}
+  });
+}
+
+function loadMore(){ alert('Cargando 7 keywords adicionales de la semana...\n\nEn producción se cargarán desde el análisis SEO automatizado.'); }
+
+const SYS_CONTENT=`Eres el asistente de SEO y contenido de Universidad YAAN. Generas propuestas concretas de keywords, estructuras de landing pages y títulos de blog en español para México.
+
+Contexto:
+- Universidad con RVOE SEP en San Luis Potosí y Ciudad Valles
+- Modelo ejecutivo: trabaja y estudia
+- 10 licenciaturas + maestrías + posgrados
+- Competencia: universidades locales sin modelo ejecutivo
+- Meta: posicionar por carrera + ciudad (SLP, Cd. Valles, Guadalajara, León)
+- Tono: informativo, directo, orientado a conversión
+
+Cuando propongas keywords incluye:
+- Keyword exacta (long-tail)
+- Volumen estimado mensual en México
+- Nivel de competencia (baja/media/alta)
+- Score de oportunidad /100
+- Por qué es buena para YAAN
+
+Cuando propongas blogs incluye:
+- Título H1 optimizado
+- 3-4 secciones H2
+- Keyword principal + secondary
+- Backlinks internos sugeridos
+
+Máx 250 palabras. Sé específico y accionable.`;
+
+const iaHist2=[];
+
+async function askIA(q){
+  if(!q||!q.trim())return;
+  const box=document.getElementById('iaBox');
+  const addMsg=(txt,cls)=>{
+    const d=document.createElement('div');
+    d.className='chat-msg-g '+cls;
+    d.style.whiteSpace='pre-wrap';
+    d.textContent=txt;
+    box.appendChild(d);
+    box.scrollTop=box.scrollHeight;
+    return d;
+  };
+  addMsg(q,'chat-user-g');
+  const typing=addMsg('Analizando...','chat-ai-g');
+  iaHist2.push({role:'user',content:q});
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:400,
+        system:SYS_CONTENT,messages:iaHist2.slice(-8)})
+    });
+    const d=await r.json();
+    const ans=d.content?.[0]?.text||'Error.';
+    typing.textContent=ans;
+    iaHist2.push({role:'assistant',content:ans});
+  }catch(e){typing.textContent='Error al conectar con la IA.';}
+  st('ia',document.querySelector('.tab-btn:nth-child(5)'));
+}
+</script>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Universidad YAAN — Dashboards</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#F2F4F8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px}
+  .logo-bar{display:flex;align-items:center;gap:14px;background:#fff;border-radius:12px;padding:14px 20px;margin-bottom:32px;box-shadow:0 1px 4px rgba(0,0,0,.08);border:1px solid #E5E7EB;width:100%;max-width:480px}
+  .logo-text p{margin:0}
+  .cards{display:flex;flex-direction:column;gap:16px;width:100%;max-width:480px}
+  .card{background:#fff;border:1px solid #E2E8F0;border-radius:12px;padding:20px 22px;box-shadow:0 1px 3px rgba(0,0,0,.06);text-decoration:none;display:flex;align-items:center;gap:16px;transition:box-shadow .15s,transform .15s}
+  .card:hover{box-shadow:0 4px 12px rgba(0,0,0,.12);transform:translateY(-2px)}
+  .card-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+  .card-body h2{font-size:15px;font-weight:700;color:#0D1B40;margin-bottom:3px}
+  .card-body p{font-size:12px;color:#6B7280;line-height:1.4}
+  .badge{margin-left:auto;background:#0D1B40;color:#C9A84C;padding:3px 10px;border-radius:99px;font-size:10px;font-weight:700;white-space:nowrap}
+  footer{margin-top:28px;font-size:11px;color:#9CA3AF}
+</style>
+</head>
+<body>
+
+<div class="logo-bar">
+  <svg width="46" height="46" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="white" stroke-width="3.5" stroke-linejoin="round">
+      <polygon points="50,50 90,10 90,50" fill="#E02844"/>
+      <polygon points="50,50 50,10 90,10" fill="#C06070"/>
+      <polygon points="50,50 90,50 90,90" fill="#E02844"/>
+      <polygon points="50,50 90,90 50,90" fill="#C06070"/>
+      <polygon points="50,50 10,90 10,50" fill="#E02844"/>
+      <polygon points="50,50 50,90 10,90" fill="#C06070"/>
+      <polygon points="50,50 10,10 50,10" fill="#E02844"/>
+      <polygon points="50,50 10,50 10,10" fill="#C06070"/>
+    </g>
+  </svg>
+  <div class="logo-text">
+    <p style="font-size:9px;font-weight:800;color:#0D1B40;letter-spacing:.18em">UNIVERSIDAD</p>
+    <p style="font-size:8px;color:#0D1B40">▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪</p>
+    <p style="font-size:24px;font-weight:900;color:#E02844;letter-spacing:.06em;line-height:1">Y.A.A.N</p>
+  </div>
+  <div style="margin-left:auto;text-align:right">
+    <p style="font-size:11px;font-weight:600;color:#0D1B40">Panel de Dashboards</p>
+    <p style="font-size:10px;color:#9CA3AF">Mayo 2026</p>
+  </div>
+</div>
+
+<div class="cards">
+  <a class="card" href="marketing.html">
+    <div class="card-icon" style="background:#EFF6FF">📊</div>
+    <div class="card-body">
+      <h2>Marketing — Operaciones</h2>
+      <p>Aprobaciones, correos, embajadores TikTok, tendencias y asistente IA</p>
+    </div>
+    <span class="badge">Alejandro</span>
+  </a>
+
+  <a class="card" href="contenido.html">
+    <div class="card-icon" style="background:#F0FDF4">✍️</div>
+    <div class="card-body">
+      <h2>Generación de Contenido — SEO</h2>
+      <p>Keywords, landing pages, blogs, cola de generación e IA sugerencias</p>
+    </div>
+    <span class="badge">Alejandro</span>
+  </a>
+
+  <a class="card" href="vendedores.html">
+    <div class="card-icon" style="background:#FFF7ED">🤝</div>
+    <div class="card-body">
+      <h2>Dashboard de Vendedores</h2>
+      <p>Pipeline Kommo, prospectos del día, seguimiento por segmento e IA vendedor</p>
+    </div>
+    <span class="badge">Asesores</span>
+  </a>
+</div>
+
+<footer>Universidad YAAN · RVOE SEP · Uso interno — Goodman Tech</footer>
+
+</body>
+</html>

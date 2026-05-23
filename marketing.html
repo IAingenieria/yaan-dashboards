@@ -1,0 +1,624 @@
+
+<h2 class="sr-only">Dashboard de marketing operacional para Alejandro — Universidad YAAN. Incluye aprobación de contenido, carruseles, captions, campañas de correo, embajadores TikTok, tendencias y asistente de IA.</h2>
+
+<style>
+:root{--color-background-primary:#FFFFFF;--color-background-secondary:#F4F6FA;--color-text-primary:#111827;--color-text-secondary:#6B7280;--color-border-secondary:#CBD5E1;--color-border-tertiary:#E5E7EB;--border-radius-md:8px;--border-radius-lg:12px;--font-sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+*{box-sizing:border-box}
+.tab-btn{padding:8px 16px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);cursor:pointer;font-size:13px;color:var(--color-text-secondary);font-family:var(--font-sans);transition:all .12s}
+.tab-btn.active{background:#0D1B40;color:#C9A84C;border-color:#0D1B40;font-weight:500}
+.tab-pane{display:none}.tab-pane.active{display:block}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px 16px;margin-bottom:10px}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:var(--border-radius-md);font-size:11px;font-weight:500}
+.badge-warn{background:#FEF9E7;color:#A0680A}
+.badge-ok{background:#E9F7EF;color:#1A7A4A}
+.badge-pending{background:#EEF2FA;color:#1E3D7A}
+.badge-danger{background:#FDEDEC;color:#C0392B}
+.badge-navy{background:#0D1B40;color:#C9A84C}
+.badge-viral{background:#4A1A6E;color:#DEB8F0}
+.approve-btn{padding:5px 14px;border:none;border-radius:var(--border-radius-md);background:#1A7A4A;color:#fff;cursor:pointer;font-size:12px;font-weight:500;font-family:var(--font-sans)}
+.reject-btn{padding:5px 14px;border:none;border-radius:var(--border-radius-md);background:#C0392B;color:#fff;cursor:pointer;font-size:12px;font-family:var(--font-sans)}
+.edit-btn{padding:5px 14px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-secondary);cursor:pointer;font-size:12px;font-family:var(--font-sans)}
+.score-bar{height:6px;border-radius:3px;background:var(--color-background-secondary);overflow:hidden;margin-top:4px}
+.score-fill{height:100%;border-radius:3px}
+.stat-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.stat-row:last-child{border-bottom:none}
+.chat-msg-m{padding:10px 14px;border-radius:var(--border-radius-lg);font-size:13px;line-height:1.5;max-width:90%}
+.chat-user-m{background:#0D1B40;color:#fff;align-self:flex-end}
+.chat-ai-m{background:var(--color-background-secondary);color:var(--color-text-primary);align-self:flex-start}
+.news-card{padding:10px 12px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);margin-bottom:8px;cursor:pointer;transition:border-color .15s}
+.news-card:hover{border-color:#C9A84C}
+.ambassador-card{padding:12px 14px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);margin-bottom:10px}
+.progress-pill{height:8px;border-radius:4px;background:var(--color-background-secondary);overflow:hidden}
+.progress-fill{height:100%;border-radius:4px;background:#C9A84C}
+input[type=text]{width:100%;padding:8px 12px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:13px;font-family:var(--font-sans);background:var(--color-background-primary);color:var(--color-text-primary)}
+</style>
+
+<div style="background:#F2F4F8;padding:16px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#111827">
+
+<div style="display:flex;align-items:center;gap:14px;background:#fff;border-radius:12px;padding:12px 18px;margin-bottom:18px;box-shadow:0 1px 4px rgba(0,0,0,.08);border:1px solid #E5E7EB">
+  <svg width="52" height="52" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g stroke="white" stroke-width="3.5" stroke-linejoin="round"><polygon points="50,50 90,10 90,50" fill="#E02844"/><polygon points="50,50 50,10 90,10" fill="#C06070"/><polygon points="50,50 90,50 90,90" fill="#E02844"/><polygon points="50,50 90,90 50,90" fill="#C06070"/><polygon points="50,50 10,90 10,50" fill="#E02844"/><polygon points="50,50 50,90 10,90" fill="#C06070"/><polygon points="50,50 10,10 50,10" fill="#E02844"/><polygon points="50,50 10,50 10,10" fill="#C06070"/></g></svg>
+  <div><p style="margin:0;font-size:10px;font-weight:800;color:#0D1B40;letter-spacing:.18em;line-height:1.4">UNIVERSIDAD</p><p style="margin:0;font-size:8px;color:#0D1B40">▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪</p><p style="margin:0;font-size:27px;font-weight:900;color:#E02844;letter-spacing:.06em;line-height:1.1">Y.A.A.N</p></div>
+  <div style="margin-left:10px;padding-left:14px;border-left:1px solid #E5E7EB;flex:1">
+    <p style="margin:0;font-size:14px;font-weight:700;color:#0D1B40">Dashboard de Marketing — Operaciones</p>
+    <p style="margin:2px 0 0;font-size:11px;color:#6B7280">Alejandro · Semana 21 · Mayo 2026</p>
+  </div>
+  <span style="background:#0D1B40;color:#C9A84C;padding:4px 12px;border-radius:99px;font-size:11px;font-weight:600;white-space:nowrap">RVOE SEP ✓</span>
+</div>
+
+<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.25rem;flex-wrap:wrap;gap:10px">
+  <div>
+    <h2 style="margin:0;font-size:18px;font-weight:500">Dashboard de Marketing — Alejandro</h2>
+    <p style="margin:3px 0 0;font-size:13px;color:var(--color-text-secondary)">Semana 21 · Universidad YAAN · Mayo 2026</p>
+  </div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <span class="badge badge-danger"><i class="ti ti-clock" style="font-size:11px" aria-hidden="true"></i> 8 pendientes de aprobación</span>
+    <span class="badge badge-ok"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i> 4 publicados hoy</span>
+    <span class="badge badge-navy"><i class="ti ti-brand-tiktok" style="font-size:11px" aria-hidden="true"></i> 4 embajadores activos</span>
+  </div>
+</div>
+
+<div style="background:#0D1B40;border-radius:var(--border-radius-lg);padding:14px 18px;margin-bottom:1.25rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+  <div>
+    <p style="margin:0;font-size:10px;color:#7090B0;letter-spacing:.05em;text-transform:uppercase;font-weight:500">Tema de la semana</p>
+    <p style="margin:4px 0 0;font-size:18px;font-weight:500;color:#C9A84C">Semana 3 — Maestros CONAFE y normalistas</p>
+    <p style="margin:3px 0 0;font-size:12px;color:#AABBD4">Certifícate con RVOE oficial SEP · Mejora tu categoría salarial</p>
+  </div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap">
+    <div style="text-align:center">
+      <p style="margin:0;font-size:20px;font-weight:500;color:#fff">12</p>
+      <p style="margin:0;font-size:10px;color:#7090B0">piezas planificadas</p>
+    </div>
+    <div style="text-align:center">
+      <p style="margin:0;font-size:20px;font-weight:500;color:#1A7A4A">5</p>
+      <p style="margin:0;font-size:10px;color:#7090B0">aprobadas</p>
+    </div>
+    <div style="text-align:center">
+      <p style="margin:0;font-size:20px;font-weight:500;color:#C9A84C">7</p>
+      <p style="margin:0;font-size:10px;color:#7090B0">pendientes</p>
+    </div>
+  </div>
+</div>
+
+<div style="display:flex;gap:8px;margin-bottom:1.25rem;flex-wrap:wrap">
+  <button class="tab-btn active" onclick="showTab('aprobaciones',this)"><i class="ti ti-check" aria-hidden="true"></i> Aprobaciones</button>
+  <button class="tab-btn" onclick="showTab('correos',this)"><i class="ti ti-mail" aria-hidden="true"></i> Correos</button>
+  <button class="tab-btn" onclick="showTab('embajadores',this)"><i class="ti ti-brand-tiktok" aria-hidden="true"></i> Embajadores</button>
+  <button class="tab-btn" onclick="showTab('tendencias',this)"><i class="ti ti-trending-up" aria-hidden="true"></i> Tendencias</button>
+  <button class="tab-btn" onclick="showTab('ia',this)"><i class="ti ti-brain" aria-hidden="true"></i> IA Asistente</button>
+</div>
+
+<!-- TAB: APROBACIONES -->
+<div id="tab-aprobaciones" class="tab-pane active">
+  <p style="margin:0 0 10px;font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.05em">Carruseles pendientes de revisión</p>
+
+  <div id="carouselList">
+  <div class="card" id="car1">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px">
+      <div style="flex:1;min-width:200px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span class="badge badge-warn">Carrusel</span>
+          <span class="badge badge-pending">Instagram · 4 slides</span>
+          <span class="badge badge-viral">Score 92/100</span>
+        </div>
+        <p style="margin:0;font-size:14px;font-weight:500;color:var(--color-text-primary)">¿Maestro CONAFE? Tu título universitario está más cerca de lo que crees</p>
+        <p style="margin:4px 0 0;font-size:12px;color:var(--color-text-secondary)">Slide 1: Hook impactante con dato de SEP · Slide 2: Modelo ejecutivo · Slide 3: Becas disponibles · Slide 4: CTA WhatsApp</p>
+        <div style="display:flex;align-items:center;gap:6px;margin-top:6px">
+          <span style="font-size:11px;color:var(--color-text-secondary)">Potencial de alcance:</span>
+          <div class="score-bar" style="width:120px"><div class="score-fill" style="width:92%;background:#1A7A4A"></div></div>
+          <span style="font-size:11px;font-weight:500;color:#1A7A4A">Muy alto</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:6px;align-items:center">
+        <button class="edit-btn" onclick="editItem('car1')">Editar</button>
+        <button class="reject-btn" onclick="rejectItem('car1')">Rechazar</button>
+        <button class="approve-btn" onclick="approveItem('car1','Carrusel CONAFE')">Aprobar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="car2">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px">
+      <div style="flex:1;min-width:200px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span class="badge badge-warn">Carrusel</span>
+          <span class="badge badge-pending">Facebook · 5 slides</span>
+          <span class="badge" style="background:#FEF0E7;color:#9A4A00">Score 78/100</span>
+        </div>
+        <p style="margin:0;font-size:14px;font-weight:500;color:var(--color-text-primary)">Estudia sin dejar de trabajar — Modelo ejecutivo YAAN para docentes</p>
+        <p style="margin:4px 0 0;font-size:12px;color:var(--color-text-secondary)">Slide 1: Problema · Slide 2-4: Beneficios modalidad ejecutiva · Slide 5: Precios y becas</p>
+        <div style="display:flex;align-items:center;gap:6px;margin-top:6px">
+          <span style="font-size:11px;color:var(--color-text-secondary)">Potencial de alcance:</span>
+          <div class="score-bar" style="width:120px"><div class="score-fill" style="width:78%;background:#C9A84C"></div></div>
+          <span style="font-size:11px;font-weight:500;color:#C9A84C">Alto</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:6px;align-items:center">
+        <button class="edit-btn" onclick="editItem('car2')">Editar</button>
+        <button class="reject-btn" onclick="rejectItem('car2')">Rechazar</button>
+        <button class="approve-btn" onclick="approveItem('car2','Carrusel Docentes')">Aprobar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="car3">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px">
+      <div style="flex:1;min-width:200px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span class="badge badge-warn">Carrusel</span>
+          <span class="badge badge-pending">TikTok · 3 slides</span>
+          <span class="badge" style="background:#FEF0E7;color:#9A4A00">Score 71/100</span>
+        </div>
+        <p style="margin:0;font-size:14px;font-weight:500;color:var(--color-text-primary)">5 razones por las que un maestro normalista necesita su licenciatura en 2026</p>
+        <p style="margin:4px 0 0;font-size:12px;color:var(--color-text-secondary)">Hook + datos SEP + CTA — formato vertical para TikTok</p>
+        <div style="display:flex;align-items:center;gap:6px;margin-top:6px">
+          <span style="font-size:11px;color:var(--color-text-secondary)">Potencial de alcance:</span>
+          <div class="score-bar" style="width:120px"><div class="score-fill" style="width:71%;background:#C9A84C"></div></div>
+          <span style="font-size:11px;font-weight:500;color:#C9A84C">Bueno</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:6px;align-items:center">
+        <button class="edit-btn" onclick="editItem('car3')">Editar</button>
+        <button class="reject-btn" onclick="rejectItem('car3')">Rechazar</button>
+        <button class="approve-btn" onclick="approveItem('car3','TikTok Normalistas')">Aprobar</button>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <p style="margin:1rem 0 10px;font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.05em">Captions pendientes de aprobación</p>
+  <div id="captionList">
+  <div id="captionItems">
+  <div class="card" style="padding:10px 14px" id="cap1">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
+          <span class="badge badge-pending">Instagram</span>
+          <span class="badge badge-viral">Score 88/100</span>
+        </div>
+        <p style="margin:0;font-size:13px;color:var(--color-text-primary)"><strong>Hook:</strong> "¿Sabes cuánto gana un maestro con licenciatura vs uno sin ella? La diferencia es de $4,200 al mes..."</p>
+        <p style="margin:3px 0 0;font-size:11px;color:var(--color-text-secondary)">15 hashtags · CTA WhatsApp · 847 caracteres</p>
+      </div>
+      <div style="display:flex;gap:6px">
+        <button class="reject-btn" style="font-size:11px;padding:4px 10px" onclick="rejectItem('cap1')">✗</button>
+        <button class="approve-btn" style="font-size:11px;padding:4px 10px" onclick="approveItem('cap1','Caption IG maestros')">✓ Aprobar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="padding:10px 14px" id="cap2">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
+          <span class="badge badge-pending">Facebook</span>
+          <span class="badge" style="background:#FEF0E7;color:#9A4A00">Score 74/100</span>
+        </div>
+        <p style="margin:0;font-size:13px;color:var(--color-text-primary)"><strong>Hook:</strong> "La SEP lo confirma: los maestros con licenciatura acceden a plazas mejor pagadas..."</p>
+        <p style="margin:3px 0 0;font-size:11px;color:var(--color-text-secondary)">10 hashtags · Tono informativo adultos · 623 caracteres</p>
+      </div>
+      <div style="display:flex;gap:6px">
+        <button class="reject-btn" style="font-size:11px;padding:4px 10px" onclick="rejectItem('cap2')">✗</button>
+        <button class="approve-btn" style="font-size:11px;padding:4px 10px" onclick="approveItem('cap2','Caption FB datos SEP')">✓ Aprobar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="padding:10px 14px" id="cap3">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
+          <span class="badge badge-pending">TikTok</span>
+          <span class="badge badge-viral">Score 91/100</span>
+        </div>
+        <p style="margin:0;font-size:13px;color:var(--color-text-primary)"><strong>Hook:</strong> "Llevo 8 años de maestro y nadie me había dicho esto sobre mi salario..."</p>
+        <p style="margin:3px 0 0;font-size:11px;color:var(--color-text-secondary)">Guión 45 seg · Formato storytelling · Alta viralidad</p>
+      </div>
+      <div style="display:flex;gap:6px">
+        <button class="reject-btn" style="font-size:11px;padding:4px 10px" onclick="rejectItem('cap3')">✗</button>
+        <button class="approve-btn" style="font-size:11px;padding:4px 10px" onclick="approveItem('cap3','TikTok hook maestros')">✓ Aprobar</button>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+
+  <div id="approvalLog" style="margin-top:14px"></div>
+</div>
+
+<!-- TAB: CORREOS -->
+<div id="tab-correos" class="tab-pane">
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:10px;margin-bottom:14px">
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px">
+      <p style="margin:0;font-size:11px;color:var(--color-text-secondary)">Cuentas activas</p>
+      <p style="margin:4px 0 0;font-size:22px;font-weight:500">10</p>
+      <p style="margin:2px 0 0;font-size:11px;color:var(--color-text-secondary)">IONOS · calentadas</p>
+    </div>
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px">
+      <p style="margin:0;font-size:11px;color:var(--color-text-secondary)">Enviados hoy</p>
+      <p style="margin:4px 0 0;font-size:22px;font-weight:500">350</p>
+      <p style="margin:2px 0 0;font-size:11px;color:var(--color-text-secondary)">35/cuenta/día</p>
+    </div>
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px">
+      <p style="margin:0;font-size:11px;color:var(--color-text-secondary)">Tasa de apertura</p>
+      <p style="margin:4px 0 0;font-size:22px;font-weight:500;color:#1A7A4A">36%</p>
+      <p style="margin:2px 0 0;font-size:11px;color:var(--color-text-secondary)">Meta: 30%</p>
+    </div>
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px">
+      <p style="margin:0;font-size:11px;color:var(--color-text-secondary)">Respuestas</p>
+      <p style="margin:4px 0 0;font-size:22px;font-weight:500;color:#C9A84C">4.2%</p>
+      <p style="margin:2px 0 0;font-size:11px;color:var(--color-text-secondary)">147 respuestas</p>
+    </div>
+  </div>
+
+  <p style="margin:0 0 10px;font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.05em">Secuencias activas</p>
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <div>
+        <p style="margin:0;font-size:14px;font-weight:500">Secuencia — Maquiladoras Cd. Valles</p>
+        <p style="margin:3px 0 0;font-size:12px;color:var(--color-text-secondary)">Correo 2 de 4 · Enviados a 1,240 empresas del corredor industrial</p>
+      </div>
+      <span class="badge badge-ok">Activa</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px">
+      <div style="padding:8px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);text-align:center">
+        <p style="margin:0;font-size:10px;color:var(--color-text-secondary)">Email 1</p>
+        <p style="margin:2px 0 0;font-size:12px;font-weight:500;color:#1A7A4A">Enviado ✓</p>
+        <p style="margin:1px 0 0;font-size:10px;color:var(--color-text-secondary)">Apertura 41%</p>
+      </div>
+      <div style="padding:8px;background:#0D1B40;border-radius:var(--border-radius-md);text-align:center">
+        <p style="margin:0;font-size:10px;color:#7090B0">Email 2</p>
+        <p style="margin:2px 0 0;font-size:12px;font-weight:500;color:#C9A84C">Enviando →</p>
+        <p style="margin:1px 0 0;font-size:10px;color:#7090B0">En proceso</p>
+      </div>
+      <div style="padding:8px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);text-align:center;opacity:.5">
+        <p style="margin:0;font-size:10px;color:var(--color-text-secondary)">Email 3</p>
+        <p style="margin:2px 0 0;font-size:12px;font-weight:500">Pendiente</p>
+        <p style="margin:1px 0 0;font-size:10px;color:var(--color-text-secondary)">Día 7</p>
+      </div>
+      <div style="padding:8px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);text-align:center;opacity:.5">
+        <p style="margin:0;font-size:10px;color:var(--color-text-secondary)">Email 4</p>
+        <p style="margin:2px 0 0;font-size:12px;font-weight:500">Pendiente</p>
+        <p style="margin:1px 0 0;font-size:10px;color:var(--color-text-secondary)">Día 14</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <div>
+        <p style="margin:0;font-size:14px;font-weight:500">Secuencia — Escuelas secundarias SLP</p>
+        <p style="margin:3px 0 0;font-size:12px;color:var(--color-text-secondary)">Correo 1 de 4 · 847 directores de secundaria</p>
+      </div>
+      <span class="badge badge-warn">Iniciando</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px">
+      <div style="padding:8px;background:#0D1B40;border-radius:var(--border-radius-md);text-align:center">
+        <p style="margin:0;font-size:10px;color:#7090B0">Email 1</p>
+        <p style="margin:2px 0 0;font-size:12px;font-weight:500;color:#C9A84C">Enviando →</p>
+        <p style="margin:1px 0 0;font-size:10px;color:#7090B0">En proceso</p>
+      </div>
+      <div style="padding:8px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);text-align:center;opacity:.4">
+        <p style="margin:0;font-size:10px;color:var(--color-text-secondary)">Email 2-4</p>
+        <p style="margin:2px 0 0;font-size:12px;font-weight:500">Pendientes</p>
+      </div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);opacity:.3"></div>
+      <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);opacity:.3"></div>
+    </div>
+  </div>
+
+  <p style="margin:1rem 0 10px;font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.05em">Temáticas de correos próximos</p>
+  <div class="card" style="padding:10px 14px">
+    <div class="stat-row"><span style="font-size:13px">Semana 22 — Jóvenes rurales y modalidad en línea</span><span class="badge badge-pending">Planeado</span></div>
+    <div class="stat-row"><span style="font-size:13px">Semana 23 — Adultos con carrera trunca · becas</span><span class="badge badge-pending">Planeado</span></div>
+    <div class="stat-row"><span style="font-size:13px">Semana 24 — Maquiladoras · convenio empresarial</span><span class="badge" style="background:#FEF9E7;color:#A0680A">Borrador</span></div>
+    <div class="stat-row"><span style="font-size:13px">Semana 25 — Inscripciones abiertas · urgencia</span><span class="badge" style="background:#FDEDEC;color:#C0392B">Sin redactar</span></div>
+  </div>
+</div>
+
+<!-- TAB: EMBAJADORES -->
+<div id="tab-embajadores" class="tab-pane">
+  <p style="margin:0 0 12px;font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.05em">Acuerdos y estadísticas de embajadores TikTok</p>
+
+  <div id="ambassadors">
+  <div class="ambassador-card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px">
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <div style="width:44px;height:44px;border-radius:50%;background:#0D1B40;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:500;color:#C9A84C;flex-shrink:0">MG</div>
+        <div>
+          <p style="margin:0;font-size:14px;font-weight:500">@maestro_guadalupe</p>
+          <p style="margin:2px 0 0;font-size:12px;color:var(--color-text-secondary)">Maestro normalista SLP · 42,800 seguidores</p>
+          <div style="display:flex;gap:6px;margin-top:4px;flex-wrap:wrap">
+            <span class="badge badge-ok">Contrato activo</span>
+            <span class="badge badge-navy">Nicho: educación</span>
+            <span class="badge badge-viral">ER 8.4%</span>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:right">
+        <p style="margin:0;font-size:11px;color:var(--color-text-secondary)">Contenidos acordados</p>
+        <p style="margin:2px 0;font-size:20px;font-weight:500;color:#1A7A4A">3 / 4</p>
+        <div class="progress-pill" style="width:100px;margin-left:auto"><div class="progress-fill" style="width:75%"></div></div>
+      </div>
+    </div>
+    <div style="margin-top:10px;padding-top:10px;border-top:0.5px solid var(--color-border-tertiary)">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:8px">
+        <div style="text-align:center;padding:6px;background:var(--color-background-secondary);border-radius:var(--border-radius-md)">
+          <p style="margin:0;font-size:16px;font-weight:500">127K</p><p style="margin:0;font-size:10px;color:var(--color-text-secondary)">Views promedio</p>
+        </div>
+        <div style="text-align:center;padding:6px;background:var(--color-background-secondary);border-radius:var(--border-radius-md)">
+          <p style="margin:0;font-size:16px;font-weight:500;color:#1A7A4A">34</p><p style="margin:0;font-size:10px;color:var(--color-text-secondary)">Leads generados</p>
+        </div>
+        <div style="text-align:center;padding:6px;background:var(--color-background-secondary);border-radius:var(--border-radius-md)">
+          <p style="margin:0;font-size:16px;font-weight:500;color:#C9A84C">$800</p><p style="margin:0;font-size:10px;color:var(--color-text-secondary)">Pago/video MXN</p>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <p style="margin:0;font-size:12px;color:var(--color-text-secondary)">Próximo contenido: <strong>Video sobre RVOE</strong> · Entrega: 26 mayo</p>
+        <span class="badge badge-warn">En producción</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="ambassador-card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px">
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <div style="width:44px;height:44px;border-radius:50%;background:#4A1A6E;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:500;color:#DEB8F0;flex-shrink:0">LR</div>
+        <div>
+          <p style="margin:0;font-size:14px;font-weight:500">@licenciada_rosa</p>
+          <p style="margin:2px 0 0;font-size:12px;color:var(--color-text-secondary)">Egresada YAAN Derecho · 18,400 seguidores</p>
+          <div style="display:flex;gap:6px;margin-top:4px;flex-wrap:wrap">
+            <span class="badge badge-ok">Contrato activo</span>
+            <span class="badge badge-navy">Testimonio egresada</span>
+            <span class="badge badge-viral">ER 12.1%</span>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:right">
+        <p style="margin:0;font-size:11px;color:var(--color-text-secondary)">Contenidos acordados</p>
+        <p style="margin:2px 0;font-size:20px;font-weight:500;color:#C9A84C">1 / 3</p>
+        <div class="progress-pill" style="width:100px;margin-left:auto"><div class="progress-fill" style="width:33%"></div></div>
+      </div>
+    </div>
+    <div style="margin-top:10px;padding-top:10px;border-top:0.5px solid var(--color-border-tertiary)">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:8px">
+        <div style="text-align:center;padding:6px;background:var(--color-background-secondary);border-radius:var(--border-radius-md)">
+          <p style="margin:0;font-size:16px;font-weight:500">43K</p><p style="margin:0;font-size:10px;color:var(--color-text-secondary)">Views promedio</p>
+        </div>
+        <div style="text-align:center;padding:6px;background:var(--color-background-secondary);border-radius:var(--border-radius-md)">
+          <p style="margin:0;font-size:16px;font-weight:500;color:#1A7A4A">18</p><p style="margin:0;font-size:10px;color:var(--color-text-secondary)">Leads generados</p>
+        </div>
+        <div style="text-align:center;padding:6px;background:var(--color-background-secondary);border-radius:var(--border-radius-md)">
+          <p style="margin:0;font-size:16px;font-weight:500;color:#C9A84C">$600</p><p style="margin:0;font-size:10px;color:var(--color-text-secondary)">Pago/video MXN</p>
+        </div>
+      </div>
+      <div style="background:#FDEDEC;border-radius:var(--border-radius-md);padding:8px 12px">
+        <p style="margin:0;font-size:12px;color:#C0392B"><i class="ti ti-alert-triangle" style="font-size:12px" aria-hidden="true"></i> Video 2 lleva 4 días de retraso — pendiente de entrega por la embajadora</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="ambassador-card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px">
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <div style="width:44px;height:44px;border-radius:50%;background:#0A6E6E;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:500;color:#9FE1CB;flex-shrink:0">CA</div>
+        <div>
+          <p style="margin:0;font-size:14px;font-weight:500">@carlos.admin.yaan</p>
+          <p style="margin:2px 0 0;font-size:12px;color:var(--color-text-secondary)">Alumno activo Administración · 8,200 seguidores</p>
+          <div style="display:flex;gap:6px;margin-top:4px;flex-wrap:wrap">
+            <span class="badge badge-warn">En negociación</span>
+            <span class="badge badge-navy">Día a día universitario</span>
+            <span class="badge badge-viral">ER 15.7%</span>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:right">
+        <p style="margin:0;font-size:11px;color:var(--color-text-secondary)">Acuerdo</p>
+        <p style="margin:2px 0;font-size:13px;font-weight:500;color:#C9A84C">Pendiente firma</p>
+        <button onclick="alert('Contrato enviado a revisión')" style="margin-top:4px;padding:4px 10px;border:0.5px solid #C9A84C;border-radius:var(--border-radius-md);background:transparent;color:#C9A84C;font-size:11px;cursor:pointer">Ver contrato</button>
+      </div>
+    </div>
+  </div>
+
+  <button onclick="addAmbassador()" style="width:100%;padding:10px;border:0.5px dashed var(--color-border-secondary);border-radius:var(--border-radius-lg);background:transparent;color:var(--color-text-secondary);cursor:pointer;font-size:13px;font-family:var(--font-sans);margin-top:4px">
+    <i class="ti ti-plus" aria-hidden="true"></i> Agregar embajador
+  </button>
+  </div>
+</div>
+
+<!-- TAB: TENDENCIAS -->
+<div id="tab-tendencias" class="tab-pane">
+
+  <div style="background:#FDEDEC;border:0.5px solid #F5C4C4;border-radius:var(--border-radius-lg);padding:12px 14px;margin-bottom:14px">
+    <p style="margin:0 0 4px;font-size:12px;font-weight:500;color:#C0392B"><i class="ti ti-bolt" style="font-size:13px" aria-hidden="true"></i> Alerta de oportunidad viral</p>
+    <p style="margin:0;font-size:13px;color:var(--color-text-primary)"><strong>"Reforma al sistema normalista 2026"</strong> está tendencia en Twitter/X y Facebook en SLP. Conecta directamente con tu semana de maestros CONAFE. <strong>Ventana óptima: próximas 48 horas.</strong></p>
+    <button onclick="quickQ2('Genera 3 ideas de contenido sobre la reforma normalista 2026 para YAAN')" style="margin-top:8px;padding:5px 12px;border:none;border-radius:var(--border-radius-md);background:#C0392B;color:#fff;font-size:12px;cursor:pointer;font-family:var(--font-sans)">Generar contenido ahora ↗</button>
+  </div>
+
+  <p style="margin:0 0 10px;font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.05em">Temas de relevancia en educación — México</p>
+
+  <div class="news-card" onclick="quickQ2('¿Cómo puede YAAN aprovechar la nueva ley de educación superior para captar más alumnos?')">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start">
+      <div>
+        <div style="display:flex;gap:6px;align-items:center;margin-bottom:4px"><span class="badge badge-danger">Tendencia</span><span class="badge badge-navy">Educación</span></div>
+        <p style="margin:0;font-size:13px;font-weight:500;color:var(--color-text-primary)">Nueva ley de educación superior — reconocimiento de RVOE en LATAM</p>
+        <p style="margin:3px 0 0;font-size:12px;color:var(--color-text-secondary)">Oportunidad: contenido sobre validez internacional del título YAAN · Aplica para Colombia, Perú</p>
+      </div>
+      <span style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap;margin-left:8px">Hace 2h</span>
+    </div>
+    <p style="margin:6px 0 0;font-size:11px;color:#1E3D7A">Haz clic para generar ideas de contenido con IA ↗</p>
+  </div>
+
+  <div class="news-card" onclick="quickQ2('Crea un carrusel para YAAN sobre los beneficios económicos de titularse para un trabajador de maquiladora')">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start">
+      <div>
+        <div style="display:flex;gap:6px;align-items:center;margin-bottom:4px"><span class="badge badge-warn">Oportunidad</span><span class="badge badge-navy">B2B</span></div>
+        <p style="margin:0;font-size:13px;font-weight:500;color:var(--color-text-primary)">Expansión de parques industriales en SLP — 3 empresas nuevas llegan este trimestre</p>
+        <p style="margin:3px 0 0;font-size:12px;color:var(--color-text-secondary)">Prospectos: trabajadores de nuevas maquiladoras buscando titularse · Segmento caliente</p>
+      </div>
+      <span style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap;margin-left:8px">Hace 5h</span>
+    </div>
+    <p style="margin:6px 0 0;font-size:11px;color:#1E3D7A">Haz clic para generar ideas de contenido con IA ↗</p>
+  </div>
+
+  <div class="news-card" onclick="quickQ2('Dame ideas de contenido para TikTok sobre orientación vocacional para jóvenes de preparatoria en zonas rurales')">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start">
+      <div>
+        <div style="display:flex;gap:6px;align-items:center;margin-bottom:4px"><span class="badge badge-ok">Evergreen</span><span class="badge badge-navy">Jóvenes</span></div>
+        <p style="margin:0;font-size:13px;font-weight:500;color:var(--color-text-primary)">#OrientaciónVocacional sigue siendo top 10 en TikTok educativo en México</p>
+        <p style="margin:3px 0 0;font-size:12px;color:var(--color-text-secondary)">El test vocacional gratuito de YAAN es el gancho perfecto para este contenido · Ciclo permanente</p>
+      </div>
+      <span style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap;margin-left:8px">Permanente</span>
+    </div>
+    <p style="margin:6px 0 0;font-size:11px;color:#1E3D7A">Haz clic para generar ideas de contenido con IA ↗</p>
+  </div>
+
+  <div class="news-card" onclick="quickQ2('Crea contenido para YAAN aprovechando el debate sobre reforma educativa y maestros en México')">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start">
+      <div>
+        <div style="display:flex;gap:6px;align-items:center;margin-bottom:4px"><span class="badge badge-danger">Urgente</span><span class="badge badge-navy">Política</span></div>
+        <p style="margin:0;font-size:13px;font-weight:500;color:var(--color-text-primary)">Debate en Congreso sobre reconocimiento de estudios de maestros interinos</p>
+        <p style="margin:3px 0 0;font-size:12px;color:var(--color-text-secondary)">Aplica directamente al segmento CONAFE de esta semana · Alta sensibilidad en redes</p>
+      </div>
+      <span style="font-size:11px;color:var(--color-text-secondary);white-space:nowrap;margin-left:8px">Hace 1h</span>
+    </div>
+    <p style="margin:6px 0 0;font-size:11px;color:#1E3D7A">Haz clic para generar ideas de contenido con IA ↗</p>
+  </div>
+</div>
+
+<!-- TAB: IA ASISTENTE -->
+<div id="tab-ia" class="tab-pane">
+  <div class="card" style="border:2px solid #C9A84C">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+      <div>
+        <p style="margin:0;font-size:14px;font-weight:500">Asistente de contenido — Universidad YAAN</p>
+        <p style="margin:3px 0 0;font-size:12px;color:var(--color-text-secondary)">Genera ideas, captions, hooks y estrategias de contenido en segundos</p>
+      </div>
+      <span class="badge badge-ok"><i class="ti ti-circle-dot" style="font-size:11px" aria-hidden="true"></i> IA activa</span>
+    </div>
+
+    <div id="iaChat" style="display:flex;flex-direction:column;gap:8px;min-height:60px;max-height:280px;overflow-y:auto;margin-bottom:12px">
+      <div class="chat-msg-m chat-ai-m">Hola Alejandro. Soy tu asistente de marketing. Puedo generar captions, hooks, ideas de carrusel, guiones de TikTok y estrategias de contenido para YAAN. ¿Por dónde empezamos?</div>
+    </div>
+
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">
+      <button onclick="quickQ2('Dame 5 hooks virales para TikTok sobre maestros CONAFE que quieren titularse')" style="font-size:11px;padding:4px 10px">Hooks TikTok CONAFE ↗</button>
+      <button onclick="quickQ2('Crea el guión de un carrusel de Instagram para adultos trabajadores que quieren estudiar en YAAN')" style="font-size:11px;padding:4px 10px">Carrusel adultos ↗</button>
+      <button onclick="quickQ2('Dame ideas de contenido para la próxima semana con tema jóvenes rurales y educación en línea')" style="font-size:11px;padding:4px 10px">Plan semana 22 ↗</button>
+      <button onclick="quickQ2('Escribe un caption para Facebook sobre becas en YAAN dirigido a padres de familia')" style="font-size:11px;padding:4px 10px">Caption becas FB ↗</button>
+    </div>
+
+    <div style="display:flex;gap:8px">
+      <input type="text" id="iaInput" placeholder="Pídeme un hook, caption, carrusel, guión..." onkeydown="if(event.key==='Enter')sendIA()" />
+      <button onclick="sendIA()" style="padding:0 16px;background:#0D1B40;color:#fff;border:none;border-radius:var(--border-radius-md);font-size:13px;cursor:pointer;font-family:var(--font-sans)">Generar</button>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+function showTab(id,btn){
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function approveItem(id,label){
+  const el=document.getElementById(id);
+  if(!el)return;
+  el.style.opacity='.4';
+  el.style.pointerEvents='none';
+  const log=document.getElementById('approvalLog');
+  if(log){
+    const d=document.createElement('div');
+    d.style.cssText='padding:8px 12px;background:#E9F7EF;border-radius:8px;font-size:12px;color:#1A7A4A;margin-bottom:6px';
+    d.textContent='✓ Aprobado: '+label+' — '+new Date().toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'});
+    log.prepend(d);
+  }
+}
+
+function rejectItem(id){
+  const el=document.getElementById(id);
+  if(!el)return;
+  el.style.background='#FDEDEC';
+  setTimeout(()=>{el.style.opacity='.3';el.style.pointerEvents='none';},400);
+}
+
+function editItem(id){
+  alert('Abriendo editor de contenido para '+id+' — en producción se abrirá el editor de carruseles integrado.');
+}
+
+function addAmbassador(){
+  alert('Formulario de nuevo embajador — en producción se abrirá el formulario de acuerdo con firma digital.');
+}
+
+const MARKETING_SYS=`Eres el asistente de contenido de marketing de Universidad YAAN. Generas contenido estratégico en español para las siguientes plataformas: Instagram, Facebook, TikTok, WhatsApp.
+
+Contexto:
+- Tema actual: Semana 3 — Maestros CONAFE y normalistas certificándose con RVOE SEP
+- Universidad en SLP con modelo ejecutivo (trabaja y estudia)
+- Segmentos: maestros normalistas, trabajadores de maquiladoras, jóvenes rurales, adultos
+- RVOE oficial SEP — validez nacional
+- WhatsApp: 444 552 9904 · Web: universidadyaan.mx
+- Becas disponibles todo el año
+- Tono: cálido, motivacional, sin frases corporativas
+
+Cuando generes captions incluye:
+- Hook poderoso primera línea
+- Máx 5-8 hashtags relevantes
+- CTA claro (WhatsApp o link)
+
+Cuando generes hooks TikTok:
+- Primera línea para detener el scroll
+- Máx 15 palabras
+- Orientados al pain point del segmento
+
+Sé conciso y directo. Máx 200 palabras por respuesta.`;
+
+const iaHist=[];
+
+async function callClaude(msg,sys){
+  const hist=sys===MARKETING_SYS?iaHist:[];
+  hist.push({role:'user',content:msg});
+  const r=await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:400,system:sys,messages:hist.slice(-8)})
+  });
+  const d=await r.json();
+  const ans=d.content?.[0]?.text||'Error de conexión.';
+  hist.push({role:'assistant',content:ans});
+  return ans;
+}
+
+function addIAMsg(txt,cls){
+  const box=document.getElementById('iaChat');
+  const div=document.createElement('div');
+  div.className='chat-msg-m '+cls;
+  div.style.whiteSpace='pre-wrap';
+  div.textContent=txt;
+  box.appendChild(div);
+  box.scrollTop=box.scrollHeight;
+  return div;
+}
+
+async function sendIA(){
+  const inp=document.getElementById('iaInput');
+  const q=inp.value.trim();if(!q)return;
+  inp.value='';
+  addIAMsg(q,'chat-user-m');
+  const typing=addIAMsg('Generando...','chat-ai-m');
+  try{
+    const ans=await callClaude(q,MARKETING_SYS);
+    typing.textContent=ans;
+  }catch(e){typing.textContent='Error al conectar.';}
+}
+
+async function quickQ2(q){
+  showTab('ia',document.querySelector('.tab-btn:nth-child(5)'));
+  const inp=document.getElementById('iaInput');
+  inp.value=q;
+  sendIA();
+}
+</script>

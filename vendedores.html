@@ -1,0 +1,795 @@
+<style>
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+*{box-sizing:border-box;margin:0;padding:0}
+#yaan-dash{background:#F2F4F8;padding:16px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#111827;min-height:100vh}
+#yaan-dash p,#yaan-dash span,#yaan-dash button,#yaan-dash input,#yaan-dash div{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif}
+
+/* TABS */
+.tab-btn{padding:8px 16px;border:1.5px solid #CBD5E1;border-radius:8px;background:#fff;cursor:pointer;font-size:13px;color:#475569;font-weight:500;transition:all .15s}
+.tab-btn.on{background:#0D1B40;color:#C9A84C;border-color:#0D1B40}
+.tab-pane{display:none}.tab-pane.on{display:block}
+
+/* CARDS */
+.card{background:#fff;border:1px solid #E2E8F0;border-radius:12px;padding:14px 16px;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.prospect-card{background:#fff;border:1px solid #E2E8F0;border-radius:12px;padding:14px 16px;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,.06);transition:box-shadow .15s}
+.prospect-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.prospect-card.urgente{border-left:4px solid #DC2626}
+.prospect-card.media{border-left:4px solid #D97706}
+.prospect-card.baja{border-left:4px solid #10B981}
+
+/* BADGES */
+.badge{display:inline-flex;align-items:center;gap:3px;padding:3px 9px;border-radius:99px;font-size:11px;font-weight:600;white-space:nowrap}
+.b-nuevo{background:#DBEAFE;color:#1D4ED8}
+.b-contactado{background:#FEF3C7;color:#92400E}
+.b-calificado{background:#D1FAE5;color:#065F46}
+.b-cita{background:#FEE2E2;color:#991B1B}
+.b-inscrito{background:#D1FAE5;color:#065F46}
+.b-perd{background:#F1F5F9;color:#64748B}
+.b-urgente{background:#FEE2E2;color:#DC2626}
+.b-warn{background:#FEF3C7;color:#B45309}
+.b-ok{background:#D1FAE5;color:#059669}
+
+/* SEGMENTOS */
+.seg-bach{background:#DBEAFE;color:#1E40AF}
+.seg-trunca{background:#EDE9FE;color:#5B21B6}
+.seg-conafe{background:#D1FAE5;color:#065F46}
+.seg-maqui{background:#FFEDD5;color:#C2410C}
+.seg-b2b{background:#F3E8FF;color:#6D28D9}
+.seg-prepa{background:#CCFBF1;color:#0F766E}
+.seg-ref{background:#FEF9C3;color:#713F12}
+
+/* CANALES */
+.ch-wa{color:#16A34A;font-weight:600;font-size:11px}
+.ch-fb{color:#2563EB;font-weight:600;font-size:11px}
+.ch-ig{color:#DB2777;font-weight:600;font-size:11px}
+.ch-email{color:#7C3AED;font-weight:600;font-size:11px}
+.ch-call{color:#475569;font-weight:600;font-size:11px}
+
+/* BOTONES */
+.btn{padding:6px 13px;border:none;border-radius:8px;cursor:pointer;font-size:12px;font-weight:600;transition:opacity .1s;white-space:nowrap}
+.btn:hover{opacity:.85}
+.btn-call{background:#059669;color:#fff}
+.btn-wa{background:#16A34A;color:#fff}
+.btn-cal{background:#1D4ED8;color:#fff}
+.btn-inscrito{background:#C9A84C;color:#0D1B40}
+.btn-lost{background:#F1F5F9;border:1px solid #CBD5E1;color:#64748B;padding:5px 12px;font-size:11px}
+.btn-sm{padding:5px 11px;font-size:11px}
+.btn-navy{background:#0D1B40;color:#C9A84C}
+
+/* IA BOX */
+.ia-box{background:#EFF6FF;border-left:4px solid #2563EB;border-radius:0 8px 8px 0;padding:10px 12px;margin:10px 0 10px}
+
+/* AVATAR */
+.avatar{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0}
+
+/* CITAS HOY (navy card) */
+.cita-card{background:#0D1B40;border-radius:12px;padding:14px 16px;margin-bottom:8px;border-left:4px solid #C9A84C}
+
+/* KANBAN */
+.kanban-col{background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;padding:10px;min-height:100px}
+.kanban-mini{background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:8px 10px;margin-bottom:6px;cursor:pointer;transition:border-color .12s;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.kanban-mini:hover{border-color:#C9A84C}
+
+/* STAT BOX */
+.stat-box{background:#fff;border:1px solid #E2E8F0;border-radius:10px;padding:12px 14px;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+
+/* URGENTE HOY */
+.hoy-urgente{background:#FFF7F7;border:1px solid #FECACA;border-radius:10px;padding:10px 14px;margin-bottom:8px}
+
+/* FILTROS */
+.filter-btn{padding:5px 13px;border:1.5px solid #CBD5E1;border-radius:99px;background:#fff;cursor:pointer;font-size:12px;color:#475569;font-weight:500}
+.filter-btn.sel{background:#0D1B40;color:#C9A84C;border-color:#0D1B40}
+
+/* CHAT IA */
+.chat-msg{padding:10px 14px;border-radius:12px;font-size:13px;line-height:1.6;max-width:90%;white-space:pre-wrap}
+.chat-user{background:#0D1B40;color:#fff;align-self:flex-end}
+.chat-ai{background:#F1F5F9;color:#111827;align-self:flex-start;border:1px solid #E2E8F0}
+input[type=text]{width:100%;padding:9px 13px;border:1.5px solid #CBD5E1;border-radius:8px;font-size:13px;background:#fff;color:#111827}
+input[type=text]:focus{outline:none;border-color:#2563EB}
+</style>
+
+<h2 class="sr-only">Panel de ventas para asesores — Universidad YAAN. Prospectos desde Kommo CRM con etapas de pipeline y sugerencias de IA.</h2>
+
+<div id="yaan-dash">
+
+<!-- ══ LOGO ══════════════════════════════════════════ -->
+<div style="display:flex;align-items:center;gap:14px;background:#fff;border-radius:12px;padding:12px 18px;margin-bottom:16px;box-shadow:0 1px 4px rgba(0,0,0,.08);border:1px solid #E5E7EB">
+  <svg width="52" height="52" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><g stroke="white" stroke-width="3.5" stroke-linejoin="round"><polygon points="50,50 90,10 90,50" fill="#E02844"/><polygon points="50,50 50,10 90,10" fill="#C06070"/><polygon points="50,50 90,50 90,90" fill="#E02844"/><polygon points="50,50 90,90 50,90" fill="#C06070"/><polygon points="50,50 10,90 10,50" fill="#E02844"/><polygon points="50,50 50,90 10,90" fill="#C06070"/><polygon points="50,50 10,10 50,10" fill="#E02844"/><polygon points="50,50 10,50 10,10" fill="#C06070"/></g></svg>
+  <div><p style="margin:0;font-size:10px;font-weight:800;color:#0D1B40;letter-spacing:.18em;line-height:1.4">UNIVERSIDAD</p><p style="margin:0;font-size:8px;color:#0D1B40">▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪</p><p style="margin:0;font-size:27px;font-weight:900;color:#E02844;letter-spacing:.06em;line-height:1.1">Y.A.A.N</p></div>
+  <div style="margin-left:10px;padding-left:14px;border-left:1px solid #E5E7EB;flex:1">
+    <p style="margin:0;font-size:14px;font-weight:700;color:#0D1B40">Panel de Ventas — Asesores YAAN</p>
+    <p style="margin:2px 0 0;font-size:11px;color:#6B7280">Semana 21 · Mayo 2026 · Sincronizado con Kommo CRM</p>
+  </div>
+  <span style="background:#0D1B40;color:#C9A84C;padding:4px 12px;border-radius:99px;font-size:11px;font-weight:600;white-space:nowrap">RVOE SEP ✓</span>
+</div>
+
+<!-- ══ HEADER ══════════════════════════════════════════ -->
+<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px;flex-wrap:wrap;gap:10px">
+  <div>
+    <h2 style="font-size:20px;font-weight:700;color:#0D1B40">Panel de Ventas — Asesores YAAN</h2>
+    <p style="font-size:13px;color:#6B7280;margin-top:2px">Semana 21 · Mayo 2026 · Sincronizado con Kommo CRM</p>
+  </div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <span class="badge b-urgente">⚡ 3 urgentes hoy</span>
+    <span class="badge b-warn">🕐 2 citas hoy</span>
+    <span class="badge b-ok">✓ 5 inscritos esta semana</span>
+    <span class="badge" style="background:#0D1B40;color:#C9A84C">● Kommo · 8 activos</span>
+  </div>
+</div>
+
+<!-- ══ CITAS HOY ════════════════════════════════════════ -->
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px">
+  <div class="cita-card">
+    <p style="font-size:10px;color:#8AABCB;text-transform:uppercase;font-weight:600;letter-spacing:.06em;margin-bottom:4px">Cita hoy · 3:30 PM · WhatsApp</p>
+    <p style="font-size:16px;font-weight:700;color:#fff;margin-bottom:3px">Juan Carlos Flores</p>
+    <p style="font-size:12px;color:#AABBD4;margin-bottom:10px">Derecho · SLP · Bachillerato · 444-218-4532</p>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-call btn-sm" onclick="registrarAccion('p1','Llamada 3:30pm')">📞 Llamar</button>
+      <button class="btn btn-wa btn-sm" onclick="abrirWA('444-218-4532')">💬 WhatsApp</button>
+    </div>
+  </div>
+  <div class="cita-card">
+    <p style="font-size:10px;color:#8AABCB;text-transform:uppercase;font-weight:600;letter-spacing:.06em;margin-bottom:4px">Cita hoy · 5:00 PM · Videollamada</p>
+    <p style="font-size:16px;font-weight:700;color:#fff;margin-bottom:3px">Ing. Patricia Sánchez</p>
+    <p style="font-size:12px;color:#AABBD4;margin-bottom:10px">Administración · Cd. Valles · Maquiladora</p>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-call btn-sm" onclick="registrarAccion('p4','Videollamada 5pm')">📹 Entrar</button>
+      <button class="btn btn-wa btn-sm" onclick="abrirWA('481-234-5678')">💬 WhatsApp</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TABS ═════════════════════════════════════════════ -->
+<div style="display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap">
+  <button class="tab-btn on" onclick="showTab('hoy',this)">📅 Hoy</button>
+  <button class="tab-btn" onclick="showTab('pipeline',this)">📊 Pipeline</button>
+  <button class="tab-btn" onclick="showTab('prospectos',this)">👥 Todos los prospectos</button>
+  <button class="tab-btn" onclick="showTab('ia',this)">🤖 IA Vendedor</button>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     TAB: HOY
+══════════════════════════════════════════════════════ -->
+<div id="tab-hoy" class="tab-pane on">
+
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px">
+    <div class="stat-box">
+      <p style="font-size:11px;color:#6B7280;margin-bottom:4px">Llamadas hoy</p>
+      <p style="font-size:26px;font-weight:700;color:#111827" id="statLlamadas">4</p>
+      <p style="font-size:11px;color:#9CA3AF">meta: 12</p>
+    </div>
+    <div class="stat-box">
+      <p style="font-size:11px;color:#6B7280;margin-bottom:4px">Citas realizadas</p>
+      <p style="font-size:26px;font-weight:700;color:#D97706" id="statCitas">1</p>
+      <p style="font-size:11px;color:#9CA3AF">de 2 hoy</p>
+    </div>
+    <div class="stat-box">
+      <p style="font-size:11px;color:#6B7280;margin-bottom:4px">Inscritos hoy</p>
+      <p style="font-size:26px;font-weight:700;color:#059669" id="statInscritos">1</p>
+      <p style="font-size:11px;color:#9CA3AF">semana: 5</p>
+    </div>
+    <div class="stat-box">
+      <p style="font-size:11px;color:#6B7280;margin-bottom:4px">Sin responder +2h</p>
+      <p style="font-size:26px;font-weight:700;color:#DC2626">3</p>
+      <p style="font-size:11px;color:#DC2626;font-weight:500">⚠ urgente</p>
+    </div>
+  </div>
+
+  <p style="font-size:11px;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">⚠ Urgente — acción requerida hoy</p>
+
+  <div class="hoy-urgente">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px">
+      <div style="display:flex;gap:10px;align-items:flex-start">
+        <div class="avatar" style="background:#F3E8FF;color:#6D28D9;width:38px;height:38px;font-size:13px">FT</div>
+        <div>
+          <p style="font-size:14px;font-weight:600;color:#111827">Lic. Fernando Torres · Maquiladoras del Norte</p>
+          <p style="font-size:12px;color:#6B7280;margin-top:2px"><span class="badge seg-b2b">Empresa B2B</span> · Email · 60 empleados sin título · <strong style="color:#DC2626">3 días sin respuesta</strong></p>
+          <p style="font-size:12px;color:#DC2626;font-weight:600;margin-top:4px">Potencial: 60 alumnos = $45,000 MXN/mes. No dejes pasar otro día.</p>
+        </div>
+      </div>
+      <div style="display:flex;gap:6px">
+        <button class="btn btn-call btn-sm" onclick="registrarAccion('p5','Llamada B2B')">📞 Llamar</button>
+        <button class="btn btn-cal btn-sm" onclick="mostrarDetalle('p5')">Ver ficha</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="hoy-urgente">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px">
+      <div style="display:flex;gap:10px;align-items:flex-start">
+        <div class="avatar" style="background:#EDE9FE;color:#5B21B6;width:38px;height:38px;font-size:13px">AB</div>
+        <div>
+          <p style="font-size:14px;font-weight:600;color:#111827">Ana Berenice Reyes · Psicología SLP</p>
+          <p style="font-size:12px;color:#6B7280;margin-top:2px"><span class="badge seg-trunca">Carrera Trunca</span> · WhatsApp · <strong style="color:#DC2626">4 días sin seguimiento</strong></p>
+          <p style="font-size:12px;color:#DC2626;font-weight:600;margin-top:4px">Alta probabilidad de perder este lead. Envía mensaje hoy.</p>
+        </div>
+      </div>
+      <div style="display:flex;gap:6px">
+        <button class="btn btn-wa btn-sm" onclick="abrirWA('444-778-9900')">💬 WhatsApp</button>
+        <button class="btn btn-cal btn-sm" onclick="mostrarDetalle('p7')">Ver ficha</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="hoy-urgente">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px">
+      <div style="display:flex;gap:10px;align-items:flex-start">
+        <div class="avatar" style="background:#CCFBF1;color:#0F766E;width:38px;height:38px;font-size:13px">RC</div>
+        <div>
+          <p style="font-size:14px;font-weight:600;color:#111827">Mtro. Roberto Cisneros · Preparatoria Estatal #12</p>
+          <p style="font-size:12px;color:#6B7280;margin-top:2px"><span class="badge seg-prepa">Preparatoria</span> · Llamada hoy 11:30am · <strong style="color:#DC2626">Sin asesor asignado</strong></p>
+          <p style="font-size:12px;color:#DC2626;font-weight:600;margin-top:4px">Quiere presentación en la prepa. Puede traer 10-20 alumnos de una vez.</p>
+        </div>
+      </div>
+      <div style="display:flex;gap:6px">
+        <button class="btn btn-call btn-sm" onclick="registrarAccion('p6','Llamada director prepa')">📞 Llamar</button>
+        <button class="btn btn-cal btn-sm" onclick="mostrarDetalle('p6')">Ver ficha</button>
+      </div>
+    </div>
+  </div>
+
+  <p style="font-size:11px;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:.06em;margin:16px 0 10px">📋 Seguimientos del día</p>
+  <div class="card" style="padding:0">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid #F1F5F9">
+      <span style="font-size:13px;color:#111827">Prof. Ernesto Huerta · Cita <strong>mañana 4pm</strong> · Confirmar hoy</span>
+      <button class="btn btn-wa btn-sm" onclick="abrirWA('444-567-8901')">💬 Confirmar</button>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid #F1F5F9">
+      <span style="font-size:13px;color:#111827">Rosa Guadalupe Martínez · Carrera Trunca · Seguimiento ayer</span>
+      <button class="btn btn-call btn-sm" onclick="registrarAccion('p2','Llamada seguimiento')">📞 Llamar</button>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px">
+      <span style="font-size:13px;color:#111827">Miguel Ángel Domínguez · <span style="color:#D97706;font-weight:600">Referido @licenciada_rosa</span> · Sin asignar</span>
+      <button class="btn btn-call btn-sm" onclick="registrarAccion('p8','Primer contacto referido')">📞 Primer contacto</button>
+    </div>
+  </div>
+
+  <div id="accionLog" style="margin-top:12px"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     TAB: PIPELINE
+══════════════════════════════════════════════════════ -->
+<div id="tab-pipeline" class="tab-pane">
+  <p style="font-size:12px;color:#6B7280;margin-bottom:14px">Etapas del pipeline de Kommo. Haz clic en cualquier prospecto para ver su ficha completa.</p>
+
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px">
+
+    <div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <span style="font-size:11px;font-weight:700;color:#1D4ED8;text-transform:uppercase;letter-spacing:.05em">Nuevo</span>
+        <span class="badge b-nuevo">3</span>
+      </div>
+      <div class="kanban-col">
+        <div class="kanban-mini" onclick="mostrarDetalle('p1')">
+          <p style="font-size:12px;font-weight:600;color:#111827">Juan Carlos Flores</p>
+          <p style="font-size:11px;color:#6B7280">Derecho · SLP</p>
+          <div style="display:flex;gap:4px;margin-top:5px"><span class="badge seg-bach" style="font-size:10px">Bachillerato</span><span class="ch-wa">WA</span></div>
+        </div>
+        <div class="kanban-mini" onclick="mostrarDetalle('p6')">
+          <p style="font-size:12px;font-weight:600;color:#111827">Mtro. Roberto Cisneros</p>
+          <p style="font-size:11px;color:#6B7280">Prepa #12 · Múltiples</p>
+          <div style="display:flex;gap:4px;margin-top:5px"><span class="badge seg-prepa" style="font-size:10px">Preparatoria</span></div>
+        </div>
+        <div class="kanban-mini" onclick="mostrarDetalle('p8')">
+          <p style="font-size:12px;font-weight:600;color:#111827">Miguel Ángel Domínguez</p>
+          <p style="font-size:11px;color:#6B7280">Mecatrónica · Cd. Valles</p>
+          <div style="display:flex;gap:4px;margin-top:5px"><span class="badge seg-ref" style="font-size:10px">⭐ Referido</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <span style="font-size:11px;font-weight:700;color:#B45309;text-transform:uppercase;letter-spacing:.05em">Contactado</span>
+        <span class="badge b-contactado">2</span>
+      </div>
+      <div class="kanban-col">
+        <div class="kanban-mini" onclick="mostrarDetalle('p2')">
+          <p style="font-size:12px;font-weight:600;color:#111827">Rosa G. Martínez</p>
+          <p style="font-size:11px;color:#6B7280">Contaduría · SLP</p>
+          <div style="display:flex;gap:4px;margin-top:5px"><span class="badge seg-trunca" style="font-size:10px">Trunca</span><span class="ch-fb">FB</span></div>
+        </div>
+        <div class="kanban-mini" onclick="mostrarDetalle('p5')">
+          <p style="font-size:12px;font-weight:600;color:#111827">Lic. Fernando Torres</p>
+          <p style="font-size:11px;color:#6B7280">60 empleados · B2B</p>
+          <div style="display:flex;gap:4px;margin-top:5px"><span class="badge seg-b2b" style="font-size:10px">Empresa</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <span style="font-size:11px;font-weight:700;color:#065F46;text-transform:uppercase;letter-spacing:.05em">Calificado</span>
+        <span class="badge b-calificado">2</span>
+      </div>
+      <div class="kanban-col">
+        <div class="kanban-mini" onclick="mostrarDetalle('p3')">
+          <p style="font-size:12px;font-weight:600;color:#111827">Prof. Ernesto Huerta</p>
+          <p style="font-size:11px;color:#6B7280">Educación · SLP</p>
+          <div style="display:flex;gap:4px;margin-top:5px"><span class="badge seg-conafe" style="font-size:10px">CONAFE</span><span class="ch-wa">WA</span></div>
+        </div>
+        <div class="kanban-mini" onclick="mostrarDetalle('p7')">
+          <p style="font-size:12px;font-weight:600;color:#111827">Ana Berenice Reyes</p>
+          <p style="font-size:11px;color:#6B7280">Psicología · SLP</p>
+          <div style="display:flex;gap:4px;margin-top:5px"><span class="badge seg-trunca" style="font-size:10px">Trunca</span><span class="ch-wa">WA</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <span style="font-size:11px;font-weight:700;color:#991B1B;text-transform:uppercase;letter-spacing:.05em">Cita agendada</span>
+        <span class="badge b-cita">1</span>
+      </div>
+      <div class="kanban-col">
+        <div class="kanban-mini" style="border-color:#DC2626" onclick="mostrarDetalle('p4')">
+          <p style="font-size:12px;font-weight:600;color:#111827">Ing. Patricia Sánchez</p>
+          <p style="font-size:11px;color:#6B7280">Administración · Cd. Valles</p>
+          <div style="display:flex;gap:4px;margin-top:5px"><span class="badge seg-maqui" style="font-size:10px">Maquiladora</span></div>
+          <p style="font-size:11px;color:#DC2626;font-weight:600;margin-top:4px">HOY 5:00 PM</p>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <span style="font-size:11px;font-weight:700;color:#065F46;text-transform:uppercase;letter-spacing:.05em">Inscrito ✓</span>
+        <span class="badge b-inscrito">5 esta semana</span>
+      </div>
+      <div class="kanban-col" style="background:#F0FDF4;border-color:#A7F3D0">
+        <div class="kanban-mini" style="border-color:#10B981;opacity:.75">
+          <p style="font-size:12px;font-weight:600;color:#065F46">Gabriela Morales</p>
+          <p style="font-size:11px;color:#059669">Derecho · SLP · Lunes</p>
+        </div>
+        <div class="kanban-mini" style="border-color:#10B981;opacity:.65">
+          <p style="font-size:12px;color:#065F46">+4 más esta semana</p>
+          <p style="font-size:11px;color:#059669">Ver historial →</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="margin-top:14px;background:#FFF7ED;border:1px solid #FED7AA;border-radius:10px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+    <span style="font-size:13px;color:#C2410C;font-weight:600">Perdidos esta semana: 2</span>
+    <span style="font-size:12px;color:#6B7280">Motivos: precio (1) · sin bachillerato (1)</span>
+    <button class="btn btn-sm" style="background:#C2410C;color:#fff" onclick="alert('En producción: muestra los prospectos en etapa Perdido con motivo registrado en Kommo.')">Ver perdidos</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     TAB: TODOS LOS PROSPECTOS
+══════════════════════════════════════════════════════ -->
+<div id="tab-prospectos" class="tab-pane">
+
+  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px">
+    <button class="filter-btn sel" onclick="filtrar('todos',this)">Todos (8)</button>
+    <button class="filter-btn" onclick="filtrar('bachillerato',this)">🎓 Bachillerato (2)</button>
+    <button class="filter-btn" onclick="filtrar('carrera_trunca',this)">🔄 Carrera trunca (2)</button>
+    <button class="filter-btn" onclick="filtrar('conafe',this)">📚 CONAFE (1)</button>
+    <button class="filter-btn" onclick="filtrar('maquiladora',this)">🏭 Maquiladora (1)</button>
+    <button class="filter-btn" onclick="filtrar('b2b_empresa',this)">🏢 Empresa B2B (1)</button>
+    <button class="filter-btn" onclick="filtrar('preparatoria',this)">🏫 Preparatoria (1)</button>
+  </div>
+
+  <!-- ── P1 JUAN CARLOS ── -->
+  <div class="prospect-card urgente" id="card-p1" data-seg="bachillerato">
+    <div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap">
+      <div class="avatar" style="background:#DBEAFE;color:#1D4ED8">JC</div>
+      <div style="flex:1;min-width:200px">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:5px">
+          <span style="font-size:15px;font-weight:700;color:#111827">Juan Carlos Flores</span>
+          <span class="badge seg-bach">🎓 Bachillerato</span>
+          <span class="badge b-cita">● Cita HOY 3:30pm</span>
+          <span class="ch-wa">WA 444-218-4532</span>
+        </div>
+        <p style="font-size:12px;color:#6B7280;margin-bottom:6px">Licenciatura en Derecho · SLP · Llegó por WhatsApp · Asesor: María López</p>
+        <p style="font-size:13px;color:#374151;font-style:italic;background:#F9FAFB;padding:7px 10px;border-radius:8px;border-left:3px solid #CBD5E1">"¿Cuánto cuesta la carrera de Derecho? ¿Hay becas?" — Hoy 2:47 pm</p>
+        <div class="ia-box">
+          <p style="font-size:10px;color:#1D4ED8;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">🤖 IA sugiere</p>
+          <p style="font-size:12px;color:#1E3A8A;line-height:1.6">Llámalo a las 3:30 pm como acordaron. <strong>Antes mándale por WhatsApp la tabla de becas</strong> — reduce el choque del precio. Habla por mensualidad, no por total. Enfócate en: modelo ejecutivo (trabaja y estudia) + RVOE oficial SEP.</p>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <button class="btn btn-call btn-sm" onclick="registrarAccion('p1','Llamada 3:30pm')">📞 Llamar 3:30</button>
+          <button class="btn btn-wa btn-sm" onclick="abrirWA('444-218-4532')">💬 Enviar becas</button>
+          <button class="btn btn-cal btn-sm" onclick="agendarCita('Juan Carlos Flores')">📅 Reagendar</button>
+          <button class="btn btn-inscrito btn-sm" onclick="inscribir('p1','Juan Carlos Flores')">✓ Inscribir</button>
+          <button class="btn btn-lost" onclick="perder('p1','Juan Carlos Flores')">Perdido</button>
+        </div>
+      </div>
+      <div style="text-align:right;min-width:80px">
+        <span class="badge b-nuevo" style="display:block;margin-bottom:5px">Nuevo</span>
+        <p style="font-size:11px;color:#6B7280">Hoy 2:47 pm</p>
+        <p style="font-size:11px;color:#DC2626;font-weight:700;margin-top:3px">⚠ URGENTE</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── P2 ROSA GUADALUPE ── -->
+  <div class="prospect-card urgente" id="card-p2" data-seg="carrera_trunca">
+    <div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap">
+      <div class="avatar" style="background:#EDE9FE;color:#5B21B6">RG</div>
+      <div style="flex:1;min-width:200px">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:5px">
+          <span style="font-size:15px;font-weight:700;color:#111827">Rosa Guadalupe Martínez</span>
+          <span class="badge seg-trunca">🔄 Carrera Trunca</span>
+          <span class="badge b-contactado">Contactado</span>
+          <span class="ch-fb">FB 444-892-1234</span>
+        </div>
+        <p style="font-size:12px;color:#6B7280;margin-bottom:6px">Contaduría · SLP · Facebook · Asesor: Carlos Ramos</p>
+        <p style="font-size:13px;color:#374151;font-style:italic;background:#F9FAFB;padding:7px 10px;border-radius:8px;border-left:3px solid #CBD5E1">"Empecé Contaduría en UASLP pero dejé en 3er semestre. ¿Puedo convalidar materias?" — Ayer 6:15 pm</p>
+        <div class="ia-box">
+          <p style="font-size:10px;color:#1D4ED8;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">🤖 IA sugiere</p>
+          <p style="font-size:12px;color:#1E3A8A;line-height:1.6">Pregúntale <strong>exactamente cuántas materias cursó y en qué universidad</strong>. Si son convalidables, ese es el gancho. Frase: <em>"Puede que te falte menos de lo que crees."</em> Agenda cita esta semana antes de que pierda el impulso.</p>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <button class="btn btn-call btn-sm" onclick="registrarAccion('p2','Llamada convalidación')">📞 Llamar</button>
+          <button class="btn btn-wa btn-sm" onclick="abrirWA('444-892-1234')">💬 WhatsApp</button>
+          <button class="btn btn-cal btn-sm" onclick="agendarCita('Rosa Guadalupe')">📅 Agendar cita</button>
+          <button class="btn btn-inscrito btn-sm" onclick="inscribir('p2','Rosa Guadalupe')">✓ Inscribir</button>
+          <button class="btn btn-lost" onclick="perder('p2','Rosa Guadalupe')">Perdido</button>
+        </div>
+      </div>
+      <div style="text-align:right;min-width:80px">
+        <span class="badge b-contactado" style="display:block;margin-bottom:5px">Contactado</span>
+        <p style="font-size:11px;color:#6B7280">Ayer 6:15 pm</p>
+        <p style="font-size:11px;color:#DC2626;font-weight:700;margin-top:3px">1 día</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── P3 PROF. ERNESTO ── -->
+  <div class="prospect-card media" id="card-p3" data-seg="conafe">
+    <div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap">
+      <div class="avatar" style="background:#D1FAE5;color:#065F46">EH</div>
+      <div style="flex:1;min-width:200px">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:5px">
+          <span style="font-size:15px;font-weight:700;color:#111827">Prof. Ernesto Huerta</span>
+          <span class="badge seg-conafe">📚 CONAFE / Normalista</span>
+          <span class="badge b-calificado">Calificado</span>
+          <span class="ch-wa">WA 444-567-8901</span>
+        </div>
+        <p style="font-size:12px;color:#6B7280;margin-bottom:6px">Lic. Educación / Maestría · SLP · <strong style="color:#D97706">Cita mañana 4:00 pm</strong> · Asesor: María López</p>
+        <p style="font-size:13px;color:#374151;font-style:italic;background:#F9FAFB;padding:7px 10px;border-radius:8px;border-left:3px solid #CBD5E1">"Soy maestro CONAFE desde hace 6 años. Necesito el título para mejorar mi categoría salarial con la SEP." — Hace 2 días</p>
+        <div class="ia-box">
+          <p style="font-size:10px;color:#1D4ED8;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">🤖 IA sugiere</p>
+          <p style="font-size:12px;color:#1E3A8A;line-height:1.6"><strong>Confirma la cita de mañana hoy en la tarde</strong> por WhatsApp. Para la reunión lleva la <strong>tabla de incremento salarial SEP por categoría con RVOE</strong> — es el argumento #1 para este segmento. Pregunta si tiene colegas CONAFE con la misma necesidad.</p>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <button class="btn btn-wa btn-sm" onclick="abrirWA('444-567-8901')">💬 Confirmar cita</button>
+          <button class="btn btn-call btn-sm" onclick="registrarAccion('p3','Llamada confirmación')">📞 Llamar</button>
+          <button class="btn btn-inscrito btn-sm" onclick="inscribir('p3','Prof. Ernesto')">✓ Inscribir</button>
+          <button class="btn btn-lost" onclick="perder('p3','Prof. Ernesto')">Perdido</button>
+        </div>
+      </div>
+      <div style="text-align:right;min-width:80px">
+        <span class="badge b-calificado" style="display:block;margin-bottom:5px">Calificado</span>
+        <p style="font-size:11px;color:#6B7280">Hace 2 días</p>
+        <p style="font-size:11px;color:#D97706;font-weight:700;margin-top:3px">Cita mañana</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── P4 PATRICIA SÁNCHEZ ── -->
+  <div class="prospect-card urgente" id="card-p4" data-seg="maquiladora">
+    <div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap">
+      <div class="avatar" style="background:#FFEDD5;color:#C2410C">PS</div>
+      <div style="flex:1;min-width:200px">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:5px">
+          <span style="font-size:15px;font-weight:700;color:#111827">Ing. Patricia Sánchez</span>
+          <span class="badge seg-maqui">🏭 Maquiladora</span>
+          <span class="badge b-cita">● Cita HOY 5:00pm</span>
+          <span class="ch-ig">IG 481-234-5678</span>
+        </div>
+        <p style="font-size:12px;color:#6B7280;margin-bottom:6px">Administración · Cd. Valles · Turno matutino · Asesor: Carlos Ramos</p>
+        <p style="font-size:13px;color:#374151;font-style:italic;background:#F9FAFB;padding:7px 10px;border-radius:8px;border-left:3px solid #CBD5E1">"Trabajo en el turno matutino en la planta. Solo tengo disponibilidad sábados." — Hoy 9:00 am</p>
+        <div class="ia-box">
+          <p style="font-size:10px;color:#1D4ED8;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">🤖 IA sugiere</p>
+          <p style="font-size:12px;color:#1E3A8A;line-height:1.6">Cita hoy 5pm por videollamada. <strong>Prepara el horario de sábados de Administración en Cd. Valles</strong>. Pregunta si hay más compañeros interesados — puede convertirse en un <strong>convenio grupal con descuento corporativo</strong>. Un convenio de planta puede sumar 10-15 alumnos juntos.</p>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <button class="btn btn-call btn-sm" onclick="registrarAccion('p4','Videollamada 5pm')">📹 Entrar 5pm</button>
+          <button class="btn btn-wa btn-sm" onclick="abrirWA('481-234-5678')">💬 WhatsApp</button>
+          <button class="btn btn-inscrito btn-sm" onclick="inscribir('p4','Patricia Sánchez')">✓ Inscribir</button>
+          <button class="btn btn-lost" onclick="perder('p4','Patricia Sánchez')">Perdido</button>
+        </div>
+      </div>
+      <div style="text-align:right;min-width:80px">
+        <span class="badge b-cita" style="display:block;margin-bottom:5px">Cita hoy</span>
+        <p style="font-size:11px;color:#6B7280">Hoy 9:00 am</p>
+        <p style="font-size:11px;color:#DC2626;font-weight:700;margin-top:3px">5:00pm video</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── P5 FERNANDO TORRES B2B ── -->
+  <div class="prospect-card urgente" id="card-p5" data-seg="b2b_empresa">
+    <div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap">
+      <div class="avatar" style="background:#F3E8FF;color:#6D28D9">FT</div>
+      <div style="flex:1;min-width:200px">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:5px">
+          <span style="font-size:15px;font-weight:700;color:#111827">Lic. Fernando Torres · RH</span>
+          <span class="badge seg-b2b">🏢 Empresa B2B</span>
+          <span class="badge b-urgente">3 días sin respuesta</span>
+          <span class="ch-email">Email 444-900-2233</span>
+        </div>
+        <p style="font-size:12px;color:#6B7280;margin-bottom:6px">Maquiladoras del Norte S.A. · ~60 empleados sin título · Asesor: María López</p>
+        <p style="font-size:13px;color:#374151;font-style:italic;background:#F9FAFB;padding:7px 10px;border-radius:8px;border-left:3px solid #CBD5E1">"Tenemos ~60 trabajadores sin título universitario. ¿Tienen algún programa especial para empresas?" — Hace 3 días</p>
+        <div class="ia-box">
+          <p style="font-size:10px;color:#1D4ED8;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">🤖 IA sugiere</p>
+          <p style="font-size:12px;color:#1E3A8A;line-height:1.6"><strong>Envía hoy el PDF de Convenio Empresarial YAAN</strong> con: descuento corporativo 15%, modalidad sábados, facturación a empresa. <strong>Llama 20 min después de enviarlo.</strong> Potencial: 60 alumnos = $45,000 MXN/mes recurrentes. Este es el prospecto de mayor ROI en el pipeline.</p>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <button class="btn btn-call btn-sm" onclick="registrarAccion('p5','Llamada B2B seguimiento')">📞 Llamar</button>
+          <button class="btn btn-sm" style="background:#1D4ED8;color:#fff" onclick="registrarAccion('p5','Email convenio enviado')">📧 Enviar convenio</button>
+          <button class="btn btn-cal btn-sm" onclick="agendarCita('Fernando Torres')">📅 Proponer reunión</button>
+          <button class="btn btn-lost" onclick="perder('p5','Fernando Torres')">Perdido</button>
+        </div>
+      </div>
+      <div style="text-align:right;min-width:80px">
+        <span class="badge b-contactado" style="display:block;margin-bottom:5px">Contactado</span>
+        <p style="font-size:11px;color:#6B7280">Hace 3 días</p>
+        <p style="font-size:11px;color:#DC2626;font-weight:700;margin-top:3px">⚠ URGENTE</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── P6 ROBERTO CISNEROS ── -->
+  <div class="prospect-card media" id="card-p6" data-seg="preparatoria">
+    <div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap">
+      <div class="avatar" style="background:#CCFBF1;color:#0F766E">RC</div>
+      <div style="flex:1;min-width:200px">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:5px">
+          <span style="font-size:15px;font-weight:700;color:#111827">Mtro. Roberto Cisneros · Director</span>
+          <span class="badge seg-prepa">🏫 Preparatoria</span>
+          <span class="badge b-nuevo">Nuevo · Sin asignar</span>
+          <span class="ch-call">📞 444-445-6677</span>
+        </div>
+        <p style="font-size:12px;color:#6B7280;margin-bottom:6px">Preparatoria Estatal #12 · SLP · Llamada hoy 11:30am</p>
+        <p style="font-size:13px;color:#374151;font-style:italic;background:#F9FAFB;padding:7px 10px;border-radius:8px;border-left:3px solid #CBD5E1">"Llamó preguntando por opciones para sus egresados. Quiere que hagamos una presentación en la prepa." — Hoy 11:30am</p>
+        <div class="ia-box">
+          <p style="font-size:10px;color:#1D4ED8;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">🤖 IA sugiere</p>
+          <p style="font-size:12px;color:#1E3A8A;line-height:1.6"><strong>Llámalo hoy antes de las 6pm.</strong> Propón ir la próxima semana con una <strong>mini-feria de orientación vocacional gratuita</strong>. Un acto en la prepa puede traer 10-20 alumnos inscritos. Pregunta: ¿cuántos alumnos de 6to semestre? ¿Qué fecha libres?</p>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <button class="btn btn-call btn-sm" onclick="registrarAccion('p6','Llamada director prepa')">📞 Llamar hoy</button>
+          <button class="btn btn-cal btn-sm" onclick="agendarCita('Mtro. Roberto Cisneros')">📅 Agendar visita</button>
+          <button class="btn btn-lost" onclick="perder('p6','Roberto Cisneros')">Perdido</button>
+        </div>
+      </div>
+      <div style="text-align:right;min-width:80px">
+        <span class="badge b-nuevo" style="display:block;margin-bottom:5px">Nuevo</span>
+        <p style="font-size:11px;color:#6B7280">Hoy 11:30am</p>
+        <p style="font-size:11px;color:#D97706;font-weight:700;margin-top:3px">Sin asignar</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── P7 ANA BERENICE ── -->
+  <div class="prospect-card urgente" id="card-p7" data-seg="carrera_trunca">
+    <div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap">
+      <div class="avatar" style="background:#EDE9FE;color:#5B21B6">AB</div>
+      <div style="flex:1;min-width:200px">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:5px">
+          <span style="font-size:15px;font-weight:700;color:#111827">Ana Berenice Reyes</span>
+          <span class="badge seg-trunca">🔄 Carrera Trunca</span>
+          <span class="badge b-urgente">4 días sin respuesta</span>
+          <span class="ch-wa">WA 444-778-9900</span>
+        </div>
+        <p style="font-size:12px;color:#6B7280;margin-bottom:6px">Psicología · SLP · 28 años, mamá, quiere terminar · Asesor: Carlos Ramos</p>
+        <p style="font-size:13px;color:#374151;font-style:italic;background:#F9FAFB;padding:7px 10px;border-radius:8px;border-left:3px solid #CBD5E1">"Tengo 28 años, dejé Psicología a medias. Tengo esposo e hijo pero quiero terminar. ¿Hay horarios nocturnos?" — Hace 4 días</p>
+        <div class="ia-box">
+          <p style="font-size:10px;color:#1D4ED8;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">🤖 IA sugiere</p>
+          <p style="font-size:12px;color:#1E3A8A;line-height:1.6">4 días sin seguimiento — <strong>riesgo alto de perderla</strong>. Envía hoy por WhatsApp el horario nocturno de Psicología. Mensaje corto sin presión: <em>"Ana, encontré el horario que puede funcionarte. ¿Te lo mando?"</em> Responde su pregunta concreta. No menciones inscripción aún.</p>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <button class="btn btn-wa btn-sm" onclick="abrirWA('444-778-9900')">💬 Enviar horario nocturno</button>
+          <button class="btn btn-call btn-sm" onclick="registrarAccion('p7','Llamada seguimiento Ana')">📞 Llamar</button>
+          <button class="btn btn-cal btn-sm" onclick="agendarCita('Ana Berenice')">📅 Agendar</button>
+          <button class="btn btn-inscrito btn-sm" onclick="inscribir('p7','Ana Berenice')">✓ Inscribir</button>
+          <button class="btn btn-lost" onclick="perder('p7','Ana Berenice')">Perdido</button>
+        </div>
+      </div>
+      <div style="text-align:right;min-width:80px">
+        <span class="badge b-calificado" style="display:block;margin-bottom:5px">Calificado</span>
+        <p style="font-size:11px;color:#6B7280">Hace 4 días</p>
+        <p style="font-size:11px;color:#DC2626;font-weight:700;margin-top:3px">⚠ En riesgo</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── P8 MIGUEL ÁNGEL ── -->
+  <div class="prospect-card urgente" id="card-p8" data-seg="bachillerato">
+    <div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap">
+      <div class="avatar" style="background:#FEF9C3;color:#713F12">MD</div>
+      <div style="flex:1;min-width:200px">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:5px">
+          <span style="font-size:15px;font-weight:700;color:#111827">Miguel Ángel Domínguez</span>
+          <span class="badge seg-bach">🎓 Bachillerato</span>
+          <span class="badge seg-ref">⭐ Referido @licenciada_rosa</span>
+          <span class="ch-wa">WA 444-321-0987</span>
+        </div>
+        <p style="font-size:12px;color:#6B7280;margin-bottom:6px">Mecatrónica · Cd. Valles · Recién egresado de bachillerato · Sin asignar</p>
+        <p style="font-size:13px;color:#374151;font-style:italic;background:#F9FAFB;padding:7px 10px;border-radius:8px;border-left:3px solid #CBD5E1">"Rosa me dijo que es muy buena universidad. Acabo de terminar la prepa y quiero estudiar Mecatrónica." — Hace 1 día</p>
+        <div class="ia-box">
+          <p style="font-size:10px;color:#1D4ED8;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">🤖 IA sugiere</p>
+          <p style="font-size:12px;color:#1E3A8A;line-height:1.6"><strong>Referido caliente — alta disposición.</strong> Llama hoy. Es recién egresado sin compromisos laborales todavía. <strong>Menciona que conoces a Rosa</strong> y que puede visitarla en el campus. Cierre fácil: solo necesita la guía de inscripción y la fecha de inicio del ciclo.</p>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <button class="btn btn-call btn-sm" onclick="registrarAccion('p8','Primer contacto referido')">📞 Llamar hoy</button>
+          <button class="btn btn-wa btn-sm" onclick="abrirWA('444-321-0987')">💬 WhatsApp</button>
+          <button class="btn btn-cal btn-sm" onclick="agendarCita('Miguel Ángel')">📅 Invitar al campus</button>
+          <button class="btn btn-inscrito btn-sm" onclick="inscribir('p8','Miguel Ángel')">✓ Inscribir</button>
+          <button class="btn btn-lost" onclick="perder('p8','Miguel Ángel')">Perdido</button>
+        </div>
+      </div>
+      <div style="text-align:right;min-width:80px">
+        <span class="badge b-nuevo" style="display:block;margin-bottom:5px">Nuevo</span>
+        <p style="font-size:11px;color:#6B7280">Hace 1 día</p>
+        <p style="font-size:11px;color:#059669;font-weight:700;margin-top:3px">Referido ⭐</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="prospectoLog" style="margin-top:12px"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     TAB: IA VENDEDOR
+══════════════════════════════════════════════════════ -->
+<div id="tab-ia" class="tab-pane">
+  <div style="background:#fff;border:2px solid #C9A84C;border-radius:14px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.08)">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+      <div>
+        <p style="font-size:15px;font-weight:700;color:#111827">🤖 IA Vendedor — Estrategias de seguimiento y cierre</p>
+        <p style="font-size:12px;color:#6B7280;margin-top:2px">Scripts, manejo de objeciones y estrategias por segmento para YAAN</p>
+      </div>
+      <span class="badge b-ok">● IA activa</span>
+    </div>
+
+    <div id="iaChat" style="display:flex;flex-direction:column;gap:8px;min-height:80px;max-height:300px;overflow-y:auto;margin-bottom:12px;padding:4px">
+      <div class="chat-msg chat-ai">Hola. Soy tu asistente de ventas para Universidad YAAN. Puedo ayudarte con:
+
+• Scripts de llamada por segmento (CONAFE, carrera trunca, maquiladora, empresa B2B)
+• Cómo manejar objeciones de precio, tiempo o familia
+• Estrategias para prospectos que no responden
+• Argumentos para directores de preparatoria
+• Cómo cerrar un referido caliente
+
+¿Con cuál prospecto o situación empezamos?</div>
+    </div>
+
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">
+      <button onclick="quickQ('Dame el script exacto para llamar a un maestro CONAFE que quiere mejorar su categoría salarial')" style="font-size:11px;padding:5px 12px;border:1.5px solid #CBD5E1;border-radius:99px;background:#F8FAFC;cursor:pointer;color:#374151;font-family:inherit">Script maestro CONAFE ↗</button>
+      <button onclick="quickQ('¿Cómo manejo la objeción de precio cuando un prospecto dice que está caro?')" style="font-size:11px;padding:5px 12px;border:1.5px solid #CBD5E1;border-radius:99px;background:#F8FAFC;cursor:pointer;color:#374151;font-family:inherit">Objeción de precio ↗</button>
+      <button onclick="quickQ('¿Qué mensaje de WhatsApp mando a alguien que lleva 4 días sin responder sin que se sienta presionado?')" style="font-size:11px;padding:5px 12px;border:1.5px solid #CBD5E1;border-radius:99px;background:#F8FAFC;cursor:pointer;color:#374151;font-family:inherit">WA sin respuesta ↗</button>
+      <button onclick="quickQ('¿Cómo le presento a un director de preparatoria una feria vocacional para sus egresados?')" style="font-size:11px;padding:5px 12px;border:1.5px solid #CBD5E1;border-radius:99px;background:#F8FAFC;cursor:pointer;color:#374151;font-family:inherit">Pitch preparatoria ↗</button>
+      <button onclick="quickQ('Dame argumentos para que una empresa firme un convenio con YAAN y capacite a sus trabajadores')" style="font-size:11px;padding:5px 12px;border:1.5px solid #CBD5E1;border-radius:99px;background:#F8FAFC;cursor:pointer;color:#374151;font-family:inherit">Cierre B2B empresa ↗</button>
+      <button onclick="quickQ('¿Cómo convenzo a alguien con familia e hijos de que sí puede estudiar en YAAN sin descuidar su casa?')" style="font-size:11px;padding:5px 12px;border:1.5px solid #CBD5E1;border-radius:99px;background:#F8FAFC;cursor:pointer;color:#374151;font-family:inherit">Objeción familia ↗</button>
+    </div>
+
+    <div style="display:flex;gap:8px">
+      <input type="text" id="iaInput" placeholder="Escribe tu situación de venta o pide un script..." onkeydown="if(event.key==='Enter')sendIA()"/>
+      <button onclick="sendIA()" style="padding:9px 18px;background:#0D1B40;color:#C9A84C;border:none;border-radius:8px;font-size:13px;cursor:pointer;font-weight:700;white-space:nowrap;font-family:inherit">Consultar IA</button>
+    </div>
+  </div>
+</div>
+
+</div><!-- /yaan-dash -->
+
+<script>
+/* ── TABS ── */
+function showTab(id,btn){
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('on'));
+  document.getElementById('tab-'+id).classList.add('on');
+  btn.classList.add('on');
+}
+
+/* ── FILTROS ── */
+function filtrar(seg,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  document.querySelectorAll('.prospect-card').forEach(c=>{
+    c.style.display=(seg==='todos'||c.dataset.seg===seg)?'block':'none';
+  });
+}
+
+/* ── LOGS ── */
+function logAccion(cid,msg,bg){
+  const c=document.getElementById(cid);if(!c)return;
+  const d=document.createElement('div');
+  d.style.cssText=`padding:8px 12px;background:${bg};border-radius:8px;font-size:12px;margin-bottom:6px;color:#111827;border:1px solid #E2E8F0`;
+  d.textContent=msg+' — '+new Date().toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'});
+  c.prepend(d);
+}
+
+/* ── ACCIONES ── */
+function registrarAccion(id,accion){
+  const nombres={p1:'Juan Carlos Flores',p2:'Rosa Guadalupe',p3:'Prof. Ernesto Huerta',p4:'Patricia Sánchez',p5:'Fernando Torres',p6:'Roberto Cisneros',p7:'Ana Berenice',p8:'Miguel Ángel'};
+  logAccion('accionLog','✓ '+nombres[id]+' — '+accion,'#F0FDF4');
+  logAccion('prospectoLog','✓ '+nombres[id]+' — '+accion,'#F0FDF4');
+  if(accion.toLowerCase().includes('llamada')){const s=document.getElementById('statLlamadas');if(s)s.textContent=parseInt(s.textContent)+1;}
+}
+function abrirWA(tel){window.open('https://wa.me/52'+tel.replace(/[^0-9]/g,''),'_blank');}
+function agendarCita(n){alert('Agendando cita con '+n+'\nEn producción: abre Cal.com y envía el link al prospecto por WhatsApp.');}
+function inscribir(id,n){
+  const c=document.getElementById('card-'+id);
+  if(c){c.style.opacity='.45';c.style.pointerEvents='none';}
+  logAccion('prospectoLog','✅ INSCRITO: '+n+' — etapa actualizada en Kommo','#F0FDF4');
+  const s=document.getElementById('statInscritos');if(s)s.textContent=parseInt(s.textContent)+1;
+}
+function perder(id,n){
+  const c=document.getElementById('card-'+id);
+  if(c){c.style.opacity='.3';c.style.pointerEvents='none';}
+  logAccion('prospectoLog','✗ Perdido: '+n+' — movido a etapa Perdido en Kommo','#FFF7F7');
+}
+function mostrarDetalle(id){
+  const info={
+    p1:'Juan Carlos Flores\nDerecho · SLP · Bachillerato · WhatsApp\nCita: Hoy 3:30pm',
+    p2:'Rosa Guadalupe Martínez\nContaduría · SLP · Carrera Trunca · Facebook',
+    p3:'Prof. Ernesto Huerta\nEducación · SLP · CONAFE · WhatsApp\nCita: Mañana 4pm',
+    p4:'Ing. Patricia Sánchez\nAdministración · Cd. Valles · Maquiladora · Instagram\nCita: Hoy 5pm',
+    p5:'Lic. Fernando Torres\nMaquiladoras del Norte · B2B · Email\n60 empleados sin título',
+    p6:'Mtro. Roberto Cisneros\nPreparatoria Estatal #12 · SLP\nQuiere feria vocacional',
+    p7:'Ana Berenice Reyes\nPsicología · SLP · Carrera Trunca · WhatsApp\n28 años, mamá, quiere terminar',
+    p8:'Miguel Ángel Domínguez\nMecatrónica · Cd. Valles · Referido @licenciada_rosa'
+  };
+  alert(info[id]+'\n\nEn producción: abre la ficha completa de Kommo con historial de mensajes, notas y actividad.');
+}
+
+/* ── IA VENDEDOR ── */
+const SYS=`Eres el asistente de ventas de Universidad YAAN para sus asesores comerciales. Ayudas a cerrar inscripciones.
+
+Contexto:
+- Universidad con RVOE oficial SEP — validez nacional
+- Sedes: San Luis Potosí y Ciudad Valles
+- Modelo ejecutivo: sábados y viernes noche (trabaja y estudia)
+- Becas hasta 40% disponibles todo el año
+- Colegiatura ~$750 MXN/mes
+- Carreras: Derecho, Contaduría, Administración, Psicología, Mecatrónica, Educación, Enfermería, Maestrías
+
+Segmentos y argumentos clave:
+- Maestros CONAFE/normalistas: RVOE = cambio de categoría salarial SEP (+$4,200/mes)
+- Carrera trunca: convalidación de materias + "te falta menos de lo que crees"
+- Maquiladora: modelo sábados, convenio empresarial descuento 15%
+- Empresa B2B: facturación a empresa, descuento corporativo, hasta 60 empleados de una vez
+- Bachillerato: precio mensual accesible, título con validez real, campus propio
+- Director de prepa: feria vocacional gratuita, canal de 10-20 alumnos por acto
+
+Reglas de venta:
+1. Nunca des el costo total de golpe — presenta por mensualidad
+2. Responde la pregunta concreta antes de vender
+3. Las objeciones de precio son objeciones de confianza
+4. Un referido es el lead más caliente — nombra a quien lo refirió
+5. Scripts en español mexicano natural, sin frases corporativas
+
+Respuesta: máx 180 palabras. Si das script de llamada: diálogo natural. Si das estrategia: 3-4 puntos accionables.`;
+
+const hist=[];
+async function sendIA(){
+  const inp=document.getElementById('iaInput');
+  const q=inp.value.trim();if(!q)return;inp.value='';
+  const box=document.getElementById('iaChat');
+  const add=(t,cls)=>{const d=document.createElement('div');d.className='chat-msg '+cls;d.textContent=t;box.appendChild(d);box.scrollTop=box.scrollHeight;return d;};
+  add(q,'chat-user');
+  const typing=add('Generando estrategia...','chat-ai');
+  hist.push({role:'user',content:q});
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:500,system:SYS,messages:hist.slice(-10)})
+    });
+    const d=await r.json();
+    const a=d.content?.[0]?.text||'Error de conexión.';
+    typing.textContent=a;
+    hist.push({role:'assistant',content:a});
+  }catch(e){typing.textContent='Error al conectar con la IA.';}
+}
+function quickQ(q){
+  showTab('ia',document.querySelectorAll('.tab-btn')[3]);
+  document.getElementById('iaInput').value=q;
+  sendIA();
+}
+</script>
