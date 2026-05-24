@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard Rectoral — Universidad YAAN</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0D1120;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#F0F4FF;min-height:100vh}
+
+/* ── HEADER ── */
+.header{background:#0A0E1A;border-bottom:2px solid #C9A84C;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.header-left{display:flex;align-items:center;gap:14px}
+.header-left svg g{fill:#ffffff}
+.h-titles h1{font-size:18px;font-weight:800;color:#fff;line-height:1.2}
+.h-titles p{font-size:11px;color:#7A8BAA;margin-top:2px}
+.meta-bar{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.live-dot{width:8px;height:8px;background:#22C55E;border-radius:50%;display:inline-block;animation:pulse 1.8s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.header-right{text-align:right}
+.alumnos-total{font-size:13px;font-weight:700;color:#C9A84C}
+.progress-bar-wrap{width:220px;background:#1E2A40;border-radius:99px;height:7px;margin:5px 0}
+.progress-bar-fill{background:linear-gradient(90deg,#C9A84C,#F0C060);height:7px;border-radius:99px;transition:width .6s}
+.progress-label{font-size:10px;color:#7A8BAA}
+
+/* ── KPI GRID ── */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:16px 20px}
+@media(max-width:700px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
+.kpi{background:#111827;border:1px solid #1E2A40;border-radius:12px;padding:14px 16px}
+.kpi-label{font-size:10px;color:#7A8BAA;font-weight:600;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px}
+.kpi-val{font-size:26px;font-weight:900;color:#C9A84C;line-height:1}
+.kpi-sub{font-size:11px;color:#4ADE80;margin-top:4px}
+.kpi-sub.warn{color:#F59E0B}
+.kpi-sub.info{color:#60A5FA}
+
+/* ── MAIN GRID ── */
+.main-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 20px 16px}
+@media(max-width:700px){.main-grid{grid-template-columns:1fr}}
+.panel{background:#111827;border:1px solid #1E2A40;border-radius:12px;padding:16px 18px}
+.panel-title{font-size:11px;font-weight:800;color:#7A8BAA;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.panel-title span{width:3px;height:14px;background:#C9A84C;border-radius:2px;display:inline-block}
+
+/* ── EMBUDO ── */
+.funnel-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.funnel-bar-wrap{flex:1;background:#1E2A40;border-radius:4px;height:32px;position:relative;overflow:hidden}
+.funnel-bar{height:100%;border-radius:4px;display:flex;align-items:center;padding:0 10px;font-size:12px;font-weight:700;white-space:nowrap;transition:width .8s}
+.funnel-label{font-size:11px;color:#CBD5E1;min-width:130px}
+.funnel-num{font-size:11px;color:#7A8BAA;min-width:60px;text-align:right}
+
+/* ── B2B PIPELINE ── */
+.b2b-row{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;border-radius:8px;margin-bottom:6px;border:1px solid #1E2A40}
+.b2b-row.highlight{background:#0D2818;border-color:#22C55E}
+.b2b-stage{font-size:13px;color:#CBD5E1}
+.b2b-val{font-size:15px;font-weight:800;color:#fff}
+.b2b-row.highlight .b2b-stage{color:#4ADE80;font-weight:700}
+.b2b-row.highlight .b2b-val{color:#4ADE80}
+
+/* ── SEMANA POR SEMANA ── */
+.weeks-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.week-box{background:#0D1828;border:1px solid #1E2A40;border-radius:8px;padding:10px;text-align:center}
+.week-box.current{border-color:#C9A84C}
+.week-num{font-size:10px;color:#7A8BAA;font-weight:700;text-transform:uppercase}
+.week-ins{font-size:20px;font-weight:900;color:#C9A84C}
+.week-meta{font-size:10px;color:#4ADE80;margin-top:2px}
+
+/* ── CANALES ── */
+.canal-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.canal-name{font-size:12px;color:#CBD5E1;min-width:110px}
+.canal-bar-bg{flex:1;background:#1E2A40;border-radius:4px;height:8px}
+.canal-bar{height:8px;border-radius:4px}
+.canal-pct{font-size:11px;color:#7A8BAA;min-width:32px;text-align:right}
+
+/* ── ALERTAS ── */
+.alert{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:8px;margin-bottom:8px;border-left:3px solid}
+.alert.red{background:#1C0A0A;border-color:#EF4444}
+.alert.amber{background:#1C1200;border-color:#F59E0B}
+.alert.green{background:#071A0F;border-color:#22C55E}
+.alert-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.alert-text{font-size:12px;color:#CBD5E1;line-height:1.5}
+.alert-text strong{color:#fff}
+
+/* ── CHAT IA ── */
+.chat-section{padding:0 20px 20px}
+.chat-wrap{background:#111827;border:1.5px solid #C9A84C;border-radius:14px;padding:16px 18px}
+.chat-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.chat-title{font-size:14px;font-weight:800;color:#fff}
+.chat-sub{font-size:11px;color:#7A8BAA;margin-bottom:12px}
+.conn-badge{font-size:10px;font-weight:700;padding:3px 10px;border-radius:99px;display:flex;align-items:center;gap:5px}
+.conn-ok{background:#071A0F;color:#4ADE80;border:1px solid #22C55E}
+.conn-no{background:#1C0808;color:#F87171;border:1px solid #EF4444}
+
+/* API KEY BANNER */
+#key-banner{display:none;background:#1C1200;border:1px solid #F59E0B;border-radius:8px;padding:10px 14px;margin-bottom:12px;align-items:center;gap:8px;flex-wrap:wrap}
+#key-banner span{font-size:12px;color:#FCD34D;flex:1;min-width:160px}
+#keyInput{background:#0D1120;border:1px solid #374151;border-radius:6px;padding:5px 9px;font-size:12px;width:220px;font-family:inherit;color:#fff}
+#keyInput::placeholder{color:#4B5563}
+.save-key-btn{background:#C9A84C;color:#0D1120;border:none;border-radius:6px;padding:5px 14px;font-size:12px;cursor:pointer;font-weight:800;font-family:inherit}
+
+.chat-msgs{min-height:80px;max-height:260px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.msg{padding:10px 14px;border-radius:10px;font-size:13px;line-height:1.6;max-width:92%;white-space:pre-wrap}
+.msg-ai{background:#1A2235;color:#E2E8F0;align-self:flex-start;border:1px solid #2D3A50}
+.msg-user{background:#0D1B40;color:#fff;align-self:flex-end;border:1px solid #1E3460}
+
+.quick-btns{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.qbtn{font-size:11px;padding:5px 12px;border:1px solid #2D3A50;border-radius:99px;background:#0D1120;cursor:pointer;color:#CBD5E1;font-family:inherit;transition:border-color .15s}
+.qbtn:hover{border-color:#C9A84C;color:#C9A84C}
+
+.chat-input-row{display:flex;gap:8px}
+.chat-input-row input{flex:1;background:#1A2235;border:1px solid #2D3A50;border-radius:8px;padding:9px 14px;font-size:13px;color:#fff;font-family:inherit;outline:none}
+.chat-input-row input::placeholder{color:#4B5563}
+.chat-input-row input:focus{border-color:#C9A84C}
+.send-btn{padding:9px 20px;background:#C9A84C;color:#0D1120;border:none;border-radius:8px;font-size:13px;cursor:pointer;font-weight:800;font-family:inherit;white-space:nowrap}
+
+/* ── FOOTER ── */
+.footer{background:#0A0E1A;border-top:1px solid #1E2A40;padding:12px 20px;display:flex;justify-content:space-between;align-items:center;font-size:10px;color:#4B5563;flex-wrap:wrap;gap:6px}
+.footer strong{color:#7A8BAA}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ HEADER ═══════════ -->
+<div class="header">
+  <div class="header-left">
+    <svg width="44" height="44" viewBox="0 0 1681 1104" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+      <g transform="translate(0,1104) scale(0.1,-0.1)" fill="#ffffff" stroke="none">
+        <path d="M3170 9195 l0 -1210 1205 -1205 1205 -1205 0 1210 0 1210 -1205 1205 -1205 1205 0 -1210z"/>
+        <path d="M1815 6710 c660 -660 1201 -1200 1202 -1200 2 0 3 540 3 1200 l0 1200 -1202 0 -1203 0 1200 -1200z"/>
+        <path d="M3030 6705 l0 -1205 1207 0 1208 0 -1205 1205 c-663 663 -1206 1205 -1207 1205 -2 0 -3 -542 -3 -1205z"/>
+        <path d="M1815 4140 l-1210 -1210 1210 0 1210 0 1210 1210 1210 1210 -1210 0 -1210 0 -1210 -1210z"/>
+        <path d="M4373 4078 l-1203 -1203 0 -1210 0 -1210 1205 1205 1205 1205 -2 1208 -3 1207 -1202 -1202z"/>
+        <path d="M5954 7976 c-3 -8 -4 -196 -1 -418 4 -437 7 -464 62 -573 74 -146 243 -220 445 -194 184 23 303 130 350 314 18 72 20 111 20 482 l0 403 -75 0 -75 0 0 -372 c0 -213 -5 -401 -11 -438 -19 -119 -69 -197 -154 -243 -32 -17 -57 -22 -126 -22 -78 0 -90 3 -135 30 -27 17 -63 51 -81 78 -57 85 -63 139 -63 576 l0 391 -75 0 c-56 0 -77 -4 -81 -14z"/>
+        <path d="M8270 7395 l0 -595 75 0 75 0 0 595 0 595 -75 0 -75 0 0 -595z"/>
+        <path d="M9680 7395 l0 -595 335 0 335 0 0 65 0 65 -257 2 -258 3 0 210 0 210 233 3 232 2 0 65 0 65 -235 0 -235 0 2 183 3 182 248 3 248 2 -3 63 -3 62 -322 3 -323 2 0 -595z"/>
+        <path d="M5962 5647 c2 -12 237 -410 521 -884 l517 -861 0 -497 c0 -323 4 -503 10 -516 10 -18 24 -19 323 -19 230 0 316 3 325 12 9 9 12 136 12 510 l0 499 526 879 c289 484 522 884 519 890 -4 6 -129 10 -344 10 l-338 0 -344 -640 c-189 -351 -346 -639 -349 -640 -3 0 -163 288 -355 640 l-350 640 -339 0 -338 0 4 -23z"/>
+        <path d="M9411 5508 c-43 -90 -344 -711 -670 -1382 -326 -670 -591 -1226 -589 -1235 3 -14 36 -16 342 -16 l338 0 344 784 c189 432 346 786 348 788 2 2 161 -351 353 -784 l350 -788 490 -3 c385 -2 492 1 500 10 5 7 162 362 349 790 186 427 342 773 346 770 3 -4 160 -353 348 -777 188 -423 347 -776 352 -783 8 -9 85 -12 342 -10 291 3 331 5 334 19 2 13 -1316 2735 -1341 2767 -11 14 -59 16 -73 2 -5 -5 -265 -538 -579 -1184 -313 -647 -572 -1175 -575 -1176 -3 0 -264 532 -581 1183 l-576 1182 -37 3 -36 3 -79 -163z"/>
+        <path d="M13507 5663 c-4 -3 -7 -633 -7 -1400 l0 -1393 285 0 285 0 2 925 3 925 684 -915 c376 -503 689 -919 696 -925 8 -7 110 -9 286 -8 l274 3 0 1395 0 1395 -275 0 -275 0 -3 -922 c-1 -508 -5 -923 -10 -923 -4 1 -319 417 -700 925 l-692 925 -273 0 c-151 0 -277 -3 -280 -7z"/>
+      </g>
+    </svg>
+    <div class="h-titles">
+      <h1>Dashboard Rectoral · Universidad YAAN</h1>
+      <p>Vista ejecutiva · Actualización en tiempo real · Mayo 2026</p>
+    </div>
+  </div>
+  <div class="meta-bar">
+    <span style="font-size:11px;color:#7A8BAA;display:flex;align-items:center;gap:6px">
+      <span class="live-dot"></span> En vivo
+    </span>
+    <span style="font-size:10px;background:#071A0F;color:#4ADE80;border:1px solid #22C55E;padding:3px 10px;border-radius:99px;font-weight:700">✓ RVOE SEP</span>
+  </div>
+  <div class="header-right">
+    <p class="alumnos-total">1,847 / 2,400 alumnos activos</p>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:76.9%"></div></div>
+    <p class="progress-label">76.9% · faltan <strong style="color:#F59E0B">553 alumnos</strong> para la meta</p>
+  </div>
+</div>
+
+<!-- ═══════════ KPIs ═══════════ -->
+<div class="kpi-grid">
+  <div class="kpi">
+    <p class="kpi-label">Prospectos este mes</p>
+    <p class="kpi-val">1,247</p>
+    <p class="kpi-sub">↑ 34% vs mes anterior</p>
+  </div>
+  <div class="kpi">
+    <p class="kpi-label">Empresas B2B contactadas</p>
+    <p class="kpi-val">7,000</p>
+    <p class="kpi-sub info">10 cuentas IONOS activas</p>
+  </div>
+  <div class="kpi">
+    <p class="kpi-label">Inscripciones nuevas</p>
+    <p class="kpi-val">67</p>
+    <p class="kpi-sub warn">Tasa cierre: 5.4%</p>
+  </div>
+  <div class="kpi">
+    <p class="kpi-label">Ingresos proyectados</p>
+    <p class="kpi-val" style="font-size:22px">$1.38M</p>
+    <p class="kpi-sub info">MXN/mes · 1,847 × $750</p>
+  </div>
+</div>
+
+<!-- ═══════════ MAIN GRID ═══════════ -->
+<div class="main-grid">
+
+  <!-- EMBUDO DE CONVERSIÓN -->
+  <div class="panel">
+    <p class="panel-title"><span></span>Embudo de Conversión</p>
+    <div class="funnel-row">
+      <p class="funnel-label">Visitantes web</p>
+      <div class="funnel-bar-wrap">
+        <div class="funnel-bar" style="width:100%;background:#1E3A5F;color:#93C5FD">Visitantes web — 18,450</div>
+      </div>
+    </div>
+    <div class="funnel-row">
+      <p class="funnel-label">Prospectos captados</p>
+      <div class="funnel-bar-wrap">
+        <div class="funnel-bar" style="width:6.8%;background:#1E4D8C;color:#BFDBFE;min-width:180px">1,247 · 6.8%</div>
+      </div>
+    </div>
+    <div class="funnel-row">
+      <p class="funnel-label">Calificados por IA</p>
+      <div class="funnel-bar-wrap">
+        <div class="funnel-bar" style="width:41.9%;background:#1D4ED8;color:#fff">523 · 41.9%</div>
+      </div>
+    </div>
+    <div class="funnel-row">
+      <p class="funnel-label">Citas agendadas</p>
+      <div class="funnel-bar-wrap">
+        <div class="funnel-bar" style="width:36.1%;background:#B45309;color:#FDE68A">189 · 36.1%</div>
+      </div>
+    </div>
+    <div class="funnel-row">
+      <p class="funnel-label">Inscritos</p>
+      <div class="funnel-bar-wrap">
+        <div class="funnel-bar" style="width:35.4%;background:#15803D;color:#BBF7D0">67 · 35.4%</div>
+      </div>
+    </div>
+    <div style="margin-top:12px;padding:10px;background:#0D2818;border-radius:8px;border:1px solid #166534">
+      <p style="font-size:11px;color:#4ADE80;font-weight:700">🎯 Oportunidad: Si la tasa de cierre sube de 5.4% a 8% = <strong style="color:#fff">+27 inscripciones/mes</strong> sin aumentar captación</p>
+    </div>
+  </div>
+
+  <!-- PIPELINE B2B -->
+  <div class="panel">
+    <p class="panel-title"><span></span>Pipeline B2B — Empresas</p>
+    <div class="b2b-row">
+      <p class="b2b-stage">Empresas identificadas</p>
+      <p class="b2b-val">2,450</p>
+    </div>
+    <div class="b2b-row">
+      <p class="b2b-stage">Contactadas este mes</p>
+      <p class="b2b-val">7,000</p>
+    </div>
+    <div class="b2b-row">
+      <p class="b2b-stage">Respondieron (5%)</p>
+      <p class="b2b-val">350</p>
+    </div>
+    <div class="b2b-row">
+      <p class="b2b-stage">En negociación activa</p>
+      <p class="b2b-val" style="color:#F59E0B">42</p>
+    </div>
+    <div class="b2b-row highlight">
+      <p class="b2b-stage">✅ Convenios cerrados</p>
+      <p class="b2b-val">5 = 100 alumnos</p>
+    </div>
+    <div style="margin-top:10px;padding:10px;background:#0D1828;border-radius:8px;border:1px solid #1E3A5F">
+      <p style="font-size:11px;color:#93C5FD;font-weight:700">💡 Potencial: 42 en negociación × 20 empleados promedio = <strong style="color:#fff">840 alumnos B2B posibles</strong></p>
+    </div>
+  </div>
+
+  <!-- INSCRIPCIONES SEMANA A SEMANA -->
+  <div class="panel">
+    <p class="panel-title"><span></span>Inscripciones — Últimas 8 Semanas</p>
+    <div class="weeks-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:10px">
+      <div class="week-box">
+        <p class="week-num">Sem 14</p>
+        <p class="week-ins">6</p>
+        <p class="week-meta">Base</p>
+      </div>
+      <div class="week-box">
+        <p class="week-num">Sem 15</p>
+        <p class="week-ins">8</p>
+        <p class="week-meta">↑33%</p>
+      </div>
+      <div class="week-box">
+        <p class="week-num">Sem 16</p>
+        <p class="week-ins">9</p>
+        <p class="week-meta">↑12%</p>
+      </div>
+      <div class="week-box">
+        <p class="week-num">Sem 17</p>
+        <p class="week-ins">11</p>
+        <p class="week-meta">↑22%</p>
+      </div>
+    </div>
+    <div class="weeks-grid" style="grid-template-columns:repeat(4,1fr)">
+      <div class="week-box">
+        <p class="week-num">Sem 18</p>
+        <p class="week-ins">10</p>
+        <p class="week-meta">↓9%</p>
+      </div>
+      <div class="week-box">
+        <p class="week-num">Sem 19</p>
+        <p class="week-ins">12</p>
+        <p class="week-meta">↑20%</p>
+      </div>
+      <div class="week-box">
+        <p class="week-num">Sem 20</p>
+        <p class="week-ins">11</p>
+        <p class="week-meta">↓8%</p>
+      </div>
+      <div class="week-box current">
+        <p class="week-num" style="color:#C9A84C">Sem 21 ●</p>
+        <p class="week-ins">0</p>
+        <p class="week-meta" style="color:#F59E0B">En curso</p>
+      </div>
+    </div>
+    <div style="margin-top:12px;display:flex;justify-content:space-between;padding:0 4px">
+      <p style="font-size:11px;color:#7A8BAA">Promedio semanal: <strong style="color:#C9A84C">9.6 inscritos</strong></p>
+      <p style="font-size:11px;color:#7A8BAA">Meta sem: <strong style="color:#F59E0B">14</strong></p>
+    </div>
+  </div>
+
+  <!-- CANALES DE CAPTACIÓN -->
+  <div class="panel">
+    <p class="panel-title"><span></span>Canales de Captación</p>
+    <div class="canal-row">
+      <p class="canal-name">WhatsApp orgánico</p>
+      <div class="canal-bar-bg"><div class="canal-bar" style="width:38%;background:#25D366"></div></div>
+      <p class="canal-pct">38%</p>
+    </div>
+    <div class="canal-row">
+      <p class="canal-name">Meta Ads</p>
+      <div class="canal-bar-bg"><div class="canal-bar" style="width:27%;background:#1877F2"></div></div>
+      <p class="canal-pct">27%</p>
+    </div>
+    <div class="canal-row">
+      <p class="canal-name">Correo B2B</p>
+      <div class="canal-bar-bg"><div class="canal-bar" style="width:18%;background:#C9A84C"></div></div>
+      <p class="canal-pct">18%</p>
+    </div>
+    <div class="canal-row">
+      <p class="canal-name">Referidos</p>
+      <div class="canal-bar-bg"><div class="canal-bar" style="width:10%;background:#A855F7"></div></div>
+      <p class="canal-pct">10%</p>
+    </div>
+    <div class="canal-row">
+      <p class="canal-name">SEO / Orgánico</p>
+      <div class="canal-bar-bg"><div class="canal-bar" style="width:7%;background:#22C55E"></div></div>
+      <p class="canal-pct">7%</p>
+    </div>
+    <div style="margin-top:12px;padding:10px;background:#1C0A0A;border-radius:8px;border:1px solid #7F1D1D">
+      <p style="font-size:11px;color:#FCA5A5;font-weight:700">⚠️ SEO solo aporta 7% — con las landing pages optimizadas puede llegar a <strong style="color:#fff">20%</strong> en 90 días sin costo de pauta</p>
+    </div>
+  </div>
+
+  <!-- ALERTAS EJECUTIVAS -->
+  <div class="panel" style="grid-column:1 / -1">
+    <p class="panel-title"><span></span>Alertas Ejecutivas — Acciones Prioritarias</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div>
+        <div class="alert red">
+          <span class="alert-icon">🔴</span>
+          <p class="alert-text"><strong>Tasa de cierre 5.4% — bajo meta (8%)</strong><br>Los asesores están perdiendo 1 de cada 20 prospectos calificados. Requiere revisión de scripts de cierre esta semana.</p>
+        </div>
+        <div class="alert amber">
+          <span class="alert-icon">🟡</span>
+          <p class="alert-text"><strong>42 empresas en negociación sin avance &gt;7 días</strong><br>Lic. Fernando Torres (60 empleados) lleva 3 días sin respuesta. Acción: llamada directa del rector + envío de convenio.</p>
+        </div>
+      </div>
+      <div>
+        <div class="alert green">
+          <span class="alert-icon">🟢</span>
+          <p class="alert-text"><strong>Segmento CONAFE en máximo histórico</strong><br>523 maestros calificados este mes. El convenio con supervisión de zona puede traer 80 inscritos de golpe. Agendar reunión.</p>
+        </div>
+        <div class="alert amber">
+          <span class="alert-icon">🟡</span>
+          <p class="alert-text"><strong>Semana 21 en curso — 0 inscritos registrados</strong><br>Promedio histórico indica 9-12 para esta semana. Validar que los asesores estén marcando inscripciones en Kommo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main-grid -->
+
+<!-- ═══════════ CHAT IA ═══════════ -->
+<div class="chat-section">
+  <div class="chat-wrap">
+    <div class="chat-header">
+      <div>
+        <p class="chat-title">🤖 Chat con tus datos · IA Ejecutiva</p>
+        <p class="chat-sub">Pregunta en lenguaje natural sobre cualquier indicador del dashboard</p>
+      </div>
+      <div id="connBadge" class="conn-badge conn-no">● Sin conexión</div>
+    </div>
+
+    <!-- API KEY -->
+    <div id="key-banner">
+      <span>🔑 Ingresa tu OpenAI API key para activar la IA (se guarda solo en este navegador)</span>
+      <input id="keyInput" type="password" placeholder="sk-proj-...">
+      <button class="save-key-btn" onclick="guardarKey()">Guardar</button>
+    </div>
+
+    <div class="chat-msgs" id="chatMsgs">
+      <div class="msg msg-ai">Hola Rectora. Tengo acceso a todos los indicadores de este mes. Puedo analizar el embudo de conversión, proyectar escenarios de ingresos, evaluar el potencial B2B o identificar los cuellos de botella más urgentes. ¿Qué le gustaría revisar?</div>
+    </div>
+
+    <div class="quick-btns">
+      <button class="qbtn" onclick="quickQ('¿Cuántos alumnos más necesitamos para llegar a la meta de 2,400 y en cuántas semanas podemos lograrlo al ritmo actual?')">¿Cuántos faltan? ↗</button>
+      <button class="qbtn" onclick="quickQ('¿Cuál es el potencial máximo de alumnos si cerramos todos los convenios B2B que están en negociación actualmente?')">Potencial B2B ↗</button>
+      <button class="qbtn" onclick="quickQ('Dame 3 escenarios de ROI: si la tasa de cierre sube a 6%, 8% y 10%, ¿cuántos ingresos adicionales generamos por mes?')">ROI por escenario ↗</button>
+      <button class="qbtn" onclick="quickQ('¿Qué canal de captación tiene mejor costo-beneficio y dónde debería concentrar la inversión esta semana?')">Mejor canal ↗</button>
+      <button class="qbtn" onclick="quickQ('¿Qué acción concreta debería tomar hoy como rectora para tener el mayor impacto en las inscripciones de esta semana?')">Acción urgente ↗</button>
+    </div>
+
+    <div class="chat-input-row">
+      <input type="text" id="chatInput" placeholder="Pregúntale algo al sistema..." onkeydown="if(event.key==='Enter')enviarMsg()">
+      <button class="send-btn" onclick="enviarMsg()">Preguntar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<div class="footer">
+  <p><strong>Universidad YAAN</strong> · Dashboard Rectoral v2.0 · Motor de Automatización IA</p>
+  <p>Goodman Tech · Mayo 2026 · Datos al 24/05/2026</p>
+</div>
+
+<script>
+/* ── API KEY ── */
+const SYS = `Eres el asistente IA ejecutivo de la Rectora de la Universidad YAAN (San Luis Potosí, México).
+Tienes acceso a los siguientes datos del mes actual:
+
+MÉTRICAS GENERALES:
+- Meta de alumnos: 2,400 | Alumnos actuales: 1,847 | Faltan: 553
+- Progreso: 76.9%
+- Prospectos este mes: 1,247 (+34% vs anterior)
+- Inscripciones nuevas: 67 | Tasa de cierre: 5.4%
+- Ingresos actuales: $1.38M MXN/mes (1,847 × $750)
+
+EMBUDO DE CONVERSIÓN:
+- Visitantes web: 18,450
+- Prospectos captados: 1,247 (6.8% del tráfico)
+- Calificados por IA: 523 (41.9% de prospectos)
+- Citas agendadas: 189 (36.1% de calificados)
+- Inscritos: 67 (35.4% de citas)
+
+PIPELINE B2B:
+- Empresas identificadas: 2,450
+- Contactadas: 7,000 (10 cuentas IONOS)
+- Respondieron: 350 (5%)
+- En negociación: 42
+- Convenios cerrados: 5 = 100 alumnos
+
+CANALES: WhatsApp 38%, Meta Ads 27%, Correo B2B 18%, Referidos 10%, SEO 7%
+
+SEGMENTOS: bachillerato, carrera trunca, CONAFE (maestros), maquiladora, empresa B2B, preparatoria
+PRECIO: $750 MXN/mes | RVOE SEP oficial | Modelo ejecutivo (trabaja y estudia)
+SEMANAS: Promedio 9.6 inscritos/semana | Meta 14/semana
+
+Responde con análisis ejecutivo concreto: datos, porcentajes, proyecciones numéricas y 1-3 acciones específicas.
+Máximo 220 palabras. Sin introducción innecesaria — ve directo al punto.`;
+
+const hist = [];
+
+function getApiKey(){return localStorage.getItem('yaan_openai_key')||'';}
+
+function guardarKey(){
+  const k = document.getElementById('keyInput').value.trim();
+  if(k){
+    localStorage.setItem('yaan_openai_key', k);
+    document.getElementById('key-banner').style.display = 'none';
+    document.getElementById('connBadge').className = 'conn-badge conn-ok';
+    document.getElementById('connBadge').textContent = '● Conectada';
+    addMsg('✅ API key guardada. Lista para responder cualquier consulta ejecutiva.', 'ai');
+  }
+}
+
+window.addEventListener('load', () => {
+  if(getApiKey()){
+    document.getElementById('connBadge').className = 'conn-badge conn-ok';
+    document.getElementById('connBadge').textContent = '● Conectada';
+  } else {
+    document.getElementById('key-banner').style.display = 'flex';
+  }
+});
+
+function addMsg(txt, who){
+  const box = document.getElementById('chatMsgs');
+  const d = document.createElement('div');
+  d.className = 'msg msg-' + (who==='ai'?'ai':'user');
+  d.textContent = txt;
+  box.appendChild(d);
+  box.scrollTop = box.scrollHeight;
+  return d;
+}
+
+async function enviarMsg(){
+  const inp = document.getElementById('chatInput');
+  const q = inp.value.trim(); if(!q) return;
+  inp.value = '';
+  addMsg(q, 'user');
+  const typing = addMsg('Analizando datos...', 'ai');
+  hist.push({role:'user', content:q});
+  const key = getApiKey();
+  if(!key){typing.textContent='⚠️ Configura tu API key para activar la IA.';return;}
+  try{
+    const r = await fetch('https://api.openai.com/v1/chat/completions',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
+      body: JSON.stringify({model:'gpt-4o-mini',max_tokens:600,
+        messages:[{role:'system',content:SYS},...hist.slice(-10)]})
+    });
+    const d = await r.json();
+    const a = d.choices?.[0]?.message?.content || d.error?.message || 'Error de conexión.';
+    typing.textContent = a;
+    hist.push({role:'assistant', content:a});
+  }catch(e){typing.textContent='Error al conectar con la IA.';}
+}
+
+function quickQ(q){
+  document.getElementById('chatInput').value = q;
+  enviarMsg();
+}
+</script>
+</body>
+</html>
