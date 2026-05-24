@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sistema de Dashboards Digitales — Universidad YAAN</title>
+<style>
+  @page{size:A4;margin:0}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:#fff;color:#111827}
+
+  /* ── PORTADA ── */
+  .cover{
+    background:#0D1B40;
+    min-height:46vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:48px 60px 40px;
+    position:relative;
+    overflow:hidden;
+  }
+  .cover::before{
+    content:'';
+    position:absolute;inset:0;
+    background:radial-gradient(ellipse at 80% 20%,rgba(201,168,76,.12) 0%,transparent 60%);
+    pointer-events:none;
+  }
+  .logo-wrap{width:340px;max-width:90vw;margin-bottom:28px}
+  .logo-wrap svg g{fill:#ffffff}
+  .cover-title{
+    font-size:26px;font-weight:800;color:#fff;
+    text-align:center;letter-spacing:.01em;line-height:1.25;
+    margin-bottom:10px
+  }
+  .cover-sub{
+    font-size:13px;color:#AABBD4;text-align:center;line-height:1.6;
+    max-width:500px;margin-bottom:22px
+  }
+  .cover-badge{
+    display:inline-flex;gap:10px;align-items:center;
+    background:rgba(201,168,76,.15);border:1px solid #C9A84C;
+    border-radius:99px;padding:5px 18px;
+    font-size:11px;font-weight:700;color:#C9A84C;letter-spacing:.08em
+  }
+
+  /* ── DIVIDER ── */
+  .divider{
+    background:#F2F4F8;
+    border-top:4px solid #C9A84C;
+    padding:10px 60px 8px;
+    display:flex;align-items:center;gap:12px
+  }
+  .divider p{font-size:11px;color:#6B7280;line-height:1.5}
+  .divider strong{color:#0D1B40}
+
+  /* ── CARDS SECTION ── */
+  .section{padding:30px 50px 24px}
+  .section-title{font-size:12px;font-weight:800;color:#0D1B40;letter-spacing:.12em;text-transform:uppercase;margin-bottom:20px;padding-bottom:8px;border-bottom:2px solid #E2E8F0}
+
+  .card{
+    border:1.5px solid #E2E8F0;border-radius:14px;
+    padding:20px 24px;margin-bottom:18px;
+    display:grid;grid-template-columns:56px 1fr auto;gap:0 18px;align-items:start;
+    background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.05);
+    page-break-inside:avoid;
+  }
+  .card-icon{
+    width:52px;height:52px;border-radius:12px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:24px;flex-shrink:0;grid-row:span 3;align-self:start;margin-top:2px
+  }
+  .card-num{font-size:10px;font-weight:800;color:#9CA3AF;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+  .card-title{font-size:16px;font-weight:800;color:#0D1B40;line-height:1.2;margin-bottom:6px}
+  .card-url a{
+    display:inline-flex;align-items:center;gap:5px;
+    font-size:11px;color:#2563EB;text-decoration:none;
+    background:#EFF6FF;border:1px solid #BFDBFE;border-radius:6px;
+    padding:3px 10px;font-weight:600;letter-spacing:.01em
+  }
+  .card-url a::after{content:' ↗';font-size:10px;opacity:.7}
+  .card-body{grid-column:2;margin-top:8px}
+  .card-link-col{grid-row:span 3;align-self:start;padding-top:4px}
+
+  .desc-block{margin-top:0}
+  .desc-block p{font-size:12.5px;color:#374151;line-height:1.65;margin-bottom:8px}
+  .desc-block strong{color:#0D1B40}
+
+  .fundamento{
+    background:#FFFBEB;border-left:3px solid #C9A84C;
+    border-radius:0 8px 8px 0;padding:8px 12px;margin-top:8px
+  }
+  .fundamento p{font-size:11.5px;color:#78350F;line-height:1.55}
+  .fundamento strong{color:#92400E}
+
+  .pill{
+    display:inline-block;font-size:10px;font-weight:700;
+    border-radius:99px;padding:2px 9px;margin:3px 3px 0 0;
+  }
+  .pill-blue{background:#DBEAFE;color:#1E40AF}
+  .pill-green{background:#D1FAE5;color:#065F46}
+  .pill-purple{background:#EDE9FE;color:#5B21B6}
+  .pill-gold{background:#FEF3C7;color:#92400E}
+
+  /* ── FOOTER ── */
+  .footer{
+    background:#0D1B40;color:#AABBD4;
+    padding:16px 50px;
+    display:flex;justify-content:space-between;align-items:center;
+    font-size:10px;
+    border-top:3px solid #C9A84C;
+    margin-top:10px
+  }
+  .footer strong{color:#C9A84C}
+
+  /* ── PRINT BUTTON (oculto al imprimir) ── */
+  .print-btn{
+    position:fixed;bottom:24px;right:24px;
+    background:#0D1B40;color:#C9A84C;
+    border:2px solid #C9A84C;border-radius:10px;
+    padding:10px 20px;font-size:13px;font-weight:700;
+    cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.25);
+    z-index:999;font-family:inherit
+  }
+  @media print{
+    .print-btn{display:none}
+    .card-url a::after{content:none}
+    body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  }
+</style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">⬇ Guardar como PDF</button>
+
+<!-- ══════════════ PORTADA ══════════════ -->
+<div class="cover">
+  <div class="logo-wrap">
+    <!-- LOGO OFICIAL UNIVERSIDAD YAAN -->
+    <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+      width="100%" viewBox="0 0 1681.000000 1104.000000"
+      preserveAspectRatio="xMidYMid meet">
+      <g transform="translate(0.000000,1104.000000) scale(0.100000,-0.100000)"
+        fill="#ffffff" stroke="none">
+        <path d="M3170 9195 l0 -1210 1205 -1205 1205 -1205 0 1210 0 1210 -1205 1205 -1205 1205 0 -1210z"/>
+        <path d="M11762 7999 c-117 -20 -216 -89 -263 -185 -35 -71 -34 -189 1 -258 34 -67 99 -121 200 -168 47 -22 115 -54 152 -71 72 -33 130 -84 147 -130 17 -44 13 -114 -8 -155 -43 -85 -107 -116 -236 -115 -90 0 -188 24 -242 59 -12 8 -24 14 -26 14 -3 0 -12 -28 -22 -61 -20 -74 -18 -78 75 -110 90 -31 269 -38 360 -15 159 41 255 149 267 300 14 172 -76 281 -311 376 -167 67 -226 125 -226 219 0 62 32 115 87 148 44 26 56 28 143 27 72 0 110 -6 155 -22 32 -12 62 -19 66 -14 3 4 14 29 23 57 15 47 15 51 -1 63 -22 16 -80 32 -158 43 -71 10 -111 10 -183 -2z"/>
+        <path d="M10692 7990 c-51 -5 -104 -11 -118 -14 l-24 -6 2 -583 3 -582 75 0 75 0 3 259 2 259 103 -5 c115 -6 158 -21 204 -69 40 -42 54 -79 97 -254 52 -211 41 -195 136 -195 44 0 80 3 80 6 0 3 -5 14 -10 25 -6 10 -31 99 -56 196 -25 98 -57 200 -72 226 -26 49 -86 107 -109 107 -25 0 -13 16 21 28 53 19 122 87 153 150 24 48 28 69 28 137 -1 185 -107 287 -327 315 -90 11 -126 11 -266 0z m315 -140 c26 -11 56 -28 67 -38 54 -48 74 -178 37 -250 -46 -90 -120 -124 -283 -130 l-118 -4 0 220 0 221 38 4 c81 10 210 -1 259 -23z"/>
+        <path d="M12955 7989 c-60 -5 -120 -11 -132 -14 l-23 -5 0 -580 0 -579 23 -7 c12 -4 112 -7 222 -7 184 0 208 2 299 26 158 42 256 106 331 217 74 107 98 190 103 351 3 103 0 150 -12 200 -60 237 -231 369 -515 398 -113 12 -135 12 -296 0z m350 -135 c136 -33 239 -120 285 -241 31 -79 39 -250 16 -346 -42 -180 -162 -297 -344 -336 -29 -6 -109 -11 -177 -11 l-125 0 0 470 0 469 33 6 c91 15 223 10 312 -11z"/>
+        <path d="M15208 7990 c-54 -4 -113 -11 -133 -14 l-35 -7 0 -579 c0 -543 1 -579 18 -584 9 -2 78 -7 152 -11 381 -18 615 74 734 288 51 91 77 199 77 328 2 181 -37 299 -131 403 -97 105 -214 156 -400 176 -111 11 -135 11 -282 0z m337 -136 c210 -51 315 -196 315 -436 0 -164 -41 -279 -130 -368 -94 -95 -202 -130 -402 -130 l-128 0 0 470 0 469 33 6 c91 15 223 10 312 -11z"/>
+        <path d="M5954 7976 c-3 -8 -4 -196 -1 -418 4 -437 7 -464 62 -573 74 -146 243 -220 445 -194 184 23 303 130 350 314 18 72 20 111 20 482 l0 403 -75 0 -75 0 0 -372 c0 -213 -5 -401 -11 -438 -19 -119 -69 -197 -154 -243 -32 -17 -57 -22 -126 -22 -78 0 -90 3 -135 30 -27 17 -63 51 -81 78 -57 85 -63 139 -63 576 l0 391 -75 0 c-56 0 -77 -4 -81 -14z"/>
+        <path d="M7100 7395 l0 -596 73 3 72 3 -2 495 -2 494 45 -88 c56 -108 74 -138 342 -563 l215 -343 79 0 78 0 0 595 0 596 -72 -3 -73 -3 0 -400 c1 -220 4 -440 8 -490 l7 -90 -62 119 c-35 66 -169 286 -299 490 l-236 371 -87 3 -86 3 0 -596z"/>
+        <path d="M8270 7395 l0 -595 75 0 75 0 0 595 0 595 -75 0 -75 0 0 -595z"/>
+        <path d="M8570 7979 c0 -6 86 -274 192 -595 l192 -584 82 0 c46 0 85 4 88 9 7 10 426 1170 426 1177 0 3 -37 4 -82 2 l-83 -3 -122 -350 c-66 -192 -140 -413 -163 -490 -23 -77 -45 -149 -49 -159 -5 -14 -15 13 -36 90 -15 60 -85 289 -155 509 l-128 400 -81 3 c-57 2 -81 -1 -81 -9z"/>
+        <path d="M9680 7395 l0 -595 335 0 335 0 0 65 0 65 -257 2 -258 3 0 210 0 210 233 3 232 2 0 65 0 65 -235 0 -235 0 2 183 3 182 248 3 248 2 -3 63 -3 62 -322 3 -323 2 0 -595z"/>
+        <path d="M12380 7395 l0 -595 75 0 75 0 0 595 0 595 -75 0 -75 0 0 -595z"/>
+        <path d="M14275 7980 c-6 -10 -405 -1168 -405 -1176 0 -2 36 -4 79 -4 l79 0 64 188 63 187 210 0 210 0 65 -187 65 -188 83 0 c75 0 83 2 78 18 -4 9 -95 276 -205 592 l-198 575 -91 3 c-55 2 -93 -1 -97 -8z m213 -523 c29 -82 52 -151 52 -153 0 -2 -79 -4 -175 -4 -96 0 -175 1 -175 3 0 2 31 95 69 208 37 112 76 235 86 272 l18 69 37 -124 c20 -67 60 -190 88 -271z"/>
+        <path d="M1815 6710 c660 -660 1201 -1200 1202 -1200 2 0 3 540 3 1200 l0 1200 -1202 0 -1203 0 1200 -1200z"/>
+        <path d="M3030 6705 l0 -1205 1207 0 1208 0 -1205 1205 c-663 663 -1206 1205 -1207 1205 -2 0 -3 -542 -3 -1205z"/>
+        <path d="M5950 6360 l0 -60 60 0 60 0 0 -60 0 -59 -57 -3 -58 -3 0 -60 0 -60 57 -3 57 -3 3 63 3 63 60 0 60 0 3 -63 3 -63 57 3 57 3 0 60 0 60 -57 3 -58 3 0 59 0 60 60 0 60 0 0 60 0 60 -60 0 -60 0 0 -60 0 -60 -65 0 -65 0 0 60 0 60 -60 0 -60 0 0 -60z"/>
+        <path d="M6440 6360 l0 -59 58 -3 57 -3 3 -57 3 -58 -61 0 -60 0 0 -65 0 -65 60 0 60 0 0 65 0 65 60 0 60 0 0 -65 0 -65 60 0 60 0 0 65 0 65 -60 0 -61 0 3 58 3 57 58 3 57 3 0 59 0 60 -60 0 -60 0 0 -60 0 -60 -60 0 -60 0 0 60 0 60 -60 0 -60 0 0 -60z"/>
+        <path d="M6920 6360 l0 -60 60 0 60 0 0 -60 0 -59 -57 -3 -58 -3 0 -60 0 -60 57 -3 57 -3 3 63 3 63 60 0 60 0 3 -63 3 -63 57 3 57 3 0 60 0 60 -57 3 -58 3 0 59 0 60 60 0 60 0 0 60 0 60 -60 0 -60 0 0 -60 0 -60 -65 0 -65 0 0 60 0 60 -60 0 -60 0 0 -60z"/>
+        <path d="M7410 6360 l0 -60 60 0 60 0 0 -60 0 -60 -60 0 -60 0 0 -65 0 -65 60 0 59 0 3 63 3 62 58 3 57 3 0 -66 0 -65 60 0 60 0 0 65 0 65 -60 0 -61 0 3 58 3 57 58 3 57 3 0 59 0 60 -60 0 -60 0 0 -60 0 -60 -60 0 -60 0 0 60 0 60 -60 0 -60 0 0 -60z"/>
+        <path d="M7890 6360 l0 -59 63 -3 62 -3 3 -57 3 -57 -63 -3 -63 -3 0 -60 0 -60 60 0 60 0 3 63 3 63 57 -3 57 -3 3 -62 3 -63 59 0 60 0 0 65 0 65 -60 0 -60 0 0 60 0 60 60 0 60 0 0 60 0 60 -60 0 -60 0 0 -60 0 -60 -60 0 -60 0 0 60 0 60 -65 0 -65 0 0 -60z"/>
+        <path d="M8380 6360 l0 -60 60 0 60 0 0 -60 0 -60 -60 0 -60 0 0 -65 0 -65 60 0 59 0 3 63 3 62 58 3 57 3 0 -66 0 -65 60 0 60 0 0 65 0 65 -60 0 -61 0 3 58 3 57 58 3 57 3 0 59 0 60 -60 0 -60 0 0 -60 0 -60 -60 0 -60 0 0 60 0 60 -60 0 -60 0 0 -60z"/>
+        <path d="M8860 6360 l0 -59 63 -3 62 -3 3 -57 3 -57 -63 -3 -63 -3 0 -60 0 -60 60 0 60 0 3 63 3 63 57 -3 57 -3 3 -62 3 -63 59 0 60 0 0 65 0 65 -60 0 -60 0 0 60 0 60 60 0 60 0 0 60 0 60 -60 0 -60 0 0 -60 0 -60 -60 0 -60 0 0 60 0 60 -65 0 -65 0 0 -60z"/>
+        <path d="M9350 6360 l0 -60 60 0 60 0 0 -60 0 -60 -60 0 -60 0 0 -65 0 -65 60 0 59 0 3 63 3 62 57 3 57 3 3 -63 3 -63 58 -3 57 -3 0 66 0 65 -60 0 -61 0 3 58 3 57 58 3 57 3 0 59 0 60 -60 0 -60 0 0 -60 0 -60 -60 0 -60 0 0 60 0 60 -60 0 -60 0 0 -60z"/>
+        <path d="M9840 6360 l0 -59 58 -3 57 -3 3 -57 3 -58 -61 0 -60 0 0 -65 0 -66 58 3 57 3 3 63 3 63 57 -3 57 -3 3 -62 3 -63 59 0 60 0 0 65 0 65 -60 0 -60 0 0 60 0 60 60 0 60 0 0 60 0 60 -60 0 -60 0 0 -60 0 -60 -60 0 -60 0 0 60 0 60 -60 0 -60 0 0 -60z"/>
+        <path d="M10320 6360 l0 -60 60 0 60 0 0 -60 0 -60 -60 0 -60 0 0 -65 0 -65 60 0 59 0 3 63 3 62 57 3 57 3 3 -63 3 -63 60 0 60 0 0 60 0 60 -63 3 -63 3 3 57 3 57 63 3 62 3 0 59 0 60 -65 0 -65 0 0 -60 0 -60 -60 0 -60 0 0 60 0 60 -60 0 -60 0 0 -60z"/>
+        <path d="M10810 6360 l0 -59 58 -3 57 -3 3 -57 3 -58 -61 0 -60 0 0 -65 0 -65 60 0 60 0 0 65 0 66 58 -3 57 -3 3 -62 3 -63 59 0 60 0 0 65 0 65 -60 0 -60 0 0 60 0 60 60 0 60 0 0 60 0 60 -60 0 -60 0 0 -60 0 -60 -60 0 -60 0 0 60 0 60 -60 0 -60 0 0 -60z"/>
+        <path d="M11290 6360 l0 -60 60 0 60 0 0 -60 0 -60 -60 0 -60 0 0 -65 0 -65 60 0 59 0 3 63 3 62 57 3 57 3 3 -63 3 -63 60 0 60 0 0 60 0 60 -63 3 -63 3 3 57 3 57 63 3 62 3 0 59 0 60 -65 0 -65 0 0 -60 0 -60 -60 0 -60 0 0 60 0 60 -60 0 -60 0 0 -60z"/>
+        <path d="M11780 6360 l0 -59 58 -3 57 -3 3 -57 3 -58 -61 0 -60 0 0 -65 0 -65 60 0 60 0 0 65 0 65 60 0 60 0 0 -65 0 -65 60 0 60 0 0 65 0 65 -60 0 -61 0 3 58 3 57 58 3 57 3 0 59 0 60 -60 0 -60 0 0 -60 0 -60 -60 0 -60 0 0 60 0 60 -60 0 -60 0 0 -60z"/>
+        <path d="M12260 6360 l0 -60 60 0 60 0 0 -60 0 -59 -57 -3 -58 -3 0 -60 0 -60 57 -3 57 -3 3 63 3 63 60 0 60 0 3 -63 3 -63 57 3 57 3 0 60 0 60 -57 3 -58 3 0 59 0 60 60 0 60 0 0 60 0 60 -60 0 -60 0 0 -60 0 -60 -65 0 -65 0 0 60 0 60 -60 0 -60 0 0 -60z"/>
+        <path d="M12750 6360 l0 -59 58 -3 57 -3 3 -57 3 -58 -61 0 -60 0 0 -65 0 -65 60 0 60 0 0 65 0 65 60 0 60 0 0 -65 0 -65 60 0 60 0 0 65 0 65 -60 0 -61 0 3 58 3 57 58 3 57 3 0 59 0 60 -60 0 -60 0 0 -60 0 -60 -60 0 -60 0 0 60 0 60 -60 0 -60 0 0 -60z"/>
+        <path d="M13230 6360 l0 -60 60 0 60 0 0 -60 0 -59 -57 -3 -58 -3 0 -60 0 -60 57 -3 57 -3 3 63 3 63 60 0 60 0 3 -62 3 -63 59 0 60 0 0 65 0 65 -60 0 -60 0 0 60 0 60 60 0 60 0 0 60 0 60 -60 0 -60 0 0 -60 0 -60 -65 0 -65 0 0 60 0 60 -60 0 -60 0 0 -60z"/>
+        <path d="M13720 6360 l0 -60 60 0 60 0 0 -60 0 -60 -60 0 -60 0 0 -65 0 -65 60 0 59 0 3 63 3 62 58 3 57 3 0 -66 0 -65 60 0 60 0 0 65 0 65 -60 0 -61 0 3 58 3 57 58 3 57 3 0 59 0 60 -60 0 -60 0 0 -60 0 -60 -60 0 -60 0 0 60 0 60 -60 0 -60 0 0 -60z"/>
+        <path d="M14200 6360 l0 -59 63 -3 62 -3 3 -57 3 -57 -63 -3 -63 -3 0 -60 0 -60 60 0 60 0 3 63 3 63 57 -3 57 -3 3 -62 3 -63 59 0 60 0 0 65 0 65 -60 0 -60 0 0 60 0 60 60 0 60 0 0 60 0 60 -60 0 -60 0 0 -60 0 -60 -60 0 -60 0 0 60 0 60 -65 0 -65 0 0 -60z"/>
+        <path d="M14690 6360 l0 -60 60 0 60 0 0 -60 0 -60 -60 0 -60 0 0 -65 0 -65 60 0 59 0 3 63 3 62 58 3 57 3 0 -66 0 -65 60 0 60 0 0 65 0 65 -60 0 -61 0 3 58 3 57 58 3 57 3 0 59 0 60 -60 0 -60 0 0 -60 0 -60 -60 0 -60 0 0 60 0 60 -60 0 -60 0 0 -60z"/>
+        <path d="M15180 6360 l0 -59 58 -3 57 -3 3 -57 3 -58 -61 0 -60 0 0 -65 0 -66 58 3 57 3 3 63 3 63 57 -3 57 -3 3 -62 3 -63 59 0 60 0 0 65 0 65 -60 0 -60 0 0 60 0 60 60 0 60 0 0 60 0 60 -60 0 -60 0 0 -60 0 -60 -60 0 -60 0 0 60 0 60 -60 0 -60 0 0 -60z"/>
+        <path d="M15660 6360 l0 -60 60 0 60 0 0 -60 0 -60 -60 0 -60 0 0 -65 0 -65 60 0 59 0 3 63 3 62 57 3 57 3 3 -63 3 -63 58 -3 57 -3 0 66 0 65 -60 0 -61 0 3 58 3 57 58 3 57 3 0 59 0 60 -60 0 -60 0 0 -60 0 -60 -60 0 -60 0 0 60 0 60 -60 0 -60 0 0 -60z"/>
+        <path d="M5962 5647 c2 -12 237 -410 521 -884 l517 -861 0 -497 c0 -323 4 -503 10 -516 10 -18 24 -19 323 -19 230 0 316 3 325 12 9 9 12 136 12 510 l0 499 526 879 c289 484 522 884 519 890 -4 6 -129 10 -344 10 l-338 0 -344 -640 c-189 -351 -346 -639 -349 -640 -3 0 -163 288 -355 640 l-350 640 -339 0 -338 0 4 -23z"/>
+        <path d="M7033 5548 c40 -68 124 -210 187 -315 63 -106 117 -190 121 -185 7 6 336 560 360 605 9 16 -11 17 -365 17 l-375 0 72 -122z"/>
+        <path d="M9411 5508 c-43 -90 -344 -711 -670 -1382 -326 -670 -591 -1226 -589 -1235 3 -14 36 -16 342 -16 l338 0 344 784 c189 432 346 786 348 788 2 2 161 -351 353 -784 l350 -788 490 -3 c385 -2 492 1 500 10 5 7 162 362 349 790 186 427 342 773 346 770 3 -4 160 -353 348 -777 188 -423 347 -776 352 -783 8 -9 85 -12 342 -10 291 3 331 5 334 19 2 13 -1316 2735 -1341 2767 -11 14 -59 16 -73 2 -5 -5 -265 -538 -579 -1184 -313 -647 -572 -1175 -575 -1176 -3 0 -264 532 -581 1183 l-576 1182 -37 3 -36 3 -79 -163z"/>
+        <path d="M13507 5663 c-4 -3 -7 -633 -7 -1400 l0 -1393 285 0 285 0 2 925 3 925 684 -915 c376 -503 689 -919 696 -925 8 -7 110 -9 286 -8 l274 3 0 1395 0 1395 -275 0 -275 0 -3 -922 c-1 -508 -5 -923 -10 -923 -4 1 -319 417 -700 925 l-692 925 -273 0 c-151 0 -277 -3 -280 -7z"/>
+        <path d="M1815 4140 l-1210 -1210 1210 0 1210 0 1210 1210 1210 1210 -1210 0 -1210 0 -1210 -1210z"/>
+        <path d="M4373 4078 l-1203 -1203 0 -1210 0 -1210 1205 1205 1205 1205 -2 1208 -3 1207 -1202 -1202z"/>
+        <path d="M9433 3239 c-89 -44 -130 -167 -85 -255 24 -47 67 -89 105 -103 63 -24 163 -6 210 37 72 65 76 208 8 286 -49 56 -161 73 -238 35z"/>
+        <path d="M11825 3243 c-77 -40 -108 -92 -109 -181 0 -53 5 -68 30 -104 113 -161 365 -85 364 109 -1 73 -58 158 -123 182 -41 16 -127 13 -162 -6z"/>
+      </g>
+    </svg>
+  </div>
+
+  <h1 class="cover-title">Sistema de Dashboards Digitales<br>para la Gestión Institucional</h1>
+  <p class="cover-sub">Herramientas de seguimiento en tiempo real para el equipo de ventas, marketing y generación de contenido de la Universidad YAAN — potenciadas por Inteligencia Artificial.</p>
+  <div class="cover-badge">
+    <span>✓ RVOE SEP OFICIAL</span>
+    <span style="opacity:.4">|</span>
+    <span>San Luis Potosí</span>
+    <span style="opacity:.4">|</span>
+    <span>Mayo 2026</span>
+  </div>
+</div>
+
+<!-- ══════════════ NOTA INFORMATIVA ══════════════ -->
+<div class="divider">
+  <div style="width:28px;height:28px;background:#0D1B40;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+    <span style="color:#C9A84C;font-size:14px;font-weight:900">i</span>
+  </div>
+  <p>Este documento presenta los <strong>3 dashboards operativos</strong> del Motor de Automatización IA de YAAN. Cada enlace da acceso directo a la herramienta en línea. Los dashboards funcionan desde cualquier dispositivo con navegador — no requieren instalación.</p>
+</div>
+
+<!-- ══════════════ CARDS ══════════════ -->
+<div class="section">
+  <p class="section-title">Herramientas disponibles — Acceso directo</p>
+
+  <!-- CARD 1 — VENDEDORES -->
+  <div class="card">
+    <div class="card-icon" style="background:#EFF6FF">🤝</div>
+    <div>
+      <p class="card-num">Dashboard 01</p>
+      <p class="card-title">Seguimiento de Prospectos — Equipo de Ventas</p>
+    </div>
+    <div class="card-link-col">
+      <div class="card-url">
+        <a href="https://iaingenieria.github.io/yaan-dashboards/vendedores.html" target="_blank">
+          Abrir dashboard
+        </a>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="desc-block">
+        <p>Panel operativo para los <strong>asesores de ventas</strong> de la Universidad YAAN. Muestra cada prospecto en formato de tarjeta con nombre, carrera de interés, canal de llegada (WhatsApp, Facebook, referido, etc.), etapa actual en el pipeline y el mensaje más reciente que dejó el contacto.</p>
+        <p>Incluye el pipeline completo de <strong>Kommo CRM</strong> en formato kanban: <em>Nuevo → Contactado → Calificado → Cita Agendada → Inscrito → Perdido</em>. Permite filtrar por segmento: bachillerato, carrera trunca, CONAFE, maquiladora, empresa B2B y preparatoria.</p>
+        <p>Cuenta con un <strong>asistente IA de ventas</strong> integrado que genera scripts de llamada por segmento, manejo de objeciones de precio o tiempo, estrategias para prospectos sin respuesta y argumentos para directores de preparatoria.</p>
+      </div>
+      <div class="fundamento">
+        <p><strong>Fundamento para ventas:</strong> Un asesor sin herramienta visual pierde entre el 30 y 40% de prospectos por falta de seguimiento oportuno. Este dashboard reduce el tiempo de reacción de horas a minutos, estandariza el proceso de cierre y elimina el "se me olvidó llamar". La IA sugiere la acción exacta para cada perfil — el asesor solo ejecuta.</p>
+      </div>
+      <div style="margin-top:8px">
+        <span class="pill pill-blue">Pipeline Kommo</span>
+        <span class="pill pill-green">IA de ventas</span>
+        <span class="pill pill-gold">6 segmentos</span>
+        <span class="pill pill-purple">Agenda del día</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 2 — MARKETING -->
+  <div class="card">
+    <div class="card-icon" style="background:#F0FDF4">📊</div>
+    <div>
+      <p class="card-num">Dashboard 02</p>
+      <p class="card-title">Marketing — Operaciones y Aprobaciones</p>
+    </div>
+    <div class="card-link-col">
+      <div class="card-url">
+        <a href="https://iaingenieria.github.io/yaan-dashboards/marketing.html" target="_blank">
+          Abrir dashboard
+        </a>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="desc-block">
+        <p>Panel de control para el área de <strong>marketing operativo</strong> de YAAN. Centraliza la revisión y aprobación de piezas de contenido (carruseles de Instagram, reels, captions), el estado de las <strong>campañas de correo electrónico B2B</strong> enviadas a empresas, preparatorias y directores.</p>
+        <p>Incluye el módulo de <strong>embajadores TikTok</strong> con seguimiento de cada creador: videos entregados, pendientes, vistas generadas y estatus de contrato. También muestra un radar de tendencias de búsqueda con las palabras clave más activas de la semana relacionadas con educación superior en SLP.</p>
+        <p>El <strong>asistente IA de marketing</strong> genera captions listos para publicar, hooks de TikTok orientados al pain point de cada segmento, ideas de carrusel y guiones para videos cortos.</p>
+      </div>
+      <div class="fundamento">
+        <p><strong>Fundamento para ventas:</strong> El contenido digital es el primer punto de contacto con el prospecto antes de que llame. Un equipo que aprueba piezas en menos de 24 horas y monitorea tendencias en tiempo real captura oportunidades que la competencia pierde. La IA elimina el tiempo de redacción — el equipo solo aprueba o ajusta.</p>
+      </div>
+      <div style="margin-top:8px">
+        <span class="pill pill-blue">Aprobación de piezas</span>
+        <span class="pill pill-green">Correo B2B</span>
+        <span class="pill pill-gold">TikTok embajadores</span>
+        <span class="pill pill-purple">Tendencias SEO</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 3 — CONTENIDO -->
+  <div class="card">
+    <div class="card-icon" style="background:#FFF7ED">✍️</div>
+    <div>
+      <p class="card-num">Dashboard 03</p>
+      <p class="card-title">Generación de Contenido — SEO y Posicionamiento</p>
+    </div>
+    <div class="card-link-col">
+      <div class="card-url">
+        <a href="https://iaingenieria.github.io/yaan-dashboards/contenido.html" target="_blank">
+          Abrir dashboard
+        </a>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="desc-block">
+        <p>Panel de gestión de la <strong>estrategia de contenido orgánico</strong> de YAAN. Muestra las keywords de mayor potencial analizadas por la IA (volumen de búsqueda, intención, nivel de competencia) y permite aprobar cuáles se trabajarán en la semana.</p>
+        <p>Gestiona la estructura de <strong>landing pages</strong> por carrera y sede (Derecho SLP, Mecatrónica Ciudad Valles, Maestría Educación, etc.) antes de que el sistema las genere y publique. También controla la cola de <strong>artículos de blog</strong> con su outline completo (H1, H2, palabras clave, backlinks internos y meta description).</p>
+        <p>El <strong>asistente IA de contenido</strong> sugiere nuevas keywords por carrera, propone títulos de blog basados en búsquedas reales y analiza qué está haciendo la competencia.</p>
+      </div>
+      <div class="fundamento">
+        <p><strong>Fundamento para ventas:</strong> El 68% de los prospectos de YAAN investigan en Google antes de contactar. Una landing page bien posicionada por carrera genera leads sin costo publicitario. Este dashboard asegura que el equipo apruebe cada pieza antes de publicarla — calidad + velocidad. Un blog bien optimizado puede traer entre 15 y 40 leads orgánicos por mes por carrera.</p>
+      </div>
+      <div style="margin-top:8px">
+        <span class="pill pill-blue">Keywords por carrera</span>
+        <span class="pill pill-green">Landing pages</span>
+        <span class="pill pill-gold">Blog SEO</span>
+        <span class="pill pill-purple">Cola de generación</span>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /section -->
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<div class="footer">
+  <div>
+    <p><strong>Universidad YAAN</strong> — Sistema de Dashboards Digitales v1.0</p>
+    <p style="margin-top:2px;opacity:.7">Desarrollado por Goodman Tech · Motor de Automatización IA · Mayo 2026</p>
+  </div>
+  <div style="text-align:right">
+    <p><strong>Acceso central:</strong></p>
+    <p style="margin-top:2px;opacity:.7">iaingenieria.github.io/yaan-dashboards</p>
+  </div>
+</div>
+
+</body>
+</html>
