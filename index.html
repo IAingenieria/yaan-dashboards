@@ -2,57 +2,102 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Universidad YAAN — Dashboards</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Universidad YAAN — Centro de Dashboards</title>
 <style>
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{background:#F2F4F8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px}
-  .logo-bar{display:flex;align-items:center;gap:14px;background:#fff;border-radius:12px;padding:14px 20px;margin-bottom:32px;box-shadow:0 1px 4px rgba(0,0,0,.08);border:1px solid #E5E7EB;width:100%;max-width:480px}
-  .logo-text p{margin:0}
-  .cards{display:flex;flex-direction:column;gap:16px;width:100%;max-width:480px}
-  .card{background:#fff;border:1px solid #E2E8F0;border-radius:12px;padding:20px 22px;box-shadow:0 1px 3px rgba(0,0,0,.06);text-decoration:none;display:flex;align-items:center;gap:16px;transition:box-shadow .15s,transform .15s}
-  .card:hover{box-shadow:0 4px 12px rgba(0,0,0,.12);transform:translateY(-2px)}
-  .card-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
-  .card-body h2{font-size:15px;font-weight:700;color:#0D1B40;margin-bottom:3px}
-  .card-body p{font-size:12px;color:#6B7280;line-height:1.4}
-  .badge{margin-left:auto;background:#0D1B40;color:#C9A84C;padding:3px 10px;border-radius:99px;font-size:10px;font-weight:700;white-space:nowrap}
-  footer{margin-top:28px;font-size:11px;color:#9CA3AF}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#F2F4F8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;min-height:100vh;padding:28px 20px 40px;display:flex;flex-direction:column;align-items:center}
+
+/* HEADER */
+.header{display:flex;align-items:center;gap:16px;background:#fff;border-radius:14px;padding:16px 22px;margin-bottom:28px;box-shadow:0 1px 6px rgba(0,0,0,.08);border:1px solid #E5E7EB;width:100%;max-width:580px}
+.logo-txt p{margin:0}
+.header-right{margin-left:auto;text-align:right}
+
+/* SECTION LABEL */
+.section-label{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#9CA3AF;margin-bottom:10px;width:100%;max-width:580px}
+
+/* CARDS */
+.cards{display:flex;flex-direction:column;gap:12px;width:100%;max-width:580px;margin-bottom:20px}
+.card{background:#fff;border:1px solid #E2E8F0;border-radius:12px;padding:16px 18px;box-shadow:0 1px 4px rgba(0,0,0,.05);text-decoration:none;display:flex;align-items:center;gap:14px;transition:box-shadow .15s,transform .15s}
+.card:hover{box-shadow:0 4px 14px rgba(0,0,0,.1);transform:translateY(-2px)}
+.card-icon{width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.card-body h2{font-size:14px;font-weight:700;color:#0D1B40;margin-bottom:3px}
+.card-body p{font-size:11px;color:#6B7280;line-height:1.45}
+.badge{margin-left:auto;flex-shrink:0;background:#0D1B40;color:#C9A84C;padding:3px 11px;border-radius:99px;font-size:10px;font-weight:700;white-space:nowrap}
+.badge-gold{background:#FFFBEB;color:#92400E;border:1px solid #FDE68A}
+
+/* RECTORAL CARD — doble botón */
+.card-rector{background:#fff;border:1.5px solid #C9A84C;border-radius:12px;padding:16px 18px;box-shadow:0 2px 10px rgba(201,168,76,.12);display:flex;align-items:center;gap:14px}
+.mode-btns{display:flex;gap:6px;margin-left:auto;flex-shrink:0}
+.mbtn{font-size:11px;font-weight:700;padding:5px 13px;border-radius:99px;text-decoration:none;border:1.5px solid;transition:all .15s;white-space:nowrap}
+.mbtn-day{background:#F2F4F8;color:#0D1B40;border-color:#CBD5E1}
+.mbtn-day:hover{background:#0D1B40;color:#fff;border-color:#0D1B40}
+.mbtn-night{background:#0D1B40;color:#C9A84C;border-color:#0D1B40}
+.mbtn-night:hover{background:#162447;border-color:#C9A84C}
+
+/* PORTADA LINK */
+.portada-link{display:flex;align-items:center;gap:10px;background:#0D1B40;border-radius:10px;padding:12px 18px;text-decoration:none;width:100%;max-width:580px;margin-bottom:8px;transition:opacity .15s}
+.portada-link:hover{opacity:.88}
+.portada-link span{font-size:13px;font-weight:700;color:#fff}
+.portada-link small{font-size:11px;color:#AABBD4}
+
+footer{margin-top:24px;font-size:10px;color:#9CA3AF;text-align:center}
 </style>
 </head>
 <body>
 
-<div class="logo-bar">
-  <svg width="46" height="46" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-    <g stroke="white" stroke-width="3.5" stroke-linejoin="round">
-      <polygon points="50,50 90,10 90,50" fill="#E02844"/>
-      <polygon points="50,50 50,10 90,10" fill="#C06070"/>
-      <polygon points="50,50 90,50 90,90" fill="#E02844"/>
-      <polygon points="50,50 90,90 50,90" fill="#C06070"/>
-      <polygon points="50,50 10,90 10,50" fill="#E02844"/>
-      <polygon points="50,50 50,90 10,90" fill="#C06070"/>
-      <polygon points="50,50 10,10 50,10" fill="#E02844"/>
-      <polygon points="50,50 10,50 10,10" fill="#C06070"/>
+<!-- HEADER LOGO -->
+<div class="header">
+  <svg width="48" height="48" viewBox="0 0 1681 1104" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+    <g transform="translate(0,1104) scale(0.1,-0.1)" fill="#0D1B40" stroke="none">
+      <path d="M3170 9195 l0 -1210 1205 -1205 1205 -1205 0 1210 0 1210 -1205 1205 -1205 1205 0 -1210z"/>
+      <path d="M1815 6710 c660 -660 1201 -1200 1202 -1200 2 0 3 540 3 1200 l0 1200 -1202 0 -1203 0 1200 -1200z"/>
+      <path d="M3030 6705 l0 -1205 1207 0 1208 0 -1205 1205 c-663 663 -1206 1205 -1207 1205 -2 0 -3 -542 -3 -1205z"/>
+      <path d="M1815 4140 l-1210 -1210 1210 0 1210 0 1210 1210 1210 1210 -1210 0 -1210 0 -1210 -1210z"/>
+      <path d="M4373 4078 l-1203 -1203 0 -1210 0 -1210 1205 1205 1205 1205 -2 1208 -3 1207 -1202 -1202z"/>
+      <path d="M5962 5647 c2 -12 237 -410 521 -884 l517 -861 0 -497 c0 -323 4 -503 10 -516 10 -18 24 -19 323 -19 230 0 316 3 325 12 9 9 12 136 12 510 l0 499 526 879 c289 484 522 884 519 890 -4 6 -129 10 -344 10 l-338 0 -344 -640 c-189 -351 -346 -639 -349 -640 -3 0 -163 288 -355 640 l-350 640 -339 0 -338 0 4 -23z"/>
+      <path d="M9411 5508 c-43 -90 -344 -711 -670 -1382 -326 -670 -591 -1226 -589 -1235 3 -14 36 -16 342 -16 l338 0 344 784 c189 432 346 786 348 788 2 2 161 -351 353 -784 l350 -788 490 -3 c385 -2 492 1 500 10 5 7 162 362 349 790 186 427 342 773 346 770 3 -4 160 -353 348 -777 188 -423 347 -776 352 -783 8 -9 85 -12 342 -10 291 3 331 5 334 19 2 13 -1316 2735 -1341 2767 -11 14 -59 16 -73 2 -5 -5 -265 -538 -579 -1184 -313 -647 -572 -1175 -575 -1176 -3 0 -264 532 -581 1183 l-576 1182 -37 3 -36 3 -79 -163z"/>
+      <path d="M13507 5663 c-4 -3 -7 -633 -7 -1400 l0 -1393 285 0 285 0 2 925 3 925 684 -915 c376 -503 689 -919 696 -925 8 -7 110 -9 286 -8 l274 3 0 1395 0 1395 -275 0 -275 0 -3 -922 c-1 -508 -5 -923 -10 -923 -4 1 -319 417 -700 925 l-692 925 -273 0 c-151 0 -277 -3 -280 -7z"/>
     </g>
   </svg>
-  <div class="logo-text">
+  <div class="logo-txt">
     <p style="font-size:9px;font-weight:800;color:#0D1B40;letter-spacing:.18em">UNIVERSIDAD</p>
-    <p style="font-size:8px;color:#0D1B40">▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪</p>
-    <p style="font-size:24px;font-weight:900;color:#E02844;letter-spacing:.06em;line-height:1">Y.A.A.N</p>
+    <p style="font-size:8px;color:#0D1B40">▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪ ▪</p>
+    <p style="font-size:26px;font-weight:900;color:#E02844;letter-spacing:.06em;line-height:1">Y.A.A.N</p>
   </div>
-  <div style="margin-left:auto;text-align:right">
-    <p style="font-size:11px;font-weight:600;color:#0D1B40">Panel de Dashboards</p>
-    <p style="font-size:10px;color:#9CA3AF">Mayo 2026</p>
+  <div class="header-right">
+    <p style="font-size:12px;font-weight:700;color:#0D1B40">Centro de Dashboards</p>
+    <p style="font-size:10px;color:#9CA3AF;margin-top:2px">Motor IA · Mayo 2026</p>
+    <p style="font-size:10px;margin-top:4px;background:#F0FDF4;color:#16A34A;border:1px solid #86EFAC;border-radius:99px;padding:2px 8px;display:inline-block;font-weight:700">✓ RVOE SEP</p>
   </div>
 </div>
 
+<!-- RECTORÍA -->
+<p class="section-label">📌 Rectoría — Vista ejecutiva</p>
+<div class="cards">
+  <div class="card-rector">
+    <div class="card-icon" style="background:#0D1B40;font-size:20px">🏛️</div>
+    <div class="card-body">
+      <h2 style="color:#0D1B40">Dashboard Rectoral</h2>
+      <p>KPIs de matrícula, embudo, pipeline B2B, canales, gráficas Chart.js e IA ejecutiva</p>
+    </div>
+    <div class="mode-btns">
+      <a class="mbtn mbtn-day" href="rectoral-dia.html">☀️ Día</a>
+      <a class="mbtn mbtn-night" href="rectoral-noche.html">🌙 Noche</a>
+    </div>
+  </div>
+</div>
+
+<!-- OPERACIONES -->
+<p class="section-label">⚙️ Operaciones — Equipo interno</p>
 <div class="cards">
   <a class="card" href="marketing.html">
     <div class="card-icon" style="background:#EFF6FF">📊</div>
     <div class="card-body">
       <h2>Marketing — Operaciones</h2>
-      <p>Aprobaciones, correos, embajadores TikTok, tendencias y asistente IA</p>
+      <p>Aprobaciones de contenido, correos B2B, embajadores TikTok, tendencias e IA asistente</p>
     </div>
-    <span class="badge">Alejandro</span>
+    <span class="badge">Marketing</span>
   </a>
 
   <a class="card" href="contenido.html">
@@ -61,7 +106,7 @@
       <h2>Generación de Contenido — SEO</h2>
       <p>Keywords, landing pages, blogs, cola de generación e IA sugerencias</p>
     </div>
-    <span class="badge">Alejandro</span>
+    <span class="badge">SEO</span>
   </a>
 
   <a class="card" href="vendedores.html">
@@ -74,7 +119,16 @@
   </a>
 </div>
 
-<footer>Universidad YAAN · RVOE SEP · Uso interno — Goodman Tech</footer>
+<!-- PORTADA PDF -->
+<a class="portada-link" href="portada.html" target="_blank">
+  <span style="font-size:20px">📄</span>
+  <div>
+    <span>Portada institucional</span><br>
+    <small>Documento con hipervínculos a todos los dashboards · Guardar como PDF</small>
+  </div>
+  <span style="margin-left:auto;font-size:18px">↗</span>
+</a>
 
+<footer>Universidad YAAN · RVOE SEP · Sistema de Dashboards Digitales · Goodman Tech · Mayo 2026</footer>
 </body>
 </html>
