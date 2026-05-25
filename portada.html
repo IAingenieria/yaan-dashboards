@@ -104,29 +104,15 @@
   .pill-gold{background:#FEF3C7;color:#92400E}
   .pill-navy{background:#DBEAFE;color:#1e3a5f}
 
-  /* Card especial Rectoral */
-  .card-rector{
-    border:2px solid #C9A84C;
-    background:linear-gradient(135deg,#fff 80%,#FFFBEB 100%);
-    box-shadow:0 4px 18px rgba(201,168,76,.18);
-  }
-  .rector-badge{
-    display:inline-flex;align-items:center;gap:5px;
-    background:#0D1B40;color:#C9A84C;
-    border-radius:99px;padding:3px 11px;
-    font-size:10px;font-weight:800;letter-spacing:.06em;
-    margin-bottom:8px
-  }
-  .dual-link{display:flex;flex-direction:column;gap:6px}
+  /* Doble enlace para card Rectoral */
+  .dual-link{display:flex;flex-direction:column;gap:5px}
   .dual-link a{
     display:inline-flex;align-items:center;gap:5px;
-    font-size:11px;font-weight:600;text-decoration:none;
-    border-radius:6px;padding:4px 10px;border:1px solid;white-space:nowrap
+    font-size:11px;color:#2563EB;text-decoration:none;
+    background:#EFF6FF;border:1px solid #BFDBFE;border-radius:6px;
+    padding:3px 10px;font-weight:600;white-space:nowrap
   }
-  .link-day{background:#F2F4F8;color:#0D1B40;border-color:#CBD5E1}
-  .link-day::after{content:' ↗';font-size:10px;opacity:.7}
-  .link-night{background:#0D1B40;color:#C9A84C;border-color:#0D1B40}
-  .link-night::after{content:' ↗';font-size:10px;opacity:.7}
+  .dual-link a::after{content:' ↗';font-size:10px;opacity:.7}
 
   /* ── FOOTER ── */
   .footer{
@@ -335,23 +321,22 @@
   </div>
 
   <!-- CARD 4 — RECTORAL (vista ejecutiva) -->
-  <div class="card card-rector">
-    <div class="card-icon" style="background:#0D1B40;font-size:24px">🏛️</div>
+  <div class="card">
+    <div class="card-icon" style="background:#FFFBEB">🏛️</div>
     <div>
-      <div class="rector-badge">★ VISTA RECTORAL</div>
       <p class="card-num">Dashboard 04</p>
-      <p class="card-title" style="color:#0D1B40">Dashboard Rectoral — Vista Ejecutiva</p>
+      <p class="card-title">Dashboard Rectoral — Vista Ejecutiva</p>
     </div>
     <div class="card-link-col">
       <div class="dual-link">
-        <a class="link-day" href="https://iaingenieria.github.io/yaan-dashboards/rectoral-dia.html" target="_blank">☀️ Versión Día</a>
-        <a class="link-night" href="https://iaingenieria.github.io/yaan-dashboards/rectoral-noche.html" target="_blank">🌙 Versión Noche</a>
+        <a href="https://iaingenieria.github.io/yaan-dashboards/rectoral-dia.html" target="_blank">☀️ Versión Día</a>
+        <a href="https://iaingenieria.github.io/yaan-dashboards/rectoral-noche.html" target="_blank">🌙 Versión Noche</a>
       </div>
     </div>
     <div class="card-body">
       <div class="desc-block">
-        <p>Panel de control exclusivo para la <strong>Rectoría y Consejo Directivo</strong> de la Universidad YAAN. Consolida en una sola pantalla todos los indicadores estratégicos de la institución: matrícula activa vs. meta, ingresos proyectados, embudo de captación de prospectos, pipeline B2B y posicionamiento por canal.</p>
-        <p>Muestra en tiempo real el <strong>progreso hacia la meta de 2,400 alumnos</strong> (barra dorada con porcentaje y alumnos faltantes), los 4 KPIs principales — prospectos del mes, empresas B2B contactadas, inscripciones nuevas e ingresos — y gráficas interactivas de distribución por canal y top de licenciaturas con mayor captación.</p>
+        <p>Panel de control para la <strong>Rectoría y Consejo Directivo</strong> de la Universidad YAAN. Consolida en una sola pantalla todos los indicadores estratégicos de la institución: matrícula activa vs. meta, ingresos proyectados, embudo de captación de prospectos, pipeline B2B y posicionamiento por canal.</p>
+        <p>Muestra en tiempo real el <strong>progreso hacia la meta de 2,400 alumnos</strong> (barra dorada con porcentaje y alumnos faltantes), los 4 KPIs principales — prospectos del mes, empresas B2B contactadas, inscripciones nuevas e ingresos — y gráficas interactivas de distribución por canal y top licenciaturas con mayor captación.</p>
         <p>Integra un <strong>Chat de Inteligencia Artificial Ejecutiva</strong> (GPT-4o) con contexto completo de todos los indicadores del dashboard. La Rectora puede preguntar en lenguaje natural: <em>"¿En cuántos meses se recupera la inversión?"</em>, <em>"¿Qué canal tiene mejor conversión?"</em> o <em>"¿Cuántos alumnos faltan para la meta?"</em> — y recibir respuesta inmediata con datos reales.</p>
       </div>
       <div class="fundamento">
