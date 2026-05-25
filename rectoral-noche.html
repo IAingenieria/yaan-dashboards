@@ -100,13 +100,6 @@ body{background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI
 .ok{background:#071A0F;color:#4ADE80;border:1px solid #22C55E}
 .no{background:#1C0808;color:#F87171;border:1px solid #7F1D1D}
 
-/* API KEY */
-#keyBanner{display:none;background:#1A1200;border:1px solid #D97706;border-radius:8px;padding:10px 14px;margin-bottom:14px;align-items:center;gap:8px;flex-wrap:wrap}
-#keyBanner span{font-size:12px;color:#FCD34D;flex:1;min-width:160px}
-#keyInput{background:var(--bg);border:1px solid #374151;border-radius:6px;padding:5px 10px;font-size:12px;width:200px;color:#fff;font-family:inherit}
-#keyInput::placeholder{color:#4B5563}
-.key-btn{background:var(--gold);color:var(--navy);border:none;border-radius:6px;padding:5px 14px;font-size:12px;font-weight:800;cursor:pointer;font-family:inherit}
-
 /* MESSAGES */
 .msgs{min-height:80px;max-height:260px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;margin-bottom:14px;padding-right:4px}
 .msgs::-webkit-scrollbar{width:4px}.msgs::-webkit-scrollbar-track{background:transparent}.msgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
@@ -296,12 +289,6 @@ body{background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI
       <span id="connBadge" class="badge-conn no">● Sin conexión</span>
     </div>
 
-    <!-- KEY BANNER -->
-    <div id="keyBanner">
-      <span>🔑 Ingresa tu OpenAI API key para activar la IA (solo se guarda en este navegador)</span>
-      <input id="keyInput" type="password" placeholder="sk-proj-...">
-      <button class="key-btn" onclick="guardarKey()">Guardar</button>
-    </div>
 
     <div class="msgs" id="msgs">
       <div class="msg msg-ai">Hola Rectora Verónica. Tengo acceso a todos los indicadores de este mes: matrícula, embudo de conversión, pipeline B2B, canales de captación y proyecciones de ROI. ¿Qué le gustaría analizar?</div>
@@ -440,23 +427,10 @@ const hist = [];
 
 function getKey(){ return localStorage.getItem('yaan_openai_key') || ''; }
 
-function guardarKey(){
-  const k = document.getElementById('keyInput').value.trim();
-  if(!k) return;
-  localStorage.setItem('yaan_openai_key', k);
-  document.getElementById('keyBanner').style.display = 'none';
-  document.getElementById('connBadge').className = 'badge-conn ok';
-  document.getElementById('connBadge').textContent = '● IA Conectada';
-  addMsg('✅ API key guardada. Listo para responder cualquier consulta ejecutiva.', 'ai');
-}
-
 window.addEventListener('load', () => {
-  if(getKey()){
-    document.getElementById('connBadge').className = 'badge-conn ok';
-    document.getElementById('connBadge').textContent = '● IA Conectada';
-  } else {
-    document.getElementById('keyBanner').style.display = 'flex';
-  }
+  const b = document.getElementById('connBadge');
+  if(getKey()){ b.className='badge-conn ok'; b.textContent='● IA Conectada'; }
+  else { b.className='badge-conn no'; b.textContent='● Sin conexión'; }
 });
 
 function addMsg(txt, who){

@@ -104,12 +104,6 @@ body{background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI
 .ok{background:#F0FDF4;color:#16A34A;border:1px solid #86EFAC}
 .no{background:#FEF2F2;color:#DC2626;border:1px solid #FECACA}
 
-/* API KEY */
-#keyBanner{display:none;background:#FFFBEB;border:1px solid #F59E0B;border-radius:8px;padding:10px 14px;margin-bottom:14px;align-items:center;gap:8px;flex-wrap:wrap}
-#keyBanner span{font-size:12px;color:#92400E;flex:1;min-width:160px}
-#keyInput{background:#fff;border:1px solid var(--border2);border-radius:6px;padding:5px 10px;font-size:12px;width:200px;color:var(--text);font-family:inherit}
-.key-btn{background:var(--navy);color:#fff;border:none;border-radius:6px;padding:5px 14px;font-size:12px;font-weight:800;cursor:pointer;font-family:inherit}
-
 /* MESSAGES */
 .msgs{min-height:80px;max-height:240px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
 .msg{padding:10px 14px;border-radius:10px;font-size:13px;line-height:1.65;max-width:90%;white-space:pre-wrap}
@@ -274,11 +268,6 @@ body{background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI
       </div>
       <span id="connBadge" class="badge-conn no">● Sin conexión</span>
     </div>
-    <div id="keyBanner">
-      <span>🔑 Ingresa tu OpenAI API key para activar la IA (solo se guarda en este navegador)</span>
-      <input id="keyInput" type="password" placeholder="sk-proj-...">
-      <button class="key-btn" onclick="guardarKey()">Guardar</button>
-    </div>
     <div class="msgs" id="msgs">
       <div class="msg msg-ai">Hola Rectora Verónica. Tengo acceso a todos los indicadores de este mes: matrícula, embudo, pipeline B2B, canales y ROI. ¿Qué le gustaría analizar?</div>
     </div>
@@ -335,18 +324,10 @@ REGLAS: Responde en español formal y directo. Máx 220 palabras. Cifras concret
 
 const hist=[];
 function getKey(){return localStorage.getItem('yaan_openai_key')||'';}
-function guardarKey(){
-  const k=document.getElementById('keyInput').value.trim();
-  if(!k)return;
-  localStorage.setItem('yaan_openai_key',k);
-  document.getElementById('keyBanner').style.display='none';
-  document.getElementById('connBadge').className='badge-conn ok';
-  document.getElementById('connBadge').textContent='● IA Conectada';
-  addMsg('✅ API key guardada. Lista para responder cualquier consulta.','ai');
-}
 window.addEventListener('load',()=>{
-  if(getKey()){document.getElementById('connBadge').className='badge-conn ok';document.getElementById('connBadge').textContent='● IA Conectada';}
-  else{document.getElementById('keyBanner').style.display='flex';}
+  const b=document.getElementById('connBadge');
+  if(getKey()){b.className='badge-conn ok';b.textContent='● IA Conectada';}
+  else{b.className='badge-conn no';b.textContent='● Sin conexión';}
 });
 function addMsg(txt,who){
   const box=document.getElementById('msgs');

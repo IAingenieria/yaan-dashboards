@@ -459,12 +459,6 @@ input[type=text]{width:100%;padding:8px 12px;border:0.5px solid var(--color-bord
       <span class="badge bok"><i class="ti ti-circle-dot" style="font-size:11px" aria-hidden="true"></i> Activa</span>
     </div>
 
-    <div id="key-banner" style="display:none;background:#FFFBEB;border:1px solid #F59E0B;border-radius:8px;padding:10px 14px;margin-bottom:12px;align-items:center;gap:8px;flex-wrap:wrap">
-      <span style="font-size:12px;color:#92400E;flex:1;min-width:160px">🔑 Ingresa tu OpenAI API key para activar la IA (se guarda solo en tu navegador)</span>
-      <input id="keyInput" type="password" placeholder="sk-proj-..." style="border:1px solid #D1D5DB;border-radius:6px;padding:5px 9px;font-size:12px;width:220px;font-family:inherit">
-      <button onclick="guardarKey()" style="background:#0D1B40;color:#C9A84C;border:none;border-radius:6px;padding:5px 14px;font-size:12px;cursor:pointer;font-weight:700;font-family:inherit">Guardar</button>
-    </div>
-
     <div id="iaBox" style="display:flex;flex-direction:column;gap:8px;min-height:60px;max-height:260px;overflow-y:auto;margin-bottom:12px">
       <div class="chat-msg-g chat-ai-g">Hola. Puedo sugerirte nuevas keywords por carrera, proponer títulos de blog basados en la Revista YAAN, analizar qué está haciendo la competencia o generar estructuras completas de landing page. ¿Qué necesitas?</div>
     </div>
@@ -486,14 +480,6 @@ input[type=text]{width:100%;padding:8px 12px;border:0.5px solid var(--color-bord
 
 <script>
 function getApiKey(){return localStorage.getItem('yaan_openai_key')||'';}
-function guardarKey(){
-  const k=document.getElementById('keyInput').value.trim();
-  if(k){localStorage.setItem('yaan_openai_key',k);document.getElementById('key-banner').style.display='none';
-    document.getElementById('iaBox').innerHTML='<div class="chat-msg-g chat-ai-g">✅ API key guardada. ¿Qué keywords o contenido analizamos?</div>';}
-}
-window.addEventListener('load',()=>{
-  if(!getApiKey())document.getElementById('key-banner').style.display='flex';
-});
 
 function st(id,btn){
   document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('on'));
